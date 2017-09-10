@@ -30,6 +30,26 @@
 		#form-su,#form-si{
 			background-color:#454545;	
 		}
+
+		.socialButtons>button{
+			display:inline;
+		}
+
+		#errorMsg-su,#errorMsg-si{
+			color:red;
+		} 
+
+		#sign-up-form,#sign-in-form{
+			display:none;
+		}
+
+		.instructions{
+			margin:0px;
+		}
+
+		form>#email-si,form>#phoneNumber-si{
+			display:none;
+		}
 		
 	</style>
 
@@ -63,6 +83,31 @@
 		<i class="fa fa-pencil"></i><i class="fa fa-fw"></i>Sign Up with Email / Phone and Password
 	</button>
 
+	<form id="sign-up-form" class="text-center">
+		<p class="instructions">Please fill out all fields</p>
+		<input id = "email-su" type = "text" placeholder="Email"><!--put an envelope here-->
+		<input id = "phoneNumber-su" type = "text" placeholder="###-###-####"><!--put a phone here -->
+		<input id = "DOB" type = "date"><!--put a calendar icon here-->
+		<input id = "password-su" type = "password" placeholder="Password"><!--put a lock here-->
+		<button type="button" id = "submit-su">Sign Up</button>
+		<div id = "errorMsg-su"></div>
+	</form>
+
+	<form id="sign-in-form">
+		<label>Select Log-In Type (Email / Phone) : <!--dropdown select menu-->
+			<select id="LogInType">
+				<option selected="selected">--Select--</option>
+				<option>Email</option>
+				<option>Phone</option>
+			</select>
+		</label><br>
+		<input id = "email-si" type = "text" placeholder="Email"><!--put an envelope here-->
+		<input id = "phoneNumber-si" type = "text" placeholder="###-###-####"><!--put a phone here -->
+		<input id = "password-si" type = "password" placeholder="Password"><!--put a lock here-->
+		<button type="button" id = "submit-si">Sign In</button>
+		<div id = "errorMsg-si"></div>
+	</form>
+
 	<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
 	<script type="text/javascript">
 		
@@ -79,8 +124,9 @@
 	  	var dB = firebase.database();
 	  	var Auth = firebase.auth();
 	  	var cloud = firebase.storage();
-	  	var provider = new firebase.auth.FacebookAuthProvider();
-	  	
+	  	var provider_fb = new firebase.auth.FacebookAuthProvider();
+	  	var provider_goog = new firebase.auth.GoogleAuthProvider();
+
 	  	var user;
 
 	  	$("#sign-in").on("click",function(){
@@ -112,7 +158,7 @@
 		})
 
 	  	function facebookLogin(){
-		  	firebase.auth().signInWithPopup(provider).then(function(result) {
+		  	firebase.auth().signInWithPopup(provider_fb).then(function(result) {
 			  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
 			  var token = result.credential.accessToken;
 			  // The signed-in user info.
@@ -123,6 +169,7 @@
 			  $("body").append("<p>" + user.email + "</p>");
 			}).catch(function(error) {
 			  // Handle Errors here.
+			  console.log(error);
 			  var errorCode = error.code;
 			  console.log(error);
 			  var errorMessage = error.message;
@@ -133,6 +180,60 @@
 			  // ...
 			});
 		}
+
+	  	$("#google-su").on("click",function(){
+	  		googleLogin();
+		})
+
+	  	$("#google-si").on("click",function(){
+	  		googleLogin();
+		})
+
+	  	function googleLogin(){
+			firebase.auth().signInWithPopup(provider_goog).then(function(result) {
+			  // This gives you a Google Access Token. You can use it to access the Google API.
+			  var token = result.credential.accessToken;
+			  // The signed-in user info.
+			  var user = result.user;
+			  $("body").append("<p>" + user.displayName + "</p>");
+			  $("body").append("<p>" + user.email + "</p>");
+			}).catch(function(error) {
+			  // Handle Errors here.
+			  var errorCode = error.code;
+			  var errorMessage = error.message;
+			  // The email of the user's account used.
+			  var email = error.email;
+			  // The firebase.auth.AuthCredential type that was used.
+			  var credential = error.credential;
+			  // ...
+			});
+		}
+
+
+		$("#form-su").on("click",function(){
+			$("#sign-up-form").css("display","block");
+			$("input").css("display","block");
+			$("#sign-in-form").css("display","none");
+		})
+
+		$("#form-si").on("click",function(){
+			$("#form-si").prop("disabled",true);
+			$("#sign-in-form").css("display","block");
+			$("input").css("display","block");
+			$("#sign-up-form").css("display","none");
+			$("form>#email-si").css("display","none");
+			$("form>#phoneNumber-si").css("display","none");
+		})
+
+		$("#LogInType").change(function(){
+			if($("#LogInType").val()=="Email"){
+				$("form>#email-si").css("display","block");
+				$("form>#phoneNumber-si").css("display","none");
+			} else if ($("#LogInType").val()=="Phone"){
+				$("form>#email-si").css("display","none");
+				$("form>#phoneNumber-si").css("display","block");
+			}
+		})
 
 /*	glyphicon glyphicon-thumbs-up
 	glyphicon glyphicon-thumbs-down
