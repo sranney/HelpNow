@@ -70,6 +70,7 @@
 	   			console.log("not authenticated")
 	   		}
 	   	}
+	   	//need to request user_location, email, public_profile
 	</script>
 
 	<!--form-->
@@ -81,7 +82,10 @@
 	<form id="sign-up">
 		Sign Up with Facebook or Google
 		<div class="socialButtons-su">
-			<button id = "fb-su">Facebook</button>
+			<fb:login-button 
+			  scope="email,user_location"
+			  onlogin="checkLoginState();">
+			</fb:login-button>
 			<button id = "google-su">Google</button>
 		</div>
 		<p class="instructions">Or Sign Up with Form Below</p>
