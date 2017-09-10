@@ -15,7 +15,7 @@
 			border-radius:7px;
 			color:white;
 			font-size:20px;
-			display:block;
+			display:none;
 			margin:1px auto;
 		}
 
@@ -36,16 +36,31 @@
 </head>
 <body>
 	
+	<button class="btn btn-default btn-block" id="sign-up">Sign Up</button>
+	<button class="btn btn-default btn-block" id="sign-in">Sign In</button>
+	
+	<button class="btn btn-default btn-block" id="facebook-si">
+		<i class="fa fa-facebook"></i><i class="fa fa-fw"></i>Sign In with Facebook
+	</button>
+
+	<button class="btn btn-default btn-block" id="google-si">
+		<i class="fa fa-google"></i><i class="fa fa-fw"></i>Sign In with Google
+	</button>
+
+	<button class="btn btn-default btn-block" id="form-si">
+		<i class="fa fa-pencil"></i><i class="fa fa-fw"></i>Sign In with Email / Phone and Password
+	</button>
+
 	<button class="btn btn-default btn-block" id="facebook-su">
-		<i class="fa fa-facebook"></i><i class="fa fa-fw"></i>Sign in with Facebook
+		<i class="fa fa-facebook"></i><i class="fa fa-fw"></i>Sign Up with Facebook
 	</button>
 
 	<button class="btn btn-default btn-block" id="google-su">
-		<i class="fa fa-google"></i><i class="fa fa-fw"></i>Sign in with Google
+		<i class="fa fa-google"></i><i class="fa fa-fw"></i>Sign Up with Google
 	</button>
 
 	<button class="btn btn-default btn-block" id="form-su">
-		<i class="fa fa-pencil"></i><i class="fa fa-fw"></i>Sign in with Email and Password
+		<i class="fa fa-pencil"></i><i class="fa fa-fw"></i>Sign Up with Email / Phone and Password
 	</button>
 
 	<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
@@ -68,7 +83,35 @@
 	  	
 	  	var user;
 
+	  	$("#sign-in").on("click",function(){
+	  		signInUp("si");
+	  	})
+
+	  	$("#sign-up").on("click",function(){
+	  		signInUp("su");
+	  	})
+
+	  	function signInUp(type){
+	  		var othertype = type=="su"? "si":"su";
+	  		$("#sign-in").css("display","none");
+	  		$("#sign-up").css("display","none");
+	  		$("#facebook-"+othertype).css("display","none");
+	  		$("#google-"+othertype).css("display","none");
+	  		$("#form-"+othertype).css("display","none");
+	  		$("#facebook-"+type).css("display","block");
+	  		$("#google-"+type).css("display","block");
+	  		$("#form-"+type).css("display","block");
+	  	}
+
 	  	$("#facebook-su").on("click",function(){
+	  		facebookLogin();
+		})
+
+	  	$("#facebook-si").on("click",function(){
+	  		facebookLogin();
+		})
+
+	  	function facebookLogin(){
 		  	firebase.auth().signInWithPopup(provider).then(function(result) {
 			  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
 			  var token = result.credential.accessToken;
@@ -89,9 +132,11 @@
 			  var credential = error.credential;
 			  // ...
 			});
-		})
+		}
 
-
+/*	glyphicon glyphicon-thumbs-up
+	glyphicon glyphicon-thumbs-down
+*/
 	</script>
 	
 </body>
