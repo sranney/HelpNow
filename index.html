@@ -94,15 +94,7 @@
 	</form>
 
 	<form id="sign-in-form">
-		<label>Select Log-In Type (Email / Phone) : <!--dropdown select menu-->
-			<select id="LogInType">
-				<option selected="selected">--Select--</option>
-				<option>Email</option>
-				<option>Phone</option>
-			</select>
-		</label><br>
 		<input id = "email-si" type = "text" placeholder="Email"><!--put an envelope here-->
-		<input id = "phoneNumber-si" type = "text" placeholder="###-###-####"><!--put a phone here -->
 		<input id = "password-si" type = "password" placeholder="Password"><!--put a lock here-->
 		<button type="button" id = "submit-si">Sign In</button>
 		<div id = "errorMsg-si"></div>
@@ -195,6 +187,7 @@
 			  var token = result.credential.accessToken;
 			  // The signed-in user info.
 			  var user = result.user;
+			  console.log(user);
 			  $("body").append("<p>" + user.displayName + "</p>");
 			  $("body").append("<p>" + user.email + "</p>");
 			}).catch(function(error) {
