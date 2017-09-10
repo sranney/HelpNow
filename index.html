@@ -86,8 +86,8 @@
 	<form id="sign-up-form" class="text-center">
 		<p class="instructions">Please fill out all fields</p>
 		<input id = "email-su" type = "text" placeholder="Email"><!--put an envelope here-->
-		<input id = "phoneNumber-su" type = "text" placeholder="###-###-####"><!--put a phone here -->
 		<input id = "DOB" type = "date"><!--put a calendar icon here-->
+		<input id = "phoneNumber-su" type = "text" placeholder="###-###-####">
 		<input id = "password-su" type = "password" placeholder="Password"><!--put a lock here-->
 		<button type="button" id = "submit-su">Sign Up</button>
 		<div id = "errorMsg-su"></div>
@@ -142,14 +142,14 @@
 	  	}
 
 	  	$("#facebook-su").on("click",function(){
-	  		facebookLogin();
+	  		facebookLogin("su");
 		})
 
 	  	$("#facebook-si").on("click",function(){
-	  		facebookLogin();
+	  		facebookLogin("si");
 		})
 
-	  	function facebookLogin(){
+	  	function facebookLogin(type){
 		  	firebase.auth().signInWithPopup(provider_fb).then(function(result) {
 			  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
 			  var token = result.credential.accessToken;
@@ -157,8 +157,10 @@
 			  user = result.user;
 			  console.log(user);
 			  // ...
-			  $("body").append("<p>" + user.displayName + "</p>");
-			  $("body").append("<p>" + user.email + "</p>");
+			  if(type=="su"){
+			  	$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");
+			  	$("form#sign-up-form>phoneNumber-su").css("display","block");
+			  }
 			}).catch(function(error) {
 			  // Handle Errors here.
 			  console.log(error);
@@ -174,22 +176,25 @@
 		}
 
 	  	$("#google-su").on("click",function(){
-	  		googleLogin();
+	  		googleLogin("su");
 		})
 
 	  	$("#google-si").on("click",function(){
-	  		googleLogin();
+	  		googleLogin("si");
 		})
 
-	  	function googleLogin(){
+	  	function googleLogin(type){
 			firebase.auth().signInWithPopup(provider_goog).then(function(result) {
 			  // This gives you a Google Access Token. You can use it to access the Google API.
 			  var token = result.credential.accessToken;
 			  // The signed-in user info.
 			  var user = result.user;
 			  console.log(user);
-			  $("body").append("<p>" + user.displayName + "</p>");
-			  $("body").append("<p>" + user.email + "</p>");
+			  $("body").append("<p>Welcome " + user.displayName + "</p>");
+			  if(type=="su"){
+			  	$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");
+			  	$("form#sign-up-form>phoneNumber-su").css("display","block");
+			  }
 			}).catch(function(error) {
 			  // Handle Errors here.
 			  var errorCode = error.code;
