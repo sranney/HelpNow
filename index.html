@@ -86,8 +86,7 @@
 	<form id="sign-up-form" class="text-center">
 		<p class="instructions">Please fill out all fields</p>
 		<input id = "email-su" type = "text" placeholder="Email"><!--put an envelope here-->
-		<input id = "DOB" type = "date"><!--put a calendar icon here-->
-		<input id = "phoneNumber-su" type = "text" placeholder="###-###-####">
+		<input id = "phoneNumber-su" type = "text" placeholder="###-###-####"><!--put a phone icon here-->
 		<input id = "password-su" type = "password" placeholder="Password"><!--put a lock here-->
 		<button type="button" id = "submit-su">Sign Up</button>
 		<div id = "errorMsg-su"></div>
@@ -158,8 +157,14 @@
 			  console.log(user);
 			  // ...
 			  if(type=="su"){
+			  	$("form#sign-up-form").prepend("<p>Welcome " + user.displayName + "</p>");
 			  	$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");
+			  	$("form#sign-up-form").css("display","block");
+			  	$("form#sign-up-form>#email-su").css("display","none");
+				$("form#sign-up-form>#password-su").css("display","none");
 			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
+			  } else {
+			  	$("body").append("<p>Welcome " + user.displayName + "</p>");
 			  }
 			}).catch(function(error) {
 			  // Handle Errors here.
@@ -190,10 +195,15 @@
 			  // The signed-in user info.
 			  var user = result.user;
 			  console.log(user);
-			  $("body").append("<p>Welcome " + user.displayName + "</p>");
 			  if(type=="su"){
+			  	$("form#sign-up-form").prepend("<p>Welcome " + user.displayName + "</p>");
 			  	$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");
+			  	$("form#sign-up-form").css("display","block");
+			  	$("form#sign-up-form>#email-su").css("display","none");
+				$("form#sign-up-form>#password-su").css("display","none");
 			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
+			  } else {
+			  	$("body").append("<p>Welcome " + user.displayName + "</p>");
 			  }
 			}).catch(function(error) {
 			  // Handle Errors here.
