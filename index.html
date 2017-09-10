@@ -70,7 +70,12 @@
 	   			console.log("not authenticated")
 	   		}
 	   	}
-	   	//need to request user_location, email, public_profile
+	   	
+	   	function checkLoginStatus(){
+	   		FB.getLoginStatus(function(response){
+	   			statusChangeCallback(response);
+	   		})
+	   	}
 	</script>
 
 	<!--form-->
