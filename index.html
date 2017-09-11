@@ -488,7 +488,12 @@
 			$(".modal-body>button").css("display","none");
 			$(".modal-body").append("<p>Thank you, " + userObj.displayName + ", please click the button below to continue to site</p>");
 			$("#logInComplete").css("display","block");
-			dB.ref("users/" + userObj.uid).push(userObj);
+			var userInfoToPush = {
+				name : userObj.displayName,
+				phoneNumber: userObj.phoneNumber,
+				email: userObj.email
+			}
+			dB.ref("users/" + userObj.uid).push(userInfoToPush);
 		}
 
 		dB.ref("users").on("child_added",function(childSnapshot){
