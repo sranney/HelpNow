@@ -491,12 +491,12 @@
 				name : userObj.displayName,
 				phoneNumber: $("#phoneNumber-su").val(),
 				email: userObj.email
-			})
+			});
 			console.log(userObj.uid);
 		}
 
 		dB.ref("users").on("child_added",function(childSnapshot){
-			console.log(childSnapshot.key());
+			console.log(childSnapshot);
 		})
 
 		$("#submit-si").on("click",function(){
