@@ -492,7 +492,6 @@
 				phoneNumber: $("#phoneNumber-su").val(),
 				email: userObj.email
 			});
-			console.log(userObj.uid);
 		}
 
 		dB.ref("users").on("child_added",function(childSnapshot){
@@ -512,7 +511,9 @@
 	  		var email = $("#email-" + type).val();
 	  		var password = $("#password-" + type).val();
 	  		var errorCode="";
-		  	Auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
+		  	Auth.createUserWithEmailAndPassword(email, password).then(function(user){
+		  		console.log(user);
+		  	}).catch(function(error) {
 				  // Handle Errors here.
 				  errorCode = error.code;
 				  var errorMessage = error.message;
