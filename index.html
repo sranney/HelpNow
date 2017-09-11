@@ -228,7 +228,7 @@
 
 
 		$("#submit-su").on("click",function(){
-			if("#submit-su").html()=="Set Phone"){
+			if($("#submit-su").html()=="Set Phone"){
 				if($("#userName-su").val()!=="" && $("#email-su").val() !== "" && $("#phoneNumber-su").val() !=="" && $("#password-su").val() !== ""){
 					if($("#phoneNumber-su").val().length == 12){
 						submitForm("su");
