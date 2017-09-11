@@ -11,6 +11,90 @@
 	
 	<style type="text/css">
 		
+		/*homepage style*/
+
+		body,.jumbotron{
+			background-color:#032642;
+		}
+
+		.jumbotron{
+			animation-duration:1s;
+			animation-iteration-count:1;
+			animation-name:slideInFromTop;			
+		}
+		
+		@keyframes slideInFromTop{
+			0%{transform:translateY(-100%);}
+			100%{transform:translateY(0%);}
+		}
+
+		img{
+			height:200px;
+		}		
+
+		.helper>p,.help>p{
+			font-size:100px;
+		}
+		
+		.helper,.help{
+			height:100%;
+			width:100%;
+			border-radius:15px;
+		}
+
+		#helper,#help{
+			display: flex;
+			align-content: center;
+			align-items: center;
+			justify-content: center;
+			width:100%;
+			min-height:40vh;
+		}
+
+		p{
+			color:white;
+			font-size:20px;
+			font-weight:bold;
+		}
+		
+
+		.helper{
+			background-color:green;
+			animation-duration:1s;
+			animation-iteration-count:1;
+			animation-name:slideInFromLeft;
+		}
+
+		.help{
+			background-color:red;
+			animation-duration:1s;
+			animation-iteration-count:1;
+			animation-name:slideInFromRight;			
+		}
+
+		@keyframes slideInFromLeft{
+			0%{
+				transform:translateX(-300%);
+				opacity:0;
+			}
+			100%{
+				transform:translateX(0);
+				opacity:1;
+			}
+		}
+
+		@keyframes slideInFromRight{
+			0%{
+				transform:translateX(300%);
+				opacity:0;
+			}
+			100%{
+				transform:translateX(0);
+				opacity:1;
+			}
+		}
+
+		/*modal sign-up sheet style*/
 		#form-su,#form-si,#google-su,#google-si,#facebook-su,#facebook-si{
 			border-radius:7px;
 			color:white;
@@ -84,12 +168,33 @@
 			border-radius:15px;
 		}
 
+
 	</style>
 
 </head>
 <body>
 
-	<button id = "show-modal">Show Modal</button>
+<!--<button id = "show-modal">Show Modal</button>-->
+
+	<div id = "titleArea" class="jumbotron text-center">
+		<img src="HelpNow Logo.png">
+	</div>
+
+	<section id="helper">
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+			<div class="helper text-center">
+				<p>Go Help</p>
+			</div>
+		</div>
+
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+			<div class="help text-center">
+				<p>Get Help</p>
+			</div>
+		</div>
+	</section>
+
+<!--MODAL HTML BELOW-->
 
 	<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
@@ -144,7 +249,7 @@
 				<div id = "errorMsg"></div>
 			</div>
 			<div class="modal-footer">
-				<button class = "btn btn-primary" type="button" data-dismiss="modal" aria-hidden="true" id ="logInComplete">Continue to Site?</button>
+				<button class = "btn btn-primary" type="button" data-dismiss="modal" aria-hidden="true" id ="logInComplete">Continue to Site</button>
 			</div>
 		</div>
 	</div>
@@ -155,10 +260,8 @@
 	<script type="text/javascript">
 		
 
-		$("#show-modal").on("click",function(){
-			$("#loginModal").modal("show");
-		})
 
+////////////////CONFIGURE FIREBASE AND CHECK IF SOMEONE IS LOGGED INTO SITE - IF SO FORMAT HTML
 		var config = {
 			apiKey: "AIzaSyBzJ9AknkEz3TmAHLEryoXaT74nLSf9mQQ",
 			authDomain: "project1-ad91c.firebaseapp.com",
@@ -175,15 +278,47 @@
 	  	var provider_fb = new firebase.auth.FacebookAuthProvider();
 	  	var provider_goog = new firebase.auth.GoogleAuthProvider();
 
+	  	var userLoggedIn=false;
+
 		firebase.auth().onAuthStateChanged(function(user) {
-		  if (user) {
-		    console.log("someone is logged in");
-		  } else {
-		    console.log("noone is logged in");
-		  }
+		  	if (user) {
+		    	userLoggedIn=true;
+		  	} else {
+		    	userLoggedIn=false;
+		  	}
 		});
 
+//////////////////////////////////HOME PAGE LOAD/////////////////////////////////////
 
+		var pageToLoad;
+
+		$(".helper").on("click",function(){
+
+			if(!userLoggedIn){
+				$("#loginModal").modal({backdrop: 'static', keyboard: false});
+				$("#loginModal").modal("show");
+				pageToLoad = "helper page.html";
+			} else {
+				var win = window.open("helper page.html");
+        		win.focus();
+			}
+
+		})
+			
+		$(".help").on("click",function(){
+
+			if(!userLoggedIn){
+				$("#loginModal").modal({backdrop: 'static', keyboard: false});
+				$("#loginModal").modal("show");
+				pageToLoad = "help page.html";
+			} else {
+				var win = window.open("help page.html");
+        		win.focus();
+			}
+
+		})
+
+//////////////////////////////////MODAL CODE/////////////////////////////////////
 
 	  	var user;
 
@@ -377,6 +512,11 @@
 			    }
 			}
 		}
+
+		$("#logInComplete").on("click",function(){
+			var win = window.open(pageToLoad);
+        	win.focus();
+		})
 
 
 /*	glyphicon glyphicon-thumbs-up
