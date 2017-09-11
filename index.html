@@ -190,6 +190,7 @@
 			  	$("form#sign-up-form").prepend("<p>Welcome " + user.displayName + "</p>");
 			  	$("form#sign-up-form").css("display","block");
 			  	$("form#sign-up-form>#instructions").css("display","none");
+			  	$("form#sign-up-form>#userName-su").css("display","none");
 			  	$("form#sign-up-form>#email-su").css("display","none");
 				$("form#sign-up-form>#password-su").css("display","none");
 			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
@@ -227,16 +228,18 @@
 
 
 		$("#submit-su").on("click",function(){
-			if($("#userName-su").val()!=="" && $("#email-su").val() !== "" && $("#phoneNumber-su").val() !=="" && $("#password-su").val() !== ""){
-				if($("#phoneNumber-su").val().length == 12){
-					submitForm("su");
+			if("#submit-su").html()=="Set Phone"){
+				if($("#userName-su").val()!=="" && $("#email-su").val() !== "" && $("#phoneNumber-su").val() !=="" && $("#password-su").val() !== ""){
+					if($("#phoneNumber-su").val().length == 12){
+						submitForm("su");
+					} else {
+						$("#errorMsg-su").empty();
+						$("#errorMsg-su").append("<p>Please provide a valid phone number.</p>");	
+					}
 				} else {
 					$("#errorMsg-su").empty();
-					$("#errorMsg-su").append("<p>Please provide a valid phone number.</p>");	
+					$("#errorMsg-su").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
 				}
-			} else {
-				$("#errorMsg-su").empty();
-				$("#errorMsg-su").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
 			}
 		})
 
