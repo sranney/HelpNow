@@ -491,7 +491,7 @@
 			$("#logInComplete").css("display","block");
 			var userInfoToPush = {
 				name : userObj.displayName,
-				phoneNumber: userObj.phoneNumber,
+				phoneNumber: $("#phoneNumber-su").val(),
 				email: userObj.email,
 			}
 			dB.ref("users/" + userObj.uid).push(userInfoToPush);
