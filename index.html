@@ -494,7 +494,7 @@
 				phoneNumber: $("#phoneNumber-su").val(),
 				email: userObj.email
 			}
-			usersRef.ref(userObj.uid).set({
+			dB.ref(userObj.uid).set({
 			  date_of_birth: "June 23, 1912",
 			  full_name: "Alan Turing"
 			});
