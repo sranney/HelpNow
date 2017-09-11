@@ -492,9 +492,9 @@
 			var userInfoToPush = {
 				name : userObj.displayName,
 				phoneNumber: $("#phoneNumber-su").val(),
-				email: userObj.email,
+				email: userObj.email
 			}
-			dB.ref("users/" + userObj.uid).set(userInfoToPush);
+			dB.ref("users/").set({userObj.uid: {userInfoToPush}});
 			console.log(userObj.uid);
 		}
 
