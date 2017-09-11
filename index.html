@@ -7,7 +7,7 @@
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://use.fontawesome.com/2a8a6780db.js"></script>
-
+	<script src="https://www.w3schools.com/lib/w3.js"></script>
 	
 	<style type="text/css">
 		
@@ -51,7 +51,7 @@
 			min-height:40vh;
 		}
 
-		p{
+		.helper>p,.help>p{
 			color:white;
 			font-size:20px;
 			font-weight:bold;
@@ -152,6 +152,7 @@
 			margin:14px auto;
 			font-weight:bold;
 			font-size:20px;
+			color:black;
 		}
 
 		#submit-su,#submit-si{
@@ -194,72 +195,14 @@
 		</div>
 	</section>
 
-<!--MODAL HTML BELOW-->
-
-	<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-		    <div class="modal-body text-center">
-
-				<div id="signUpInButtons" class="text-center">
-					<button class="btn btn-default btn-block" id="sign-up">Sign Up</button>
-					<button class="btn btn-default btn-block" id="sign-in">Sign In</button>
-				</div>
-
-				<button class="btn btn-default btn-block" id="facebook-si">
-					<i class="fa fa-facebook"></i><i class="fa fa-fw"></i>Sign In with Facebook
-				</button>
-
-				<button class="btn btn-default btn-block" id="google-si">
-					<i class="fa fa-google"></i><i class="fa fa-fw"></i>Sign In with Google
-				</button>
-
-				<button class="btn btn-default btn-block" id="form-si">
-					<i class="fa fa-pencil"></i><i class="fa fa-fw"></i>Sign In with Email and Password
-				</button>
-
-				<button class="btn btn-default btn-block" id="facebook-su">
-					<i class="fa fa-facebook"></i><i class="fa fa-fw"></i>Sign Up with Facebook
-				</button>
-
-				<button class="btn btn-default btn-block" id="google-su">
-					<i class="fa fa-google"></i><i class="fa fa-fw"></i>Sign Up with Google
-				</button>
-
-				<button class="btn btn-default btn-block" id="form-su">
-					<i class="fa fa-pencil"></i><i class="fa fa-fw"></i>Sign Up with Email and Password
-				</button>
-
-				<form id="sign-up-form" class="text-center">
-					<p class="instructions">Please fill out all fields</p>
-					<input id = "firstName-su" type = "text" placeholder="First Name" class="text-center"><!--put a user symbol here-->
-					<input id = "lastName-su" type = "text" placeholder="Last Name" class="text-center"><!--put a user symbol here-->
-					<input id = "email-su" type = "text" placeholder="Email" class="text-center"><!--put an envelope here-->
-					<input id = "phoneNumber-su" type = "text" placeholder="Phone" class="text-center"><!--put a phone icon here-->
-					<input id = "password-su" type = "password" placeholder="Password" class="text-center"><!--put a lock here-->
-					<button type="button" id = "submit-su" class="btn btn-primary">Sign Up</button>
-				</form>
-
-				<form id="sign-in-form" class="text-center">
-					<p class="instructions">Please provide your registered email and password</p>
-					<input id = "email-si" type = "text" placeholder="Email" class="text-center"><!--put an envelope here-->
-					<input id = "password-si" type = "password" placeholder="Password" class="text-center"><!--put a lock here-->
-					<button type="button" id = "submit-si" class="btn btn-primary">Sign In</button>
-				</form>
-				<div id = "errorMsg"></div>
-			</div>
-			<div class="modal-footer">
-				<button class = "btn btn-primary" type="button" data-dismiss="modal" aria-hidden="true" id ="logInComplete">Continue to Site</button>
-			</div>
-		</div>
-	</div>
-</div>
-
+	<!--modal html-->
+	<div w3-include-html="modal.html"></div> 
 
 	<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
 	<script type="text/javascript">
 		
-
+		//include modal html
+		w3.includeHTML();
 
 ////////////////CONFIGURE FIREBASE AND CHECK IF SOMEONE IS LOGGED INTO SITE - IF SO FORMAT HTML
 		var config = {
@@ -270,6 +213,7 @@
 			storageBucket: "project1-ad91c.appspot.com",
 			messagingSenderId: "297815876711"
 		};
+		
 		firebase.initializeApp(config);
 
 	  	var dB = firebase.database();
