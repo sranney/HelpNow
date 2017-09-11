@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+	<!--MODAL HTML BELOW-->
+
+		<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+			    <div class="modal-body text-center">
+
+					<div id="signUpInButtons" class="text-center">
+						<button class="btn btn-default btn-block" id="sign-up">Sign Up</button>
+						<button class="btn btn-default btn-block" id="sign-in">Sign In</button>
+					</div>
+
+					<button class="btn btn-default btn-block" id="facebook-si">
+						<i class="fa fa-facebook"></i><i class="fa fa-fw"></i>Sign In with Facebook
+					</button>
+
+					<button class="btn btn-default btn-block" id="google-si">
+						<i class="fa fa-google"></i><i class="fa fa-fw"></i>Sign In with Google
+					</button>
+
+					<button class="btn btn-default btn-block" id="form-si">
+						<i class="fa fa-pencil"></i><i class="fa fa-fw"></i>Sign In with Email and Password
+					</button>
+
+					<button class="btn btn-default btn-block" id="facebook-su">
+						<i class="fa fa-facebook"></i><i class="fa fa-fw"></i>Sign Up with Facebook
+					</button>
+
+					<button class="btn btn-default btn-block" id="google-su">
+						<i class="fa fa-google"></i><i class="fa fa-fw"></i>Sign Up with Google
+					</button>
+
+					<button class="btn btn-default btn-block" id="form-su">
+						<i class="fa fa-pencil"></i><i class="fa fa-fw"></i>Sign Up with Email and Password
+					</button>
+
+					<form id="sign-up-form" class="text-center">
+						<p class="instructions">Please fill out all fields</p>
+						<input id = "firstName-su" type = "text" placeholder="First Name" class="text-center"><!--put a user symbol here-->
+						<input id = "lastName-su" type = "text" placeholder="Last Name" class="text-center"><!--put a user symbol here-->
+						<input id = "email-su" type = "text" placeholder="Email" class="text-center"><!--put an envelope here-->
+						<input id = "phoneNumber-su" type = "text" placeholder="Phone" class="text-center"><!--put a phone icon here-->
+						<input id = "password-su" type = "password" placeholder="Password" class="text-center"><!--put a lock here-->
+						<button type="button" id = "submit-su" class="btn btn-primary">Sign Up</button>
+					</form>
+
+					<form id="sign-in-form" class="text-center">
+						<p class="instructions">Please provide your registered email and password</p>
+						<input id = "email-si" type = "text" placeholder="Email" class="text-center"><!--put an envelope here-->
+						<input id = "password-si" type = "password" placeholder="Password" class="text-center"><!--put a lock here-->
+						<button type="button" id = "submit-si" class="btn btn-primary">Sign In</button>
+					</form>
+					<div id = "errorMsg"></div>
+				</div>
+				<div class="modal-footer">
+					<button class = "btn btn-primary" type="button" data-dismiss="modal" aria-hidden="true" id ="logInComplete">Continue to Site</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
