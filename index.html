@@ -309,13 +309,14 @@
 
 	  	var userObj;//will be user object with all kinds of datas
 
+	  	//firebase function to check whether user is logged into site
 		Auth.onAuthStateChanged(function(user) {
 		  	if (user) {
 		    	userObj = user;
-		    	userLoggedIn=true;
-		    	$("#Welcome").html("Welcome back, " + userObj.displayName);
+		    	userLoggedIn=true;//used below to state user is logged in and to proceed to next page
+		    	$("#Welcome").html("Welcome back, " + userObj.displayName);//provides welcome greeting
 		  	} else {
-		    	userLoggedIn=false;
+		    	userLoggedIn=false;//used below to state user is not logged in and to prompt user with a modal
 		  	}
 		});
 
@@ -323,8 +324,9 @@
 
 		var pageToLoad;
 
+		//listener for when helper button is clicked on home screen
 		$(".helper").on("click",function(){
-
+			//checks to see if user is logged in prior to proceeding to helper page
 			if(!userLoggedIn){
 				$("#loginModal").modal({backdrop: 'static', keyboard: false});
 				$("#loginModal").modal("show");
@@ -336,8 +338,9 @@
 
 		})
 		
+		//listener for when help button is clicked on home screen
 		$(".help").on("click",function(){
-
+			//checks to see if user is logged in prior to proceeding to helper page
 			if(!userLoggedIn){
 				$("#loginModal").modal({backdrop: 'static', keyboard: false});
 				$("#loginModal").modal("show");
@@ -351,15 +354,17 @@
 
 //////////////////////////////////MODAL CODE/////////////////////////////////////
 
-
+		//button click listener for sign in button that is presented when modal opens
 	  	$("#sign-in").on("click",function(){
 	  		signInUp("si");
 	  	})
 
+	  	//button click listener for sign up button that is presented when modal opens
 	  	$("#sign-up").on("click",function(){
 	  		signInUp("su");
 	  	})
 
+	  	//function that runs when "sign up" or "sign in" button is clicked
 	  	function signInUp(type){
 	  		var othertype = type=="su"? "si":"su";
 	  		$("#sign-in").css("display","inline");
@@ -443,14 +448,14 @@
 		}
 
 
-		$("#form-su").on("click",function(){
+		$("#form-su").on("click",function(){//click listener for sign up with email and password
 			$("#sign-up-form").css("display","block");
 			$("input").css("display","block");
 			$("#sign-in-form").css("display","none");
 			$("#errorMsg").empty();
 		})
 
-		$("#form-si").on("click",function(){
+		$("#form-si").on("click",function(){//click listener for sign in with email and password
 			$("#sign-in-form").css("display","block");
 			$("input").css("display","block");
 			$("#sign-up-form").css("display","none");
@@ -458,35 +463,39 @@
 		})
 
 
-		$("#submit-su").on("click",function(){
-			if($("#submit-su").html()!="Set Phone"){
+		$("#submit-su").on("click",function(){//used for both sign up form and for getting phone from people signing up with facebook or google
+			if($("#submit-su").html()!="Set Phone"){//federated signups will push this button when providing a phone number - when this occurs, the html on the button #submit-su will be "Set Phone". so here we check whether the submit su button is being used in part of the user form for signing up with email and password of if it is being used as a part of a federated signup
+			//code that will execute if it is an email-password sign up
 				if($("#firstName-su").val()!=="" && $("#lastName-su").val()!=="" && $("#email-su").val() !== "" && $("#phoneNumber-su").val() !=="" && $("#password-su").val() !== ""){
 					if($("#phoneNumber-su").val().length == 12){
 						submitForm("su");
-					} else {
+					} else {//phone number provided was not valid
 						$("#errorMsg").empty();
 						$("#errorMsg").append("<p>Please provide a valid phone number.</p>");	
 					}
-				} else {
+				} else {//user did not fill all fields correctly
 					$("#errorMsg").empty();
 					$("#errorMsg").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
 				}
-			} else {
+			} else { //code that will execute if it is a federated sign up
 				if($("#phoneNumber-su").val().length == 12){
-					pushPhone();
+					pushPhone();//add phone and other items to database of users
 				} else {
-					$("#errorMsg").empty();
+					$("#errorMsg").empty();//return a warning that the user entry for phone number was not valid
 					$("#errorMsg").append("<p>Please provide a valid phone number.</p>");	
 				}
 			}
 		})
 
-		function pushPhone(){
+		function pushPhone(){//for federated signups - we need to get a phone number from user and federated signups don't provide this information
+		//if this function runs, it is due to the user login being successful and the user providing a valid phone
+		//provide further instructions for user to use site
 			$("#signUpInButtons").css("display","none");
 			$("#sign-up-form").css("display","none");
 			$(".modal-body>button").css("display","none");
 			$(".modal-body").append("<p>Thank you, " + userObj.displayName + ", please click the button below to continue to site</p>");
 			$("#logInComplete").css("display","block");
+			//since this is a new log-in, create a new node for node users that will pass name, phone and email information about user
 			dB.ref("/users/"+userObj.uid).set({
 				name : userObj.displayName,
 				phoneNumber: $("#phoneNumber-su").val(),
@@ -494,25 +503,23 @@
 			});
 		}
 
-		dB.ref("users").on("child_added",function(childSnapshot){
-			console.log(childSnapshot.toJSON());
-		})
-
-		$("#submit-si").on("click",function(){
-			if($("#email-si").val() !== "" && $("#password-si").val() !== ""){
-				submitForm("si");
-			} else {
-				$("#errorMsg").empty();
-				$("#errorMsg").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
-			}
-		})
-
-		function submitForm(type){
+		function submitForm(type){//for user form signups
 	  		var email = $("#email-" + type).val();
 	  		var password = $("#password-" + type).val();
+	  		var name = $("#firstName-su").val() + " " + $("#lastName-su").val();
+	  		var phoneNumber = $("#phoneNumber-su").val();
 	  		var errorCode="";
 		  	Auth.createUserWithEmailAndPassword(email, password).then(function(user){
-		  		console.log(user);
+		  		$("#logInComplete").css("display","block");
+				$("#signUpInButtons").css("display","none");
+				$("#sign-up-form").css("display","none");
+				$(".modal-body>button").css("display","none");
+				$(".modal-body").append("<p>Thank you, " + user.displayName + ", please click the button below to continue to site</p>");
+				dB.ref("/users/"+user.uid).set({
+					name : name,
+					phoneNumber: phoneNumber,
+					email: email
+				});
 		  	}).catch(function(error) {
 				  // Handle Errors here.
 				  errorCode = error.code;
@@ -525,15 +532,48 @@
 				  	$("#errorMsg").append("<p>" + errorMessage + " Please try again.</p>")
 				  }
 			});
-			if (errorCode.length==0){
-				$("#logInComplete").css("display","block");
-			}
 		}
 
+		//returns user information for user who just signed up
+		dB.ref("users").on("child_added",function(childSnapshot){
+			console.log(childSnapshot.toJSON());
+		})
+
+		//button click listener for sign in form
+		$("#submit-si").on("click",function(){
+			if($("#email-si").val() !== "" && $("#password-si").val() !== ""){
+				submitForm_si();
+			} else {
+				$("#errorMsg").empty();
+				$("#errorMsg").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
+			}
+		})
+
+		function submitForm_si(){//sign-in function for email/password
+			var email = $("#email-" + type).val();
+	  		var password = $("#password-" + type).val();
+	  		firebase.auth().signInWithEmailAndPassword(email, password).then(function(user){
+	  			$("#signUpInButtons").css("display","none");
+				$("#sign-up-form").css("display","none");
+				$(".modal-body>button").css("display","none");
+				$(".modal-body").append("<p>Thank you, " +  + ", please click the button below to continue to site</p>");
+				$("#logInComplete").css("display","block");
+	  		}).catch(function(error) {
+			  // Handle Errors here.
+			  var errorCode = error.code;
+			  var errorMessage = error.message;
+			  // ...
+			  $("#errorMsg").empty();
+			  $("#errorMsg").append(errorMessage);
+			});
+		}
+
+		//keydown listener for phone number input element 
 		$("#phoneNumber-su").on("keydown",function(){
 			phoneNumbVal($(this).val(),"#phoneNumber-su");
 		})
 
+		//phone number validation
 		phoneNumbVal = function(numb_forValidation,id){
 			var e = event || window.event;  // get event object
 	    	var key = e.keyCode || e.which;
@@ -559,15 +599,13 @@
 			}
 		}
 
+		//after signing in or up, user is prompted with the logincomplete button to proceed to next page
 		$("#logInComplete").on("click",function(){
 			var win = window.open(pageToLoad);
         	win.focus();
 		})
 
 
-/*	glyphicon glyphicon-thumbs-up
-	glyphicon glyphicon-thumbs-down
-*/
 
 	</script>
 	
