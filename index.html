@@ -98,7 +98,8 @@
 
 	<form id="sign-up-form" class="text-center">
 		<p id="instructions">Please fill out all fields</p>
-		<input id = "userName-su" type = "text" placeholder="UserName" class="text-center"><!--put a user symbol here-->
+		<input id = "firstName-su" type = "text" placeholder="First Name" class="text-center"><!--put a user symbol here-->
+		<input id = "lastName-su" type = "text" placeholder="Last Name" class="text-center"><!--put a user symbol here-->
 		<input id = "email-su" type = "text" placeholder="Email" class="text-center"><!--put an envelope here-->
 		<input id = "phoneNumber-su" type = "text" placeholder="Phone" class="text-center"><!--put a phone icon here-->
 		<input id = "password-su" type = "password" placeholder="Password" class="text-center"><!--put a lock here-->
@@ -190,7 +191,8 @@
 			  	$("form#sign-up-form").prepend("<p>Welcome " + user.displayName + "</p>");
 			  	$("form#sign-up-form").css("display","block");
 			  	$("form#sign-up-form>#instructions").css("display","none");
-			  	$("form#sign-up-form>#userName-su").css("display","none");
+			  	$("form#sign-up-form>#firstName-su").css("display","none");
+			  	$("form#sign-up-form>#lastName-su").css("display","none");
 			  	$("form#sign-up-form>#email-su").css("display","none");
 				$("form#sign-up-form>#password-su").css("display","none");
 			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
@@ -228,8 +230,8 @@
 
 
 		$("#submit-su").on("click",function(){
-			if($("#submit-su").html()=="Set Phone"){
-				if($("#userName-su").val()!=="" && $("#email-su").val() !== "" && $("#phoneNumber-su").val() !=="" && $("#password-su").val() !== ""){
+			if($("#submit-su").html()!="Set Phone"){
+				if($("#firstName-su").val()!=="" && $("#lastName-su").val()!=="" && $("#email-su").val() !== "" && $("#phoneNumber-su").val() !=="" && $("#password-su").val() !== ""){
 					if($("#phoneNumber-su").val().length == 12){
 						submitForm("su");
 					} else {
@@ -240,17 +242,20 @@
 					$("#errorMsg-su").empty();
 					$("#errorMsg-su").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
 				}
+			} else {
+				if($("#phoneNumber-su").val().length == 12){
+					pushPhone();
+				} else {
+					$("#errorMsg-su").empty();
+					$("#errorMsg-su").append("<p>Please provide a valid phone number.</p>");	
+				}
 			}
 		})
 
+
 		$("#submit-si").on("click",function(){
-			if($("#userName-si").val()!=="" && $("#email-si").val() !== "" && $("#phoneNumber-si").val() !=="" && $("#password-si").val() !== ""){
-				if($("#phoneNumber-si").val().length == 12){
-					submitForm("si");
-				} else {
-					$("#errorMsg-si").empty();
-					$("#errorMsg-si").append("<p>Please provide a valid phone number.</p>");	
-				}
+			if($("#email-si").val() !== "" && $("#password-si").val() !== ""){
+				submitForm("si");
 			} else {
 				$("#errorMsg-si").empty();
 				$("#errorMsg-si").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
