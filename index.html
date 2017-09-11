@@ -154,13 +154,6 @@
 	<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
 	<script type="text/javascript">
 		
-		firebase.auth().onAuthStateChanged(function(user) {
-		  if (user) {
-		    console.log("someone is logged in");
-		  } else {
-		    console.log("noone is logged in");
-		  }
-		});
 
 		$("#show-modal").on("click",function(){
 			$("#loginModal").modal("show");
@@ -181,6 +174,16 @@
 	  	var cloud = firebase.storage();
 	  	var provider_fb = new firebase.auth.FacebookAuthProvider();
 	  	var provider_goog = new firebase.auth.GoogleAuthProvider();
+
+		firebase.auth().onAuthStateChanged(function(user) {
+		  if (user) {
+		    console.log("someone is logged in");
+		  } else {
+		    console.log("noone is logged in");
+		  }
+		});
+
+
 
 	  	var user;
 
