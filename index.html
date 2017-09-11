@@ -237,7 +237,9 @@
 			  console.log(user);
 			  // ...
 			  //google and facebook doesn't provide phone number, so we need to ask for this information from user
+			  $("errorMsg").empty();
 			  if(type=="su"){
+			  	$("form#sign-up-form>p").css("display","none");
 				$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");			  	
 			  	$("form#sign-up-form").prepend("<p>Welcome " + user.displayName + "</p>");
 			  	$("form#sign-up-form").css("display","block");
