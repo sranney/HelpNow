@@ -494,7 +494,7 @@
 				phoneNumber: $("#phoneNumber-su").val(),
 				email: userObj.email,
 			}
-			dB.ref("users/" + userObj.uid).push(userInfoToPush);
+			dB.ref("users/" + userObj.uid).set(userInfoToPush);
 			console.log(userObj.uid);
 		}
 
