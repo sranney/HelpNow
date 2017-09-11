@@ -37,8 +37,19 @@
 			opacity:0;
 			font-size:50px;
 			font-weight:bold;
+			animation-name:fillforwardswelcome;
+			animation-fill-mode:forwards;
+			animation-duration:3s;
 		}
 
+		@keyframes fillforwardswelcome{
+			0%{
+				opacity:0;
+			}
+			100%{
+				opacity:1;
+			}			
+		}
 
 		.helper,.help{
 			height:100%;
@@ -289,7 +300,6 @@
 		  	if (user) {
 		    	userLoggedIn=true;
 		    	$("#Welcome").html("Welcome back, " + user.displayName);
-		    	$("#Welcome").fadeIn(3000);
 		  	} else {
 		    	userLoggedIn=false;
 		  	}
