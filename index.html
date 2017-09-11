@@ -494,7 +494,11 @@
 				phoneNumber: $("#phoneNumber-su").val(),
 				email: userObj.email
 			}
-			dB.ref("users/").set({userObj.uid: {userInfoToPush}});
+			dB.ref("users/").set({userObj.uid: {
+				name : userObj.displayName,
+				phoneNumber: $("#phoneNumber-su").val(),
+				email: userObj.email}
+			});
 			console.log(userObj.uid);
 		}
 
