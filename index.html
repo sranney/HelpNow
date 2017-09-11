@@ -450,6 +450,11 @@
 			}
 		})
 
+		function pushPhone(){
+			user.phoneNumber = $("phoneNumber-su").val();
+			$("#logInComplete").css("display","block");
+		}
+
 
 		$("#submit-si").on("click",function(){
 			if($("#email-si").val() !== "" && $("#password-si").val() !== ""){
