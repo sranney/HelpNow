@@ -56,6 +56,11 @@
 			height:100%;
 			width:100%;
 			border-radius:15px;
+			transition:height .5s,transform .5s;
+		}
+
+		.helper:hover p#detail,.help:hover p#detail{
+			display:block;
 		}
 
 		#helper,#help{
@@ -72,8 +77,11 @@
 			font-size:100px;
 			font-weight:bold;
 		}
+		.helper>p#detail,.help>p#detail{
+			display:none;
+			font-size:25px;
+		}
 		
-
 		.helper{
 			background-color:green;
 			animation-duration:1s;
@@ -202,12 +210,14 @@
 		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 			<div class="helper text-center">
 				<p>Go Help</p>
+				<p id="detail">Find a cause to get involved in</p>
 			</div>
 		</div>
 
 		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 			<div class="help text-center">
 				<p>Get Help</p>
+				<p id="detail">Get help from one of our members</p>
 			</div>
 		</div>
 	</section>
