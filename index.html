@@ -154,6 +154,14 @@
 	<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
 	<script type="text/javascript">
 		
+		firebase.auth().onAuthStateChanged(function(user) {
+		  if (user) {
+		    console.log("someone is logged in");
+		  } else {
+		    console.log("noone is logged in");
+		  }
+		});
+
 		$("#show-modal").on("click",function(){
 			$("#loginModal").modal("show");
 		})
@@ -241,7 +249,7 @@
 			  if(type=="su"){
 			  	$("form#sign-up-form>p").css("display","none");
 				$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");			  	
-			  	$("form#sign-up-form").prepend("<p>Welcome " + user.displayName + "</p>");
+			  	$("form#sign-up-form").prepend("<p>Welcome, " + user.displayName + "</p>");
 			  	$("form#sign-up-form").css("display","block");
 			  	$("form#sign-up-form>#instructions").css("display","none");
 			  	$("form#sign-up-form>#firstName-su").css("display","none");
@@ -251,7 +259,7 @@
 			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
 			  	$("form#sign-up-form>#submit-su").html("Set Phone");
 			  } else {
-			  	$("body").append("<p>Welcome " + user.displayName + "</p>");
+			  	$("body").append("<p>Welcome, " + user.displayName + "</p>");
 			  }
 			}).catch(function(error) {
 			  // Handle Errors here.
