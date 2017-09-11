@@ -32,6 +32,12 @@
 			height:200px;
 		}		
 		
+		.jumbotron>p{
+			color:white;
+			font-size:50px;
+			font-weight:bold;
+		}
+
 		.helper,.help{
 			height:100%;
 			width:100%;
@@ -280,8 +286,7 @@
 		firebase.auth().onAuthStateChanged(function(user) {
 		  	if (user) {
 		    	userLoggedIn=true;
-		    	console.log(user);
-		    	$("#Welcome").html("Welcome back, ");
+		    	$("#Welcome").html("Welcome back, " + user.displayName);
 		  	} else {
 		    	userLoggedIn=false;
 		  	}
