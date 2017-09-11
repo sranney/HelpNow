@@ -379,6 +379,7 @@
 			  if(type=="su"){
 			  	$("#sign-in").css("display","none");
 			  	if(provider.providerId==="google.com"){$("#facebook-su").css("display","none");} else {$("#google-su").css("display","none");}
+			  	$("#form-su").css("display","none");
 			  	$("form#sign-up-form>p").css("display","none");
 				$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");			  	
 			  	$("form#sign-up-form").prepend("<p>Welcome, " + user.displayName + "</p>");
