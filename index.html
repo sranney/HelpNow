@@ -19,6 +19,11 @@
 			margin:1px auto;
 		}
 
+		#sign-up,#sign-in{
+			font-size:20px;
+			font-weight:bold;
+		}
+
 		#facebook-su,#facebook-si{
 			background-color:#385998;
 		}
@@ -51,14 +56,22 @@
 			display:none;
 		}
 		
+		input{
+			padding:4px;
+			width:100%;
+			margin:3px 0px;
+		}
+
 	</style>
 
 </head>
 <body>
 	
-	<button class="btn btn-default btn-block" id="sign-up">Sign Up</button>
-	<button class="btn btn-default btn-block" id="sign-in">Sign In</button>
-	
+	<div id="signUpInButtons" class="text-center">
+		<button class="btn btn-default btn-block" id="sign-up">Sign Up</button>
+		<button class="btn btn-default btn-block" id="sign-in">Sign In</button>
+	</div>
+
 	<button class="btn btn-default btn-block" id="facebook-si">
 		<i class="fa fa-facebook"></i><i class="fa fa-fw"></i>Sign In with Facebook
 	</button>
@@ -68,7 +81,7 @@
 	</button>
 
 	<button class="btn btn-default btn-block" id="form-si">
-		<i class="fa fa-pencil"></i><i class="fa fa-fw"></i>Sign In with Email / Phone and Password
+		<i class="fa fa-pencil"></i><i class="fa fa-fw"></i>Sign In with Email and Password
 	</button>
 
 	<button class="btn btn-default btn-block" id="facebook-su">
@@ -80,22 +93,24 @@
 	</button>
 
 	<button class="btn btn-default btn-block" id="form-su">
-		<i class="fa fa-pencil"></i><i class="fa fa-fw"></i>Sign Up with Email / Phone and Password
+		<i class="fa fa-pencil"></i><i class="fa fa-fw"></i>Sign Up with Email and Password
 	</button>
 
 	<form id="sign-up-form" class="text-center">
-		<p class="instructions">Please fill out all fields</p>
-		<input id = "email-su" type = "text" placeholder="Email"><!--put an envelope here-->
-		<input id = "phoneNumber-su" type = "text" placeholder="###-###-####"><!--put a phone icon here-->
-		<input id = "password-su" type = "password" placeholder="Password"><!--put a lock here-->
+		<p id="instructions">Please fill out all fields</p>
+		<input id = "userName-su" type = "text" placeholder="UserName" class="text-center"><!--put a user symbol here-->
+		<input id = "email-su" type = "text" placeholder="Email" class="text-center"><!--put an envelope here-->
+		<input id = "phoneNumber-su" type = "text" placeholder="Phone" class="text-center"><!--put a phone icon here-->
+		<input id = "password-su" type = "password" placeholder="Password" class="text-center"><!--put a lock here-->
 		<button type="button" id = "submit-su">Sign Up</button>
 		<div id = "errorMsg-su"></div>
 	</form>
 
 	<form id="sign-in-form">
-		<input id = "email-si" type = "text" placeholder="Email"><!--put an envelope here-->
-		<input id = "password-si" type = "password" placeholder="Password"><!--put a lock here-->
-		<button type="button" id = "submit-si">Sign In</button>
+		<p id="instructions">Please provide your registered email and password</p>
+		<input id = "email-si" type = "text" placeholder="Email" class="text-center"><!--put an envelope here-->
+		<input id = "password-si" type = "password" placeholder="Password" class="text-center"><!--put a lock here-->
+		<button type="button" id = "submit-si" class="text-center">Sign In</button>
 		<div id = "errorMsg-si"></div>
 	</form>
 
@@ -130,26 +145,40 @@
 
 	  	function signInUp(type){
 	  		var othertype = type=="su"? "si":"su";
-	  		$("#sign-in").css("display","none");
-	  		$("#sign-up").css("display","none");
+	  		$("#sign-in").css("display","inline");
+	  		$("#sign-in").removeClass("btn-block");
+	  		$("#sign-in").css("width","49%");
+	  		$("#sign-up").css("display","inline");
+	  		$("#sign-up").removeClass("btn-block");
+	  		$("#sign-up").css("width","49%");
 	  		$("#facebook-"+othertype).css("display","none");
 	  		$("#google-"+othertype).css("display","none");
 	  		$("#form-"+othertype).css("display","none");
 	  		$("#facebook-"+type).css("display","block");
 	  		$("#google-"+type).css("display","block");
 	  		$("#form-"+type).css("display","block");
+	  		$("#sign-up-form").css("display","none");
+	  		$("#sign-in-form").css("display","none");
 	  	}
 
 	  	$("#facebook-su").on("click",function(){
-	  		facebookLogin("su");
+	  		facebookLogin("su",provider_fb);
 		})
 
 	  	$("#facebook-si").on("click",function(){
-	  		facebookLogin("si");
+	  		federatedLogin("si",provider_fb);
 		})
 
-	  	function facebookLogin(type){
-		  	firebase.auth().signInWithPopup(provider_fb).then(function(result) {
+	  	$("#google-su").on("click",function(){
+	  		federatedLogin("su",provider_goog);
+		})
+
+	  	$("#google-si").on("click",function(){
+	  		federatedLogin("si",provider_goog);
+		})
+
+	  	function federatedLogin(type,provider){
+		  	firebase.auth().signInWithPopup(provider).then(function(result) {
 			  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
 			  var token = result.credential.accessToken;
 			  // The signed-in user info.
@@ -157,12 +186,14 @@
 			  console.log(user);
 			  // ...
 			  if(type=="su"){
+				$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");			  	
 			  	$("form#sign-up-form").prepend("<p>Welcome " + user.displayName + "</p>");
-			  	$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");
 			  	$("form#sign-up-form").css("display","block");
+			  	$("form#sign-up-form>#instructions").css("display","none");
 			  	$("form#sign-up-form>#email-su").css("display","none");
 				$("form#sign-up-form>#password-su").css("display","none");
 			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
+			  	$("form#sign-up-form>#submit-su").html("Set Phone");
 			  } else {
 			  	$("body").append("<p>Welcome " + user.displayName + "</p>");
 			  }
@@ -172,43 +203,7 @@
 			  var errorCode = error.code;
 			  console.log(error);
 			  var errorMessage = error.message;
-			  // The email of the user's account used.
-			  var email = error.email;
-			  // The firebase.auth.AuthCredential type that was used.
-			  var credential = error.credential;
-			  // ...
-			});
-		}
-
-	  	$("#google-su").on("click",function(){
-	  		googleLogin("su");
-		})
-
-	  	$("#google-si").on("click",function(){
-	  		googleLogin("si");
-		})
-
-	  	function googleLogin(type){
-			firebase.auth().signInWithPopup(provider_goog).then(function(result) {
-			  // This gives you a Google Access Token. You can use it to access the Google API.
-			  var token = result.credential.accessToken;
-			  // The signed-in user info.
-			  var user = result.user;
-			  console.log(user);
-			  if(type=="su"){
-			  	$("form#sign-up-form").prepend("<p>Welcome " + user.displayName + "</p>");
-			  	$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");
-			  	$("form#sign-up-form").css("display","block");
-			  	$("form#sign-up-form>#email-su").css("display","none");
-				$("form#sign-up-form>#password-su").css("display","none");
-			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
-			  } else {
-			  	$("body").append("<p>Welcome " + user.displayName + "</p>");
-			  }
-			}).catch(function(error) {
-			  // Handle Errors here.
-			  var errorCode = error.code;
-			  var errorMessage = error.message;
+			  console.log(errorMessage);
 			  // The email of the user's account used.
 			  var email = error.email;
 			  // The firebase.auth.AuthCredential type that was used.
@@ -225,23 +220,88 @@
 		})
 
 		$("#form-si").on("click",function(){
-			$("#form-si").prop("disabled",true);
 			$("#sign-in-form").css("display","block");
 			$("input").css("display","block");
 			$("#sign-up-form").css("display","none");
-			$("form>#email-si").css("display","none");
-			$("form>#phoneNumber-si").css("display","none");
 		})
 
-		$("#LogInType").change(function(){
-			if($("#LogInType").val()=="Email"){
-				$("form>#email-si").css("display","block");
-				$("form>#phoneNumber-si").css("display","none");
-			} else if ($("#LogInType").val()=="Phone"){
-				$("form>#email-si").css("display","none");
-				$("form>#phoneNumber-si").css("display","block");
+
+		$("#submit-su").on("click",function(){
+			if($("#userName-su").val()!=="" && $("#email-su").val() !== "" && $("#phoneNumber-su").val() !=="" && $("#password-su").val() !== ""){
+				if($("#phoneNumber-su").val().length == 12){
+					submitForm("su");
+				} else {
+					$("#errorMsg-su").empty();
+					$("#errorMsg-su").append("<p>Please provide a valid phone number.</p>");	
+				}
+			} else {
+				$("#errorMsg-su").empty();
+				$("#errorMsg-su").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
 			}
 		})
+
+		$("#submit-si").on("click",function(){
+			if($("#userName-si").val()!=="" && $("#email-si").val() !== "" && $("#phoneNumber-si").val() !=="" && $("#password-si").val() !== ""){
+				if($("#phoneNumber-si").val().length == 12){
+					submitForm("si");
+				} else {
+					$("#errorMsg-si").empty();
+					$("#errorMsg-si").append("<p>Please provide a valid phone number.</p>");	
+				}
+			} else {
+				$("#errorMsg-si").empty();
+				$("#errorMsg-si").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
+			}
+		})
+
+		function submitForm(type){
+	  		var email = $("#email-" + type).val();
+	  		var password = $("#password-" + type).val();
+	  		var errorCode="";
+		  	Auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
+				  // Handle Errors here.
+				  errorCode = error.code;
+				  var errorMessage = error.message;
+				  if(errorMessage == "The email address is already in use by another account."){
+				  	$("#errorMsg-" + type).append("<p>" + errorMessage + " If this is your account, please click the sign in button to sign in.</p>")
+				  } else {
+				  	$("#errorMsg-" + type).append("<p>" + errorMessage + " Please try again.</p>")
+				  }
+			});
+			if (errorCode.length==0){
+
+			}
+		}
+
+		$("#phoneNumber-su").on("keydown",function(){
+			phoneNumbVal($(this).val(),"#phoneNumber-su");
+		})
+
+		phoneNumbVal = function(numb_forValidation,id){
+			var e = event || window.event;  // get event object
+	    	var key = e.keyCode || e.which;
+
+	    	if (key >= 48 && key <= 57 || key >= 96 && key <= 105) {     
+				if(numb_forValidation.length==3||numb_forValidation.length==7){
+					$(id).val($(id).val()+"-");
+				} else if(numb_forValidation.length == 12){
+				   	if (e.preventDefault){
+						e.preventDefault();
+				        e.returnValue = false;
+				    }				
+				}
+			} else if (key==8){
+				if(numb_forValidation.length==5||numb_forValidation.length==9){
+					$(id).val($(id).val().substr(0,$(id).val().length-1));
+				}			
+			} else if (key!=9){
+			   	if (e.preventDefault){
+					e.preventDefault();
+			        e.returnValue = false;
+			    }
+			}
+		}
+
 
 /*	glyphicon glyphicon-thumbs-up
 	glyphicon glyphicon-thumbs-down
