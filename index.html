@@ -32,11 +32,13 @@
 			height:200px;
 		}		
 		
-		.jumbotron>p{
+		.jumbotron>h2{
 			color:white;
+			opacity:0;
 			font-size:50px;
 			font-weight:bold;
 		}
+
 
 		.helper,.help{
 			height:100%;
@@ -287,6 +289,7 @@
 		  	if (user) {
 		    	userLoggedIn=true;
 		    	$("#Welcome").html("Welcome back, " + user.displayName);
+		    	$("#Welcome").fadeIn(3000);
 		  	} else {
 		    	userLoggedIn=false;
 		  	}
