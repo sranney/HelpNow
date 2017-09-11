@@ -175,6 +175,7 @@
 
 	<div id = "titleArea" class="jumbotron text-center">
 		<img src="HelpNow Logo.png">
+		<h2 id="Welcome"></h2>
 	</div>
 
 	<section id="helper">
@@ -279,6 +280,8 @@
 		firebase.auth().onAuthStateChanged(function(user) {
 		  	if (user) {
 		    	userLoggedIn=true;
+		    	console.log(user);
+		    	$("#Welcome").html("Welcome back, ");
 		  	} else {
 		    	userLoggedIn=false;
 		  	}
