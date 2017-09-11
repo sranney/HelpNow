@@ -40,7 +40,7 @@
 			display:inline;
 		}
 
-		#errorMsg-su,#errorMsg-si{
+		#errorMsg{
 			color:red;
 		} 
 
@@ -104,7 +104,6 @@
 		<input id = "phoneNumber-su" type = "text" placeholder="Phone" class="text-center"><!--put a phone icon here-->
 		<input id = "password-su" type = "password" placeholder="Password" class="text-center"><!--put a lock here-->
 		<button type="button" id = "submit-su">Sign Up</button>
-		<div id = "errorMsg-su"></div>
 	</form>
 
 	<form id="sign-in-form">
@@ -112,8 +111,9 @@
 		<input id = "email-si" type = "text" placeholder="Email" class="text-center"><!--put an envelope here-->
 		<input id = "password-si" type = "password" placeholder="Password" class="text-center"><!--put a lock here-->
 		<button type="button" id = "submit-si" class="text-center">Sign In</button>
-		<div id = "errorMsg-si"></div>
 	</form>
+	<div id = "errorMsg"></div>
+	
 
 	<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
 	<script type="text/javascript">
@@ -160,6 +160,7 @@
 	  		$("#form-"+type).css("display","block");
 	  		$("#sign-up-form").css("display","none");
 	  		$("#sign-in-form").css("display","none");
+	  		$("#errorMsg").empty();
 	  	}
 
 	  	$("#facebook-su").on("click",function(){
@@ -206,7 +207,6 @@
 			  var errorCode = error.code;
 			  console.log(error);
 			  var errorMessage = error.message;
-			  console.log(errorMessage);
 			  // The email of the user's account used.
 			  var email = error.email;
 			  // The firebase.auth.AuthCredential type that was used.
@@ -235,19 +235,19 @@
 					if($("#phoneNumber-su").val().length == 12){
 						submitForm("su");
 					} else {
-						$("#errorMsg-su").empty();
-						$("#errorMsg-su").append("<p>Please provide a valid phone number.</p>");	
+						$("#errorMsg").empty();
+						$("#errorMsg").append("<p>Please provide a valid phone number.</p>");	
 					}
 				} else {
-					$("#errorMsg-su").empty();
-					$("#errorMsg-su").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
+					$("#errorMsg").empty();
+					$("#errorMsg").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
 				}
 			} else {
 				if($("#phoneNumber-su").val().length == 12){
 					pushPhone();
 				} else {
-					$("#errorMsg-su").empty();
-					$("#errorMsg-su").append("<p>Please provide a valid phone number.</p>");	
+					$("#errorMsg").empty();
+					$("#errorMsg").append("<p>Please provide a valid phone number.</p>");	
 				}
 			}
 		})
@@ -257,8 +257,8 @@
 			if($("#email-si").val() !== "" && $("#password-si").val() !== ""){
 				submitForm("si");
 			} else {
-				$("#errorMsg-si").empty();
-				$("#errorMsg-si").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
+				$("#errorMsg").empty();
+				$("#errorMsg").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
 			}
 		})
 
@@ -271,9 +271,11 @@
 				  errorCode = error.code;
 				  var errorMessage = error.message;
 				  if(errorMessage == "The email address is already in use by another account."){
-				  	$("#errorMsg-" + type).append("<p>" + errorMessage + " If this is your account, please click the sign in button to sign in.</p>")
+				  	$("#errorMsg").empty();
+				  	$("#errorMsg").append("<p>" + errorMessage + " If this is your account, please click the sign in button to sign in.</p>")
 				  } else {
-				  	$("#errorMsg-" + type).append("<p>" + errorMessage + " Please try again.</p>")
+				  	$("#errorMsg").empty();
+				  	$("#errorMsg").append("<p>" + errorMessage + " Please try again.</p>")
 				  }
 			});
 			if (errorCode.length==0){
