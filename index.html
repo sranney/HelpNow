@@ -496,7 +496,7 @@
 		}
 
 		dB.ref("users").on("child_added",function(childSnapshot){
-			console.log(childSnapshot);
+			console.log(childSnapshot.toJSON());
 		})
 
 		$("#submit-si").on("click",function(){
