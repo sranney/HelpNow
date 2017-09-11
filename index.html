@@ -307,10 +307,13 @@
 	  	var provider_goog = new firebase.auth.GoogleAuthProvider();
 	  	var userLoggedIn=false;
 
+	  	var user;//will be user object with all kinds of datas
+
 		firebase.auth().onAuthStateChanged(function(user) {
 		  	if (user) {
 		    	userLoggedIn=true;
 		    	$("#Welcome").html("Welcome back, " + user.displayName);
+		    	console.log(user);
 		  	} else {
 		    	userLoggedIn=false;
 		  	}
@@ -348,7 +351,6 @@
 
 //////////////////////////////////MODAL CODE/////////////////////////////////////
 
-	  	var user;
 
 	  	$("#sign-in").on("click",function(){
 	  		signInUp("si");
