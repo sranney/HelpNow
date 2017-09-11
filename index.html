@@ -307,13 +307,13 @@
 	  	var provider_goog = new firebase.auth.GoogleAuthProvider();
 	  	var userLoggedIn=false;
 
-	  	var user;//will be user object with all kinds of datas
+	  	var userObj;//will be user object with all kinds of datas
 
-		firebase.auth().onAuthStateChanged(function(user) {
+		Auth.onAuthStateChanged(function(user) {
 		  	if (user) {
+		    	userObj = user;
 		    	userLoggedIn=true;
-		    	$("#Welcome").html("Welcome back, " + user.displayName);
-		    	console.log(user);
+		    	$("#Welcome").html("Welcome back, " + userObj.displayName);
 		  	} else {
 		    	userLoggedIn=false;
 		  	}
@@ -335,7 +335,7 @@
 			}
 
 		})
-			
+		
 		$(".help").on("click",function(){
 
 			if(!userLoggedIn){
@@ -402,13 +402,14 @@
 	  	//function that runs for federated logins (google and facebook), complete with error handling
 	  	function federatedLogin(type,provider){
 		  	$("#sign-"+type+"-form").css("display","none");
-		  	firebase.auth().signInWithPopup(provider).then(function(result) {
-			  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+		  	Auth.signInWithPopup(provider).then(function(result) {
+			  // This gives you a Federated Provider Access Token. You can use it to access the Facebook API.
 			  var token = result.credential.accessToken;
 			  // The signed-in user info.
-			  user = result.user;
+			  userObj = result.user;
 			  // ...
 			  //google and facebook doesn't provide phone number, so we need to ask for this information from user
+			  //the code below sets modal to show instructions to user to enter phone number when signing up
 			  $("errorMsg").empty();
 			  if(type=="su"){
 			  	$("#sign-in").css("display","none");
@@ -416,7 +417,7 @@
 			  	$("#form-su").css("display","none");
 			  	$("form#sign-up-form>p").css("display","none");
 				$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");			  	
-			  	$("form#sign-up-form").prepend("<p>Welcome, " + user.displayName + "</p>");
+			  	$("form#sign-up-form").prepend("<p>Welcome, " + userObj.displayName + "</p>");
 			  	$("form#sign-up-form").css("display","block");
 			  	$("form#sign-up-form>#instructions").css("display","none");
 			  	$("form#sign-up-form>#firstName-su").css("display","none");
@@ -426,7 +427,7 @@
 			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
 			  	$("form#sign-up-form>#submit-su").html("Set Phone");
 			  } else {
-			  	$("body").append("<p>Welcome, " + user.displayName + "</p>");
+			  	$("body").append("<p>Welcome, " + userObj.displayName + "</p>");
 			  }
 			}).catch(function(error) {
 			  // Handle Errors here.
@@ -481,14 +482,18 @@
 		})
 
 		function pushPhone(){
-			user.phoneNumber = $("phoneNumber-su").val();
+			userObj.phoneNumber = $("phoneNumber-su").val();
 			$("#signUpInButtons").css("display","none");
 			$("#sign-up-form").css("display","none");
 			$(".modal-body>button").css("display","none");
-			$(".modal-body").append("<p>Thank you, " + user.displayName + ", please click the button below to continue to site</p>");
+			$(".modal-body").append("<p>Thank you, " + userObj.displayName + ", please click the button below to continue to site</p>");
 			$("#logInComplete").css("display","block");
+			dB.ref("users/" + userObj.uid).push(userObj);
 		}
 
+		dB.ref("users").on("child_added",function(childSnapshot){
+			console.log(childSnapshot);
+		})
 
 		$("#submit-si").on("click",function(){
 			if($("#email-si").val() !== "" && $("#password-si").val() !== ""){
