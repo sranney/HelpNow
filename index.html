@@ -494,7 +494,8 @@
 				phoneNumber: $("#phoneNumber-su").val(),
 				email: userObj.email
 			}
-			dB.ref("users/").set({userObj.uid: {
+			UID = userObj.uid
+			dB.ref("users/").set({UID: {
 				name : userObj.displayName,
 				phoneNumber: $("#phoneNumber-su").val(),
 				email: userObj.email}
