@@ -444,7 +444,7 @@
 				$("form#sign-up-form>#password-su").css("display","none");
 			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
 			  	$("form#sign-up-form>#submit-su").html("Set Phone");
-			  } else if(!(userObj.uid in databaseObj)){
+			  } else if(!(userObj.uid in databaseObj.users)){
 			  	$("#sign-"+type_ext).css("display","none");
 			  	if(provider.providerId==="google.com"){$("#facebook-"+type).css("display","none");} else {$("#google-"+type).css("display","none");}
 			  	$("#form-"+type).css("display","none");
