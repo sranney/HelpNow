@@ -52,18 +52,18 @@
 			}			
 		}
 
-		.helper,.help{
+		#helper,#help{
 			height:100%;
 			width:100%;
 			border-radius:15px;
 			transition:height .5s,transform .5s;
 		}
 
-		.helper:hover p#detail,.help:hover p#detail{
+		#helper:hover p#detail,#help:hover p#detail{
 			display:block;
 		}
 
-		#helper,#help{
+		.navButtons{
 			display: flex;
 			align-content: center;
 			align-items: center;
@@ -72,24 +72,24 @@
 			min-height:40vh;
 		}
 
-		.helper>p,.help>p{
+		#helper>p,#help>p{
 			color:white;
 			font-size:100px;
 			font-weight:bold;
 		}
-		.helper>p#detail,.help>p#detail{
+		#helper>p#detail,#help>p#detail{
 			display:none;
 			font-size:25px;
 		}
 		
-		.helper{
+		#helper{
 			background-color:green;
 			animation-duration:1s;
 			animation-iteration-count:1;
 			animation-name:slideInFromLeft;
 		}
 
-		.help{
+		#help{
 			background-color:red;
 			animation-duration:1s;
 			animation-iteration-count:1;
@@ -193,6 +193,11 @@
 			border-radius:15px;
 		}
 
+		@media (max-width:760){
+			#helper,#help,.navButtons{
+				display:block;
+			}
+		}
 
 	</style>
 
@@ -206,21 +211,21 @@
 		<h2 id="Welcome"></h2>
 	</div>
 
-	<section id="helper">
-		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-			<div class="helper text-center">
+	<div class="navButtons">
+		<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+			<div id="helper" class="text-center">
 				<p>Go Help</p>
-				<p id="detail">Find a cause to get involved in</p>
+				<p id="detail">Find someone to help</p>
 			</div>
 		</div>
 
-		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-			<div class="help text-center">
+		<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+			<div id="help" class="text-center">
 				<p>Get Help</p>
-				<p id="detail">Get help from one of our members</p>
+				<p id="detail">Let our members know you need help</p>
 			</div>
 		</div>
-	</section>
+	</div>
 
 <!--MODAL HTML BELOW-->
 
@@ -325,14 +330,12 @@
 			});
 	  	});
 
-
-
 //////////////////////////////////HOME PAGE LOAD/////////////////////////////////////
 
 		var pageToLoad;
 
 		//listener for when helper button is clicked on home screen
-		$(".helper").on("click",function(){
+		$("#helper").on("click",function(){
 			//checks to see if user is logged in prior to proceeding to helper page
 			if(!userLoggedIn){
 				$("#loginModal").modal({backdrop: 'static', keyboard: false});
@@ -346,7 +349,7 @@
 		})
 		
 		//listener for when help button is clicked on home screen
-		$(".help").on("click",function(){
+		$("#help").on("click",function(){
 			//checks to see if user is logged in prior to proceeding to helper page
 			if(!userLoggedIn){
 				$("#loginModal").modal({backdrop: 'static', keyboard: false});
@@ -423,7 +426,7 @@
 			  //google and facebook doesn't provide phone number, so we need to ask for this information from user
 			  //the code below sets modal to show instructions to user to enter phone number when signing up
 			  $("errorMsg").empty();
-			  if(type=="su"){
+			  if(type=="su" || !(key in databaseObj)){
 			  	$("#sign-in").css("display","none");
 			  	if(provider.providerId==="google.com"){$("#facebook-su").css("display","none");} else {$("#google-su").css("display","none");}
 			  	$("#form-su").css("display","none");
@@ -439,6 +442,7 @@
 			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
 			  	$("form#sign-up-form>#submit-su").html("Set Phone");
 			  } else {
+
 			  	$("body").append("<p>Welcome, " + userObj.displayName + "</p>");
 			  	$("#sign-in").css("display","none");
 				$("#sign-up").css("display","none");
