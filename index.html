@@ -306,6 +306,7 @@
 	  	var provider_fb = new firebase.auth.FacebookAuthProvider();
 	  	var provider_goog = new firebase.auth.GoogleAuthProvider();
 	  	var userLoggedIn=false;
+	  	var myRefToDisconnect;
 
 	  	var userObj;//will be user object with all kinds of datas
 
@@ -313,6 +314,8 @@
 		Auth.onAuthStateChanged(function(user) {
 		  	if (user) {
 		    	userObj = user;
+		    	myRefToDisconnect = dB.ref("/users/" + user.uid+"/iconnect").set(true);
+		    	myRefToDisconnect.onDisconnect().remove() ;
 		    	userLoggedIn=true;//used below to state user is logged in and to proceed to next page
 		    	$("#Welcome").html("Welcome back, " + userObj.displayName);//provides welcome greeting
 		  	} else {
@@ -433,6 +436,12 @@
 			  	$("form#sign-up-form>#submit-su").html("Set Phone");
 			  } else {
 			  	$("body").append("<p>Welcome, " + userObj.displayName + "</p>");
+			  	$("#sign-in").css("display","none");
+				$("#facebook-si").css("display","none");
+				$("#google-si").css("display","none");
+			  	$("#form-si").css("display","none");
+			  	$("form#sign-in-form").css("display","none");
+			  	$("#logInComplete").css("display","block");
 			  }
 			}).catch(function(error) {
 			  // Handle Errors here.
@@ -514,13 +523,13 @@
 				$("#signUpInButtons").css("display","none");
 				$("#sign-up-form").css("display","none");
 				$(".modal-body>button").css("display","none");
-				$(".modal-body").append("<p>Thank you, " + user.displayName + ", please click the button below to continue to site</p>");
+				$(".modal-body").append("<p>Thank you, " + name + ", please click the button below to continue to site</p>");
 				dB.ref("/users/"+user.uid).set({
 					name : name,
 					phoneNumber: phoneNumber,
 					email: email
 				});
-		  	}).catch(function(error) {
+		  	}).catch(function(error) {//for error handling
 				  // Handle Errors here.
 				  errorCode = error.code;
 				  var errorMessage = error.message;
@@ -558,7 +567,7 @@
 				$(".modal-body>button").css("display","none");
 				$(".modal-body").append("<p>Thank you, " +  + ", please click the button below to continue to site</p>");
 				$("#logInComplete").css("display","block");
-	  		}).catch(function(error) {
+	  		}).catch(function(error) {//for error handling
 			  // Handle Errors here.
 			  var errorCode = error.code;
 			  var errorMessage = error.message;
