@@ -313,18 +313,10 @@
 	  	//get instance of real-time database
 	  	dB.ref().on("value",function(snapshot){
 	  		databaseObj = snapshot.toJSON();
-	  		console.log(databaseObj);
 	  		//firebase function to check whether user is logged into site
 			Auth.onAuthStateChanged(function(user) {
 			  	if (user) {
 			    	userObj = user;
-			    	myRefToDisconnect = dB.ref("/users/" + user.uid +"/iconnect")
-			    	myRefToDisconnect.set(true);
-			    	myRefToDisconnect.onDisconnect().set("disconnected");
-					dB.ref().on("value",function(snapshot){
-				  		databaseObj = snapshot.toJSON();
-				  		console.log(databaseObj);
-				  	});
 			    	userLoggedIn=true;//used below to state user is logged in and to proceed to next page
 			    	$("#Welcome").html("Welcome back, " + databaseObj.users[userObj.uid].name);//provides welcome greeting
 			  	} else {
@@ -619,6 +611,9 @@
 
 		//after signing in or up, user is prompted with the logincomplete button to proceed to next page
 		$("#logInComplete").on("click",function(){
+	    	myRefToDisconnect = dB.ref("/users/" + user.uid +"/iconnect")
+	    	myRefToDisconnect.set(true);
+	    	myRefToDisconnect.onDisconnect().set("disconnected");
 			var win = window.open(pageToLoad);
         	win.focus();
 		})
