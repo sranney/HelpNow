@@ -531,8 +531,9 @@
 			$(".modal-body").append("<p>Thank you, " + userObj.displayName + ", please click the button below to continue to site</p>");
 			$("#logInComplete").css("display","block");
 			//since this is a new log-in, create a new node for node users that will pass name, phone and email information about user
+
 			dB.ref("/users/"+userObj.uid).set({
-				iconnect: userObj.iconnect,
+				iconnect: true,
 				name : userObj.displayName,
 				phoneNumber: $("#phoneNumber-su").val(),
 				email: userObj.email
