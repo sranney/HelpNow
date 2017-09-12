@@ -315,7 +315,7 @@
 		  	if (user) {
 		    	userObj = user;
 		    	myRefToDisconnect = dB.ref("/users/" + user.uid +"/iconnect").set(true);
-		    	myRefToDisconnect.onDisconnect().remove();
+		    	myRefToDisconnect.onDisconnect().set("disconnected");
 		    	userLoggedIn=true;//used below to state user is logged in and to proceed to next page
 		    	$("#Welcome").html("Welcome back, " + userObj.displayName);//provides welcome greeting
 		  	} else {
