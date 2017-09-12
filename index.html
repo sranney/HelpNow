@@ -314,8 +314,8 @@
 		Auth.onAuthStateChanged(function(user) {
 		  	if (user) {
 		    	userObj = user;
-		    	myRefToDisconnect = dB.ref("/users/" + user.uid+"/iconnect").set(true);
-		    	myRefToDisconnect.onDisconnect().remove() ;
+		    	myRefToDisconnect = dB.ref("/users/" + user.uid +"/iconnect").set(true);
+		    	myRefToDisconnect.onDisconnect().remove();
 		    	userLoggedIn=true;//used below to state user is logged in and to proceed to next page
 		    	$("#Welcome").html("Welcome back, " + userObj.displayName);//provides welcome greeting
 		  	} else {
@@ -437,11 +437,11 @@
 			  } else {
 			  	$("body").append("<p>Welcome, " + userObj.displayName + "</p>");
 			  	$("#sign-in").css("display","none");
+				$("#sign-up").css("display","none");
 				$("#facebook-si").css("display","none");
 				$("#google-si").css("display","none");
 			  	$("#form-si").css("display","none");
 			  	$("form#sign-in-form").css("display","none");
-			  	$("form#sign-up-form").css("display","none");
 			  	$("#logInComplete").css("display","block");
 			  }
 			}).catch(function(error) {
@@ -507,6 +507,7 @@
 			$("#logInComplete").css("display","block");
 			//since this is a new log-in, create a new node for node users that will pass name, phone and email information about user
 			dB.ref("/users/"+userObj.uid).set({
+				iconnect: userObj.iconnect,
 				name : userObj.displayName,
 				phoneNumber: $("#phoneNumber-su").val(),
 				email: userObj.email
