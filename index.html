@@ -611,7 +611,7 @@
 
 		//after signing in or up, user is prompted with the logincomplete button to proceed to next page
 		$("#logInComplete").on("click",function(){
-	    	myRefToDisconnect = dB.ref("/users/" + user.uid +"/iconnect")
+	    	myRefToDisconnect = dB.ref("/users/" + userObj.uid +"/iconnect")
 	    	myRefToDisconnect.set(true);
 	    	myRefToDisconnect.onDisconnect().set("disconnected");
 			var win = window.open(pageToLoad);
