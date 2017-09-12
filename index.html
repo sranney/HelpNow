@@ -426,7 +426,7 @@
 			  //google and facebook doesn't provide phone number, so we need to ask for this information from user
 			  //the code below sets modal to show instructions to user to enter phone number when signing up
 			  $("errorMsg").empty();
-			  if(type=="su" || !(key in databaseObj)){
+			  if(type=="su" || !(userObj.uid in databaseObj)){
 			  	$("#sign-in").css("display","none");
 			  	if(provider.providerId==="google.com"){$("#facebook-su").css("display","none");} else {$("#google-su").css("display","none");}
 			  	$("#form-su").css("display","none");
