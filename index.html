@@ -289,7 +289,7 @@
 		
 
 
-////////////////CONFIGURE FIREBASE AND CHECK IF SOMEONE IS LOGGED INTO SITE - IF SO FORMAT HTML
+////////////////CONFIGURE FIREBASE, GET INSTANCE OF REAL-TIME DATABASE AND CHECK IF SOMEONE IS LOGGED INTO SITE - IF SO FORMAT HTML
 		var config = {
 			apiKey: "AIzaSyBzJ9AknkEz3TmAHLEryoXaT74nLSf9mQQ",
 			authDomain: "project1-ad91c.firebaseapp.com",
@@ -309,20 +309,31 @@
 	  	var myRefToDisconnect;
 
 	  	var userObj;//will be user object with all kinds of datas
+	  	var databaseObj;
+	  	//get instance of real-time database
+	  	dB.ref().on("value",function(snapshot){
+	  		databaseObj = snapshot.toJSON();
+	  		console.log(databaseObj);
+	  		//firebase function to check whether user is logged into site
+			Auth.onAuthStateChanged(function(user) {
+			  	if (user) {
+			    	userObj = user;
+			    	myRefToDisconnect = dB.ref("/users/" + user.uid +"/iconnect")
+			    	myRefToDisconnect.set(true);
+			    	myRefToDisconnect.onDisconnect().set("disconnected");
+					dB.ref().on("value",function(snapshot){
+				  		databaseObj = snapshot.toJSON();
+				  		console.log(databaseObj);
+				  	});
+			    	userLoggedIn=true;//used below to state user is logged in and to proceed to next page
+			    	$("#Welcome").html("Welcome back, " + databaseObj.users[userObj.uid].name);//provides welcome greeting
+			  	} else {
+			    	userLoggedIn=false;//used below to state user is not logged in and to prompt user with a modal
+			  	}
+			});
+	  	});
 
-	  	//firebase function to check whether user is logged into site
-		Auth.onAuthStateChanged(function(user) {
-		  	if (user) {
-		    	userObj = user;
-		    	myRefToDisconnect = dB.ref("/users/" + user.uid +"/iconnect")
-		    	myRefToDisconnect.set(true);
-		    	myRefToDisconnect.onDisconnect().set("disconnected");
-		    	userLoggedIn=true;//used below to state user is logged in and to proceed to next page
-		    	$("#Welcome").html("Welcome back, " + userObj.displayName);//provides welcome greeting
-		  	} else {
-		    	userLoggedIn=false;//used below to state user is not logged in and to prompt user with a modal
-		  	}
-		});
+
 
 //////////////////////////////////HOME PAGE LOAD/////////////////////////////////////
 
@@ -545,11 +556,6 @@
 				  }
 			});
 		}
-
-		//returns user information for user who just signed up
-		dB.ref("users").on("child_added",function(childSnapshot){
-			console.log(childSnapshot.toJSON());
-		})
 
 		//button click listener for sign in form
 		$("#submit-si").on("click",function(){
