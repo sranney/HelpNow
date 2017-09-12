@@ -52,6 +52,26 @@
 			}			
 		}
 
+		.jumbotron>h3{
+			color:white;
+			opacity:0;
+			font-size:30px;
+			font-weight:bold;
+			animation-delay:2s;
+			animation-name:fillforwardswelcome;
+			animation-fill-mode:forwards;
+			animation-duration:3s;
+		}
+
+		@keyframes fillforwardswelcome{
+			0%{
+				opacity:0;
+			}
+			100%{
+				opacity:1;
+			}			
+		}
+
 		#helper,#help{
 			height:100%;
 			width:100%;
