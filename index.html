@@ -582,11 +582,11 @@
 		})
 
 		function submitForm_si(){//sign-in function for email/password
-			var email = $("#email-" + type).val();
-	  		var password = $("#password-" + type).val();
+			var email = $("#email-si").val();
+	  		var password = $("#password-si").val();
 	  		firebase.auth().signInWithEmailAndPassword(email, password).then(function(user){
 	  			$("#signUpInButtons").css("display","none");
-				$("#sign-up-form").css("display","none");
+				$("#sign-in-form").css("display","none");
 				$(".modal-body>button").css("display","none");
 				$(".modal-body").append("<p>Thank you, " +  + ", please click the button below to continue to site</p>");
 				$("#logInComplete").css("display","block");
