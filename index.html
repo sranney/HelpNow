@@ -433,32 +433,32 @@
 			  	$("#sign-"+type_ext).css("display","none");
 			  	if(provider.providerId==="google.com"){$("#facebook-"+type).css("display","none");} else {$("#google-"+type).css("display","none");}
 			  	$("#form-"+type).css("display","none");
-			  	$("form#sign-"+type_ext+"-form>p").css("display","none");
-				$("form#sign-"+type_ext+"-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");			  	
-			  	$("form#sign-"+type_ext+"-form").prepend("<p>Welcome, " + userObj.displayName + "</p>");
-			  	$("form#sign-"+type_ext+"-form").css("display","block");
-			  	$("form#sign-"+type_ext+"-form>#instructions").css("display","none");
-			  	$("form#sign-"+type_ext+"-form>#firstName-"+type).css("display","none");
-			  	$("form#sign-"+type_ext+"-form>#lastName-"+type).css("display","none");
-			  	$("form#sign-"+type_ext+"-form>#email-"+type).css("display","none");
-				$("form#sign-"+type_ext+"-form>#password-"+type).css("display","none");
-			  	$("form#sign-"+type_ext+"-form>#phoneNumber-"+type).css("display","block");
-			  	$("form#sign-"+type_ext+"-form>#submit-"+type).html("Set Phone");
+			  	$("form#sign-si-form>p").css("display","none");
+				$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");			  	
+			  	$("form#sign-up-form").prepend("<p>Welcome, " + userObj.displayName + "</p>");
+			  	$("form#sign-up-form").css("display","block");
+			  	$("form#sign-up-form>#instructions").css("display","none");
+			  	$("form#sign-up-form>#firstName-su").css("display","none");
+			  	$("form#sign-up-form>#lastName-su").css("display","none");
+			  	$("form#sign-up-form>#email-su").css("display","none");
+				$("form#sign-up-form>#password-su").css("display","none");
+			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
+			  	$("form#sign-up-form>#submit-su").html("Set Phone");
 			  } else if(!(userObj.uid in databaseObj)){
 			  	$("#sign-"+type_ext).css("display","none");
 			  	if(provider.providerId==="google.com"){$("#facebook-"+type).css("display","none");} else {$("#google-"+type).css("display","none");}
 			  	$("#form-"+type).css("display","none");
-			  	$("form#sign-"+type_ext+"-form>p").css("display","none");
-				$("form#sign-"+type_ext+"-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");			  	
-			  	$("form#sign-"+type_ext+"-form").prepend("<p>Welcome, " + userObj.displayName + "</p>");
-			  	$("form#sign-"+type_ext+"-form").css("display","block");
-			  	$("form#sign-"+type_ext+"-form>#instructions").css("display","none");
-			  	$("form#sign-"+type_ext+"-form>#firstName-"+type).css("display","none");
-			  	$("form#sign-"+type_ext+"-form>#lastName-"+type).css("display","none");
-			  	$("form#sign-"+type_ext+"-form>#email-"+type).css("display","none");
-				$("form#sign-"+type_ext+"-form>#password-"+type).css("display","none");
-			  	$("form#sign-"+type_ext+"-form>#phoneNumber-"+type).css("display","block");
-			  	$("form#sign-"+type_ext+"-form>#submit-"+type).html("Set Phone");
+			  	$("form#sign-si-form>p").css("display","none");
+				$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");			  	
+			  	$("form#sign-up-form").prepend("<p>Welcome, " + userObj.displayName + "</p>");
+			  	$("form#sign-up-form").css("display","block");
+			  	$("form#sign-up-form>#instructions").css("display","none");
+			  	$("form#sign-up-form>#firstName-su").css("display","none");
+			  	$("form#sign-up-form>#lastName-su").css("display","none");
+			  	$("form#sign-up-form>#email-su").css("display","none");
+				$("form#sign-up-form>#password-su").css("display","none");
+			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
+			  	$("form#sign-up-form>#submit-su").html("Set Phone");
 			  } else {
 			  	$("body").append("<p>Welcome, " + userObj.displayName + "</p>");
 			  	$("#sign-in").css("display","none");
