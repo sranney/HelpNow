@@ -318,8 +318,6 @@
 	  	//get instance of real-time database
 	  	dB.ref().on("value",function(snapshot){
 	  		databaseObj = snapshot.toJSON();
-	  		console.log(databaseObj);
-	  		console.log(snapshot.toJSON());
 	  		//firebase function to check whether user is logged into site
 			Auth.onAuthStateChanged(function(user) {
 			  	if (user) {
