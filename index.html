@@ -493,6 +493,7 @@
 				$("#google-si").css("display","none");
 			  	$("#form-si").css("display","none");
 			  	$("form#sign-in-form").css("display","none");
+			  	$(".modal-body").append("<p>Thank you, " + userObj.displayName + ", please click the button below to continue to site.</p><br><p>Please note that on the next page, you will be asked to allow our website to access your location. This helps us be able to match you with people that are more readily available to help.</p>");
 			  	$("#logInComplete").css("display","block");
 			  }
 			}).catch(function(error) {
