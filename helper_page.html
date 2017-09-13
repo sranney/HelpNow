@@ -341,6 +341,10 @@
         function moveToLocation(){
             // using global variable:
             map.panTo(loc_GoogMaps);
+            var marker = new google.maps.Marker({
+              position: loc_GoogMaps,
+              map: map
+            });
         }
 
     </script>
