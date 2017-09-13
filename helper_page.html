@@ -20,15 +20,33 @@
     <div id = "userInfo">
         
     </div>
-    
-    <div id="address"></div>
-    
-    <button id="accept">Accept</button>
-    <button id="reject">Reject</button>
 
-    <div id="instruct">Please enter your correct address.</div>
-    <input type="text" id="correctAddress">
-    <button id="submit">Submit</button>
+    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body text-center">
+        
+                    <div id="address"></div>
+                    
+                    <button id="accept">Accept</button>
+                    <button id="reject">Reject</button>
+
+                    <div id="instruct">Please enter your correct address.</div>
+                    <input type="text" id="correctAddress">
+                    <button id="submit">Submit</button>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button class = "btn btn-primary" type="button" data-dismiss="modal" aria-hidden="true" id ="logInComplete">Continue to Site</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
     <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
@@ -75,6 +93,8 @@
                         }
                         if(databaseObj!=undefined){
                             if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){
+                                $("#loginModal").modal({backdrop: 'static', keyboard: false});
+                                $("#loginModal").modal("show");                                
                                 $("#address").html("We have calculated your address to be <span id='returnedAddress'>"+address+"</span>. Is this correct?");
                                 $("#accept").css("display","block");
                                 $("#reject").css("display","block");
@@ -88,7 +108,8 @@
         });
 
 
-    //////////////////////////////////////////////html5 geolocation api/////////////////////////////////////////
+    //////////////////////////////html5 geolocation api mixed with Goog Maps API Geocoding///////////////////////////////
+
         var options = {
           enableHighAccuracy: true,//set it to this so that we can access the most accurate gps system available on user's system
           timeout: 5000,
@@ -137,6 +158,10 @@
                     address:recentAddress
                 });            
             }
+            $("#address").css("display","none");
+            $("#accept").css("display","none");
+            $("#reject").css("display","none");
+
         })
 
         $("#reject").on("click",function(){
@@ -159,7 +184,6 @@
                 address:recentAddress
             });
             var geocoder = new google.maps.Geocoder;
-            var geopos = {lat:lat,lng:long};
             geocoder.geocode({"address":address},function(results,status){
                 if(status==="OK"){
                     console.log(results[0].geometry.location);
