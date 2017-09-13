@@ -217,10 +217,6 @@
                                         moveToLocation();
                                     }
                                 })
-
-                                for (var i=0; i<Object.keys(databaseObj.helpRequests).length;i++){
-                                    console.log(databaseObj.users[Object.keys(databaseObj.helpRequests)[i]].address);
-                                }
                             }
                         }
                     }
@@ -345,6 +341,7 @@
         function moveToLocation(){
             // using global variable:
             map.panTo(loc_GoogMaps);
+            //helper marker
             var marker = new google.maps.Marker({
               position: loc_GoogMaps,
               map: map,
@@ -357,13 +354,18 @@
             marker.addListener('click', function() {
               infowindow.open(map, marker);
             });
+            //helpRequest markers
+            addRequestMarkersWithinRadius();
         }
 
 
-        function addRequestMarkers(){
+        function addRequestMarkersWithinRadius(){
             geocoder = new google.maps.Geocoder;
 
-
+            for (var i=0; i<Object.keys(databaseObj.helpRequests).length;i++){
+                var helpuid = Object.keys(databaseObj.helpRequests)[i];
+                console.log(databaseObj.users[helpuid].address);
+            }
 
         }
 
