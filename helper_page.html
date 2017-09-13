@@ -306,21 +306,29 @@
         var submitPushed = false;
         $("#submit").on("click",function(){
             submitPushed=true;
-            var recentAddress = $("#correctAddress").val();
-            dB.ref("/users/"+userObj.uid).set({
-                iconnect: true,
-                name : userObj.displayName,
-                phoneNumber: databaseObj.users[userObj.uid].phoneNumber,
-                email: userObj.email,
-                address:recentAddress
-            });
-            geocoder = new google.maps.Geocoder;
-            geocoder.geocode({"address":recentAddress},function(results,status){
-                if(status==="OK"){
-                    loc_GoogMaps = results[0].geometry.location;
-                    moveToLocation();
-                }
-            })
+            var correctAddress = $("#correctAddress").val();
+            
+            if(correctAddress!=databaseObj.users[userObj.uid].address){
+    
+                dB.ref("/users/"+userObj.uid).set({
+                    iconnect: true,
+                    name : userObj.displayName,
+                    phoneNumber: databaseObj.users[userObj.uid].phoneNumber,
+                    email: userObj.email,
+                    address:correctAddress
+                });
+            
+                geocoder = new google.maps.Geocoder;
+                geocoder.geocode({"address":recentAddress},function(results,status){
+                    if(status==="OK"){
+                        console.log(results[0].geometry.location)
+                        loc_GoogMaps = results[0].geometry.location;
+                        moveToLocation();
+                    }
+                })
+    
+            }
+
             $("#address").css("display","none");
             $("#accept").css("display","none");
             $("#reject").css("display","none");
@@ -365,7 +373,7 @@
 
         function addRequestMarkersWithinRadius(){
             var geocoder2 = new google.maps.Geocoder;
-
+            var bounds = new google.maps.LatLngBounds();
             for (var i=0; i<Object.keys(databaseObj.helpRequests).length;i++){
                 var helpuid = Object.keys(databaseObj.helpRequests)[i];
                 var helpAddress=databaseObj.users[helpuid].address;
@@ -387,16 +395,17 @@
                         });      
 
                         markers.push(marker);               
+                        for (var i = 0; i < markers.length; i++) {
+                            bounds.extend(markers[i].getPosition());
+                        }
+
+                        map.fitBounds(bounds);
+
                     }
                 })                
             }
 
-            var bounds = new google.maps.LatLngBounds();
-            for (var i = 0; i < markers.length; i++) {
-                bounds.extend(markers[i].getPosition());
-            }
-
-            map.fitBounds(bounds);
+            
 
         }
 
