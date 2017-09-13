@@ -374,7 +374,6 @@
 
 
         function addRequestMarkersWithinRadius(){
-            var geocoder2 = new google.maps.Geocoder;
             var bounds = new google.maps.LatLngBounds();
             
             for (var i=0; i<Object.keys(databaseObj.helpRequests).length;i++){
@@ -391,7 +390,7 @@
                 });
 
                 var infowindow = new google.maps.InfoWindow({
-                  content: databaseObj.users[helpuid].helpRequest
+                  content: "<p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button id='contact'>Ping User</button>"
                 });
 
                 marker.addListener('click', function() {
