@@ -171,7 +171,7 @@
                         }
                         if(databaseObj!=undefined){
                             if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){
-                                var clearCode = setInterval(function{                            
+                                var clearCode = setInterval(function(){                            
                                     if(address!=undefined){
                                         $("#loginModal").modal({backdrop: 'static', keyboard: false});
                                         $("#loginModal").modal("show");                                
