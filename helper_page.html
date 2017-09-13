@@ -347,6 +347,7 @@
 
             })
 
+            $("#instruct").css("display","none");
             $("#address").css("display","none");
             $("#accept").css("display","none");
             $("#reject").css("display","none");
@@ -354,6 +355,7 @@
             $("#submit").css("display","none");
             $(".modal-body").append("Thank you. Click button to continue.");
             $("#Proceed").css("display","block");
+            
         })
 
         var map;
@@ -447,13 +449,12 @@
                 })*/                
             }
 
-
-            $(document).on("click","#contact",function(){
-                console.log("map button pushed");
-            })
-            
             map.fitBounds(bounds);
         }
+
+        $(document).on("click","#contact",function(){
+            console.log("map button pushed");
+        })
 
     </script>
     <script async defer
