@@ -416,6 +416,12 @@
                     bounds.extend(markers[j].getPosition());
                 }
 
+
+                function setPositionAsContent(){
+                  infoWindow.open(this.map, this);
+                }
+
+                google.maps.event.addListener(marker, "click", setPositionAsContent);   
                 
 /*                geocoder2.geocode({"address":helpAddress},function(results,status){
                     if(status==="OK"){
@@ -444,12 +450,6 @@
                     }
                 })*/                
             }
-
-            function setPositionAsContent(){
-              infoWindow.open(this.map, this);
-            }
-
-            google.maps.event.addListener(marker, "click", setPositionAsContent);     
 
             map.fitBounds(bounds);
         }
