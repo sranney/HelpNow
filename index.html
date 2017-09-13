@@ -368,9 +368,9 @@
 			if(!userLoggedIn){
 				$("#loginModal").modal({backdrop: 'static', keyboard: false});
 				$("#loginModal").modal("show");
-				pageToLoad = "helper page.html";
+				pageToLoad = "helper_page.html";
 			} else {
-				var win = window.open("helper page.html","_self");
+				var win = window.open("helper_page.html","_self");
         		win.focus();
 			}
 
@@ -382,9 +382,9 @@
 			if(!userLoggedIn){
 				$("#loginModal").modal({backdrop: 'static', keyboard: false});
 				$("#loginModal").modal("show");
-				pageToLoad = "help page.html";
+				pageToLoad = "help_page.html";
 			} else {
-				var win = window.open("help page.html","_self");
+				var win = window.open("help_page.html","_self");
         		win.focus();
 			}
 
@@ -493,7 +493,7 @@
 				$("#google-si").css("display","none");
 			  	$("#form-si").css("display","none");
 			  	$("form#sign-in-form").css("display","none");
-			  	$(".modal-body").append("<p>Thank you, " + userObj.displayName + ", please click the button below to continue to site.</p><br><p>Please note that on the next page, you will be asked to allow our website to access your location. This helps us be able to match you with people that are more readily available to help.</p>");
+			  	$(".modal-body").append("<p>Thank you, " + userObj.displayName + ", please click the button below to continue to site.</p><br><p>Please note that, on the next page, you will be asked to allow our website to access your location. This helps us be able to match you with people that are in your vicinity.</p>");
 			  	$("#logInComplete").css("display","block");
 			  }
 			}).catch(function(error) {
@@ -555,7 +555,7 @@
 			$("#signUpInButtons").css("display","none");
 			$("#sign-up-form").css("display","none");
 			$(".modal-body>button").css("display","none");
-			$(".modal-body").append("<p>Thank you, " + userObj.displayName + ", please click the button below to continue to site.</p><br><p>Please note that on the next page, you will be asked to allow our website to access your location. This helps us be able to match you with people that are more readily available to help.</p>");
+			$(".modal-body").append("<p>Thank you, " + userObj.displayName + ", please click the button below to continue to site.</p><br><p>Please note that on the next page, you will be asked to allow our website to access your location. This helps us be able to match you with people that are in your vicinity.</p>");
 			$("#logInComplete").css("display","block");
 			//since this is a new log-in, create a new node for node users that will pass name, phone and email information about user
 
@@ -578,7 +578,7 @@
 				$("#signUpInButtons").css("display","none");
 				$("#sign-up-form").css("display","none");
 				$(".modal-body>button").css("display","none");
-				$(".modal-body").append("<p>Thank you, " + name + ", please click the button below to continue to site.</p><br><p>Please note that on the next page, you will be asked to allow our website to access your location. This helps us be able to match you with people that are more readily available to help.</p>");
+				$(".modal-body").append("<p>Thank you, " + name + ", please click the button below to continue to site.</p><br><p>Please note that on the next page, you will be asked to allow our website to access your location. This helps us be able to match you with people that are in your vicinity.</p>");
 				dB.ref("/users/"+user.uid).set({
 					name : name,
 					phoneNumber: phoneNumber,
