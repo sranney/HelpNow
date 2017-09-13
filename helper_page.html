@@ -138,7 +138,7 @@
                     iconnect: true,
                     name : userObj.displayName,
                     phoneNumber: userObj.email,
-                    email: userObj.email,
+                    email: userObj.phoneNumber,
                     address:recentAddress
                 });            
             }
@@ -160,9 +160,16 @@
                 iconnect: true,
                 name : userObj.displayName,
                 phoneNumber: userObj.email,
-                email: userObj.email,
+                email: userObj.phoneNumber,
                 address:recentAddress
             });
+            var geocoder = new google.maps.Geocoder;
+            var geopos = {lat:lat,lng:long};
+            geocoder.geocode({"address":address},function(results,status){
+                if(status==="OK"){
+                    console.log(results);
+                }
+            })            
         })
 
     </script>
