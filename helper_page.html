@@ -406,7 +406,9 @@
                 });
 
                 var infowindow = new google.maps.InfoWindow({
-                  content: "<p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button id='contact'>Contact</button>"
+                  content: "<p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button id='contact'>Contact</button>",
+                  borderRadius:30px,
+                  borderColor:red
                 });
 
                 marker.addListener('click', function() {
