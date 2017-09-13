@@ -364,7 +364,25 @@
 
             for (var i=0; i<Object.keys(databaseObj.helpRequests).length;i++){
                 var helpuid = Object.keys(databaseObj.helpRequests)[i];
-                console.log(databaseObj.users[helpuid].address);
+                var helpAddress=databaseObj.users[helpuid].address;
+                geocoder.geocode({"address":helpAddress},function(results,status){
+                    if(status==="OK"){
+                        var loc_GoogMaps_help = results[0].geometry.location;
+                        var marker = new google.maps.Marker({
+                          position: loc_GoogMaps,
+                          map: map,
+                          animation: google.maps.Animation.DROP
+                        });
+
+                        var infowindow = new google.maps.InfoWindow({
+                          content: databaseObj.users[helpuid].helpRequest
+                        });
+                        
+                        marker.addListener('click', function() {
+                          infowindow.open(map, marker);
+                        });                     
+                    }
+                })                
             }
 
         }
