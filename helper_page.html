@@ -78,7 +78,24 @@
             font-size:20px;
         }
 
-    
+        #animateWS{
+            font-size:30px;
+            animation-name:test;
+            animation-iteration-count:infinite;
+            animation-duration:3s;
+        }
+
+        @keyframes test{
+              0%{
+                font-size:30px;
+              }
+              50%{
+                font-size:33px;
+              }
+              100%{
+                font-size:30px;
+              }
+        }        
 
     </style>
 
@@ -102,7 +119,7 @@
 
                 <div class="modal-body text-center">
         
-                    <div id="address"></div>
+                    <div id="address"></div>//will display message with calculated address
                     
                     <button class="btn btn-default btn-block" id="accept">
                         <i class="fa fa-check"></i><i class="fa fa-fw"></i>Accept
@@ -117,7 +134,7 @@
                     <div id="instruct">Please enter your correct address.</div>
                     <input class="text-center" type="text" id="correctAddress" placeholder="1234 Simpleton Dr, Dallas TX 75204">
                     <button id="submit" class="btn btn-default btn-block">
-                        Submit<i class="fa fa-fw"></i><i class="fa fa-arrow-right"></i>
+                        Submit<i class="fa fa-fw" id="animateWS"></i><i class="fa fa-arrow-right"></i>
                     </button>
 
                 </div>
@@ -253,7 +270,9 @@
             $("#address").css("display","none");
             $("#accept").css("display","none");
             $("#reject").css("display","none");
-
+            $("#reject").css("display","none");
+            $("#reject").css("display","none");
+            $("#modal-body").append("Thank you. Click button to continue.");
         })
 
         $("#reject").on("click",function(){
@@ -279,9 +298,15 @@
             var geocoder = new google.maps.Geocoder;
             geocoder.geocode({"address":address},function(results,status){
                 if(status==="OK"){
-                    console.log(results[0].geometry.location);
+                    loc_GoogMaps = results[0].geometry.location;
                 }
-            })            
+            })
+            $("#address").css("display","none");
+            $("#accept").css("display","none");
+            $("#reject").css("display","none");
+            $("#correctAddress").css("display","none");
+            $("#submit").css("display","none");
+            $("#modal-body").append("Thank you. Click button to continue.");
         })
 
         function initMap(){
