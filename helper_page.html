@@ -210,6 +210,13 @@
                                         }
                                     }
                                 },300);
+                            } else {
+                                geocoder.geocode({"address":address},function(results,status){
+                                    if(status==="OK"){
+                                        loc_GoogMaps = results[0].geometry.location;
+                                        moveToLocation();
+                                    }
+                                })
                             }
                         }
                     }
@@ -230,7 +237,7 @@
 
         //if the getCurrentPosition function was able to get your gps location, then we want to do the following function, including running google maps geocode api
 
-        var lat,long,address,success;
+        var lat,long,address,success,geocoder;
         function success(pos) {
 
             var crd = pos.coords;
@@ -238,7 +245,7 @@
             long = crd.longitude;
 
             /////GOOGLE MAPS GEOCODE API FUNCTIONS - gets address
-            var geocoder = new google.maps.Geocoder;
+            geocoder = new google.maps.Geocoder;
             var geopos = {lat:lat,lng:long};
             geocoder.geocode({"location":geopos},function(results,status){
                 if(status==="OK"){
@@ -306,7 +313,7 @@
                 email: userObj.email,
                 address:recentAddress
             });
-            var geocoder = new google.maps.Geocoder;
+            geocoder = new google.maps.Geocoder;
             geocoder.geocode({"address":address},function(results,status){
                 if(status==="OK"){
                     loc_GoogMaps = results[0].geometry.location;
