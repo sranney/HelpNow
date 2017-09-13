@@ -74,6 +74,10 @@
             height:400px;
         }
 
+        input{
+            font-size:15px;
+        }
+
     </style>
 
 <body>
@@ -109,7 +113,7 @@
                     <button id="reject">Reject</button>
 
                     <div id="instruct">Please enter your correct address.</div>
-                    <input type="text" id="correctAddress" placeholder="1234 Simpleton Dr, Dallas TX 75204">
+                    <input class="text-center" type="text" id="correctAddress" placeholder="1234 Simpleton Dr, Dallas TX 75204">
                     <button id="submit" class="btn btn-default btn-block">
                         Submit<i class="fa fa-fw"></i><i class="fa fa-arrow-right"></i>
                     </button>
@@ -237,7 +241,7 @@
                 dB.ref("/users/"+userObj.uid).set({
                     iconnect: true,
                     name : userObj.displayName,
-                    phoneNumber: userObj.phoneNumber,
+                    phoneNumber: databaseObj.users[userObj.uid].phoneNumber,
                     email: userObj.email,
                     address:recentAddress
                 });            
@@ -263,7 +267,7 @@
             dB.ref("/users/"+userObj.uid).set({
                 iconnect: true,
                 name : userObj.displayName,
-                phoneNumber: userObj.phoneNumber,
+                phoneNumber: databaseObj.users[userObj.uid].phoneNumber,
                 email: userObj.email,
                 address:recentAddress
             });
