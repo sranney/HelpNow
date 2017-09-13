@@ -103,7 +103,15 @@
 
         #request{
             color:red;
-            font-style:oblique;
+            font-weight:bold;
+            font-style:italic;
+        }
+
+        #contact{
+            width:100%;
+            background-color:#003600;
+            border-radius:10px;
+            color:white;
         }
 
     </style>
@@ -395,7 +403,7 @@
                 });
 
                 var infowindow = new google.maps.InfoWindow({
-                  content: "<p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button id='contact'>Ping User</button>"
+                  content: "<p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button id='contact'>Contact</button>"
                 });
 
                 marker.addListener('click', function() {
