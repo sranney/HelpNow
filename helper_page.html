@@ -276,7 +276,8 @@
                     name : userObj.displayName,
                     phoneNumber: databaseObj.users[userObj.uid].phoneNumber,
                     email: userObj.email,
-                    address:recentAddress
+                    address:recentAddress,
+                    coords:{"lat":lat,"long":long}
                 });            
             }
             loc_GoogMaps = new google.maps.LatLng(lat, long);
