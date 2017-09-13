@@ -217,6 +217,10 @@
                                         moveToLocation();
                                     }
                                 })
+
+                                for (var i=0; i<Object.keys(databaseObj.helpRequests).length;i++){
+                                    console.log(databaseObj.users[Object.keys(databaseObj.helpRequests)[i]].address);
+                                }
                             }
                         }
                     }
@@ -353,6 +357,14 @@
             marker.addListener('click', function() {
               infowindow.open(map, marker);
             });
+        }
+
+
+        function addRequestMarkers(){
+            geocoder = new google.maps.Geocoder;
+
+
+
         }
 
     </script>
