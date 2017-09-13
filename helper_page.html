@@ -132,12 +132,12 @@
         navigator.geolocation.getCurrentPosition(success, error, options);
 
         $("#accept").on("click",function(){
-            var recentAddress = $("#correctAddress").val();
+            var recentAddress = address;
             if(databaseObj.users[userObj.uid].address!=recentAddress){
                 dB.ref("/users/"+userObj.uid).set({
                     iconnect: true,
                     name : userObj.displayName,
-                    phoneNumber: $("#phoneNumber-su").val(),
+                    phoneNumber: userObj.email,
                     email: userObj.email,
                     address:recentAddress
                 });            
@@ -159,7 +159,7 @@
             dB.ref("/users/"+userObj.uid).set({
                 iconnect: true,
                 name : userObj.displayName,
-                phoneNumber: $("#phoneNumber-su").val(),
+                phoneNumber: userObj.email,
                 email: userObj.email,
                 address:recentAddress
             });
