@@ -343,7 +343,8 @@
             map.panTo(loc_GoogMaps);
             var marker = new google.maps.Marker({
               position: loc_GoogMaps,
-              map: map
+              map: map,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
             });
             var infowindow = new google.maps.InfoWindow({
               content: "You are here"
