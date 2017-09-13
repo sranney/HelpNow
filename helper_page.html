@@ -103,8 +103,8 @@
             if(status==="OK"){
                 if(results[0]){
                     address = results[0].formatted_address;//formatted address with street address
-                    if(databaseObj!=undefined && databaseObj.users[userObj.uid].address != undefined){
-                        if(address != databaseObj.users[userObj.uid].address){
+                    if(databaseObj!=undefined){
+                        if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){
                             $("#address").html("We have calculated your address to be <span id='returnedAddress'>"+address+"</span>. Is this correct?");
                             $("#accept").css("display","block");
                             $("#reject").css("display","block");
