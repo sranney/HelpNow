@@ -260,6 +260,7 @@
         //options - object - optional parameters for how to handle getting coordinates
         navigator.geolocation.getCurrentPosition(success, error, options);
 
+        var loc_GoogMaps;
         $("#accept").on("click",function(){
             var recentAddress = address;
             if(databaseObj.users[userObj.uid].address!=recentAddress){
@@ -271,6 +272,8 @@
                     address:recentAddress
                 });            
             }
+            loc_GoogMaps = new google.maps.LatLng(lat, lng);
+            moveToLocation();
             $("#address").css("display","none");
             $("#accept").css("display","none");
             $("#reject").css("display","none");
@@ -307,6 +310,7 @@
             geocoder.geocode({"address":address},function(results,status){
                 if(status==="OK"){
                     loc_GoogMaps = results[0].geometry.location;
+                    moveToLocation();
                 }
             })
             $("#address").css("display","none");
@@ -318,17 +322,23 @@
             $("#Proceed").css("display","block");
         })
 
+        var map;
         function initMap(){
             var center={lat:32.7767,lng:-96.7970};
-            var map = new google.maps.Map(document.getElementById('map'),{
+            map = new google.maps.Map(document.getElementById('map'),{
                 zoom:14,
                 center:center
             });
         }
 
+        function moveToLocation(){
+            // using global variable:
+            map.panTo(loc_GoogMaps);
+        }
+
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJRXIv3oHTTTjcAfMJuM-kILQXbkYJNCk&callback=initMap&libraries=geometry">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJRXIv3oHTTTjcAfMJuM-kILQXbkYJNCk&libraries=geometry&callback=initMap">
     </script>
 
 </body>
