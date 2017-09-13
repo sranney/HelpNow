@@ -95,7 +95,11 @@
               100%{
                 font-size:30px;
               }
-        }        
+        } 
+
+        #Proceed{
+            display:none;
+        }       
 
     </style>
 
@@ -119,7 +123,7 @@
 
                 <div class="modal-body text-center">
         
-                    <div id="address"></div>//will display message with calculated address
+                    <div id="address"></div><!--will display message with calculated address-->
                     
                     <button class="btn btn-default btn-block" id="accept">
                         <i class="fa fa-check"></i><i class="fa fa-fw"></i>Accept
@@ -273,6 +277,7 @@
             $("#reject").css("display","none");
             $("#reject").css("display","none");
             $("#modal-body").append("Thank you. Click button to continue.");
+            $("#Proceed").css("display","block");
         })
 
         $("#reject").on("click",function(){
@@ -310,6 +315,7 @@
             $("#correctAddress").css("display","none");
             $("#submit").css("display","none");
             $("#modal-body").append("Thank you. Click button to continue.");
+            $("#Proceed").css("display","block");
         })
 
         function initMap(){
