@@ -171,11 +171,16 @@
                         }
                         if(databaseObj!=undefined){
                             if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){
-                                $("#loginModal").modal({backdrop: 'static', keyboard: false});
-                                $("#loginModal").modal("show");                                
-                                $("#address").html("We have calculated your address to be <span id='returnedAddress'>"+address+"</span>. Is this correct?");
-                                $("#accept").css("display","block");
-                                $("#reject").css("display","block");
+                                var clearCode = setInterval(function{                            
+                                    if(address!=undefined){
+                                        $("#loginModal").modal({backdrop: 'static', keyboard: false});
+                                        $("#loginModal").modal("show");                                
+                                        $("#address").html("We have calculated your address to be <span id='returnedAddress'>"+address+"</span>. Is this correct?");
+                                        $("#accept").css("display","block");
+                                        $("#reject").css("display","block");
+                                        clearInterval(clearCode);
+                                    }
+                                },300);
                             }
                         }
                     }
@@ -196,21 +201,22 @@
 
         //if the getCurrentPosition function was able to get your gps location, then we want to do the following function, including running google maps geocode api
 
-        var lat,long,address;
+        var lat,long,address,success;
         function success(pos) {
-          var crd = pos.coords;
-          lat = crd.latitude;
-          long = crd.longitude;
 
-          /////GOOGLE MAPS GEOCODE API FUNCTIONS - gets address
-          var geocoder = new google.maps.Geocoder;
-          var geopos = {lat:lat,lng:long};
-          geocoder.geocode({"location":geopos},function(results,status){
-            if(status==="OK"){
-                if(results[0]){
-                    address = results[0].formatted_address;//formatted address with street address
+            var crd = pos.coords;
+            lat = crd.latitude;
+            long = crd.longitude;
+
+            /////GOOGLE MAPS GEOCODE API FUNCTIONS - gets address
+            var geocoder = new google.maps.Geocoder;
+            var geopos = {lat:lat,lng:long};
+            geocoder.geocode({"location":geopos},function(results,status){
+                if(status==="OK"){
+                    if(results[0]){
+                        address = results[0].formatted_address;//formatted address with street address
+                    }
                 }
-            }
           })
 
         };
