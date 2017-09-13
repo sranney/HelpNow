@@ -93,28 +93,23 @@
         var lat,long,address;
         function success(pos) {
           var crd = pos.coords;
-          console.log(navigator.geolocation);
-          console.log(crd);
-          console.log(pos);
-          console.log('Your current position is:');
-          console.log(`Latitude : ${crd.latitude}`);
           lat = crd.latitude;
-          console.log(`Longitude: ${crd.longitude}`);
           long = crd.longitude;
-          console.log(`More or less ${crd.accuracy} meters.`);
 
-          /////GOOGLE MAPS GEOCODE API FUNCTIONS
+          /////GOOGLE MAPS GEOCODE API FUNCTIONS - gets address
           var geocoder = new google.maps.Geocoder;
           var geopos = {lat:lat,lng:long};
           geocoder.geocode({"location":geopos},function(results,status){
             if(status==="OK"){
                 if(results[0]){
                     address = results[0].formatted_address;//formatted address with street address
-                    console.log(results);
-                    console.log(status);
-                    $("#address").html("We have calculated your address to be <span id='returnedAddress'>"+address+"</span>. Is this correct?");
-                    $("#accept").css("display","block");
-                    $("#reject").css("display","block");
+                    if(databaseObj!=undefined){
+                        if(address != databaseObj.users[userObj.uid].address){
+                            $("#address").html("We have calculated your address to be <span id='returnedAddress'>"+address+"</span>. Is this correct?");
+                            $("#accept").css("display","block");
+                            $("#reject").css("display","block");
+                        }
+                    }
                 }
             }
           })
@@ -137,8 +132,8 @@
                 dB.ref("/users/"+userObj.uid).set({
                     iconnect: true,
                     name : userObj.displayName,
-                    phoneNumber: userObj.email,
-                    email: userObj.phoneNumber,
+                    phoneNumber: userObj.phoneNumber,
+                    email: userObj.email,
                     address:recentAddress
                 });            
             }
@@ -159,15 +154,15 @@
             dB.ref("/users/"+userObj.uid).set({
                 iconnect: true,
                 name : userObj.displayName,
-                phoneNumber: userObj.email,
-                email: userObj.phoneNumber,
+                phoneNumber: userObj.phoneNumber,
+                email: userObj.email,
                 address:recentAddress
             });
             var geocoder = new google.maps.Geocoder;
             var geopos = {lat:lat,lng:long};
             geocoder.geocode({"address":address},function(results,status){
                 if(status==="OK"){
-                    console.log(results);
+                    console.log(results[0].geometry.location);
                 }
             })            
         })
