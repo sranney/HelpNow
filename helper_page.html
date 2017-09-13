@@ -338,6 +338,8 @@
             });
         }
 
+        var markers=[];//array to push markers into
+
         function moveToLocation(){
             // using global variable:
             map.panTo(loc_GoogMaps);
@@ -354,6 +356,7 @@
             marker.addListener('click', function() {
               infowindow.open(map, marker);
             });
+            markers.push(marker);
             //helpRequest markers
             addRequestMarkersWithinRadius();
         }
@@ -377,13 +380,22 @@
                         var infowindow = new google.maps.InfoWindow({
                           content: databaseObj.users[helpuid].helpRequest
                         });
-                        
+
                         marker.addListener('click', function() {
                           infowindow.open(map, marker);
-                        });                     
+                        });      
+
+                        markers.push(marker);               
                     }
                 })                
             }
+
+            var bounds = new google.maps.LatLngBounds();
+            for (var i = 0; i < markers.length; i++) {
+                bounds.extend(markers[i].getPosition());
+            }
+
+            map.fitBounds(bounds);
 
         }
 
