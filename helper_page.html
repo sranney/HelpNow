@@ -363,12 +363,12 @@
 
 
         function addRequestMarkersWithinRadius(){
-            geocoder = new google.maps.Geocoder;
+            var geocoder2 = new google.maps.Geocoder;
 
             for (var i=0; i<Object.keys(databaseObj.helpRequests).length;i++){
                 var helpuid = Object.keys(databaseObj.helpRequests)[i];
                 var helpAddress=databaseObj.users[helpuid].address;
-                geocoder.geocode({"address":helpAddress},function(results,status){
+                geocoder2.geocode({"address":helpAddress},function(results,status){
                     if(status==="OK"){
                         var loc_GoogMaps_help = results[0].geometry.location;
                         var marker = new google.maps.Marker({
