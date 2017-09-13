@@ -272,14 +272,14 @@
         var loc_GoogMaps,acceptPushed = false,submitPushed = false;
         $("#accept").on("click",function(){
             acceptPushed=true;
-            var recentAddress = address;
-            if(databaseObj.users[userObj.uid].address!=recentAddress){
+            var currentAddress = address;
+            if(databaseObj.users[userObj.uid].address!=currentAddress){
                 dB.ref("/users/"+userObj.uid).set({
                     iconnect: true,
                     name : userObj.displayName,
                     phoneNumber: databaseObj.users[userObj.uid].phoneNumber,
                     email: userObj.email,
-                    address:recentAddress,
+                    address:currentAddress,
                     coords:{"lat":lat,"long":long}
                 });            
             }
@@ -323,6 +323,8 @@
             geocoder.geocode({"address":recentAddress},function(results,status){
                 if(status==="OK"){
                     loc_GoogMaps = results[0].geometry.location;
+                    console.log(results[0].geometry.location.lat());
+                    console.log(results[0].geometry.location.lng());
                     moveToLocation();
                 }
             })
