@@ -17,6 +17,20 @@
             color:blue;
         }
 
+        #accept{
+            background-color:#003600;
+            color:white;
+            font-size:30px;
+            font-weight:bold;
+        }
+
+        #reject{
+            background-color:#991E37;
+            color:white;
+            font-size:30px;
+            font-weight:bold;
+        }
+
     </style>
 
 <body>
@@ -33,12 +47,21 @@
         
                     <div id="address"></div>
                     
-                    <button id="accept">Accept</button>
+                    <button class="btn btn-default btn-block" id="accept">
+                        <i class="fa fa-check"></i><i class="fa fa-fw"></i>Accept
+                    </button>
+
+                    <button class="btn btn-default btn-block" id="reject">
+                        <i class="fa fa-times"></i><i class="fa fa-fw"></i>Accept
+                    </button>
+
                     <button id="reject">Reject</button>
 
                     <div id="instruct">Please enter your correct address.</div>
                     <input type="text" id="correctAddress">
-                    <button id="submit">Submit</button>
+                    <button id="submit">
+                        Submit<i class="fa fa-fw"></i><i class="fa fa-arrow-right"></i>
+                    </button>
 
                 </div>
 
