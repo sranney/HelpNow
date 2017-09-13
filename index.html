@@ -233,7 +233,7 @@
 
 	<div id = "titleArea" class="jumbotron text-center">
 		<img src="HelpNow Logo.png">
-		<h2 id="Slogan">the site where good deeds can be found</h2>
+		<h2 id="Slogan">the site where neighbors can be found</h2>
 		<h3 id="Welcome"></h3>
 	</div>
 
@@ -445,6 +445,7 @@
 	  		federatedLogin("si",provider_goog);
 		})
 
+	  	var FederatedSignIn_flag = false; //needed to distinguish sign-ups from sign-ins
 	  	//function that runs for federated logins (google and facebook), complete with error handling
 	  	function federatedLogin(type,provider){
 		  	$("#sign-"+type+"-form").css("display","none");
@@ -458,6 +459,7 @@
 			  //the code below sets modal to show instructions to user to enter phone number when signing up
 			  $("errorMsg").empty();
 			  var type_ext = type=="su" ? "up":"in";
+			  FederatedSignIn_flag = type == "su" ? false : true;
 			  if(type=="su" || databaseObj == null){
 			  	$("#sign-"+type_ext).css("display","none");
 			  	if(provider.providerId==="google.com"){$("#facebook-"+type).css("display","none");} else {$("#google-"+type).css("display","none");}
@@ -555,8 +557,10 @@
 		function pushPhone(){//for federated signups - we need to get a phone number from user and federated signups don't provide this information
 		//if this function runs, it is due to the user login being successful and the user providing a valid phone
 		//provide further instructions for user to use site
+			var type = FederatedSignIn_flag == true ? "si" : "su";
 			$("#signUpInButtons").css("display","none");
 			$("#sign-up-form").css("display","none");
+			$("#sign-in-form").css("display","none");
 			$(".modal-body>button").css("display","none");
 			$(".modal-body").append("<p>Thank you, " + userObj.displayName + ", please click the button below to continue to site.</p><br><p>Please note that on the next page, you will be asked to allow our website to access your location. This helps us be able to match you with people that are in your vicinity.</p>");
 			$("#logInComplete").css("display","block");
@@ -565,7 +569,7 @@
 			dB.ref("/users/"+userObj.uid).set({
 				iconnect: true,
 				name : userObj.displayName,
-				phoneNumber: $("#phoneNumber-su").val(),
+				phoneNumber: $("#phoneNumber-"+type).val(),
 				email: userObj.email
 			});
 		}
