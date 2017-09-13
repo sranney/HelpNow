@@ -68,7 +68,11 @@
                         var name = databaseObj.users[userObj.uid].name;
                         var email = databaseObj.users[userObj.uid].email;
                         var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
-                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>" + phoneNumber + "</li></ul>");//provides welcome greeting
+                        if(database.users[userObj.uid].address !=null){
+                            $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+database.users[userObj.uid].address+"</ul>");//provides welcome greeting
+                        } else {
+                            $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+database.users[userObj.uid].address+"</li></ul>");//provides welcome greeting
+                        }
                     }
                 } else {
                     userLoggedIn=false;//used below to state user is not logged in and to prompt user with a modal
@@ -84,9 +88,9 @@
           maximumAge: 0
         };
 
-        //if the getCurrentPosition function was able to get your gps location, then 
+        //if the getCurrentPosition function was able to get your gps location, then we want to do the following function, including running google maps geocode api
 
-        var lat,long;
+        var lat,long,address;
         function success(pos) {
           var crd = pos.coords;
           console.log(navigator.geolocation);
@@ -105,9 +109,10 @@
           geocoder.geocode({"location":geopos},function(results,status){
             if(status==="OK"){
                 if(results[0]){
+                    address = results[0].formatted_address;//formatted address with street address
                     console.log(results);
                     console.log(status);
-                    $("#address").html("We have calculated your address to be <span id='returnedAddress'>"+results[0].formatted_address+"</span>. Is this correct?");
+                    $("#address").html("We have calculated your address to be <span id='returnedAddress'>"+address+"</span>. Is this correct?");
                     $("#accept").css("display","block");
                     $("#reject").css("display","block");
                 }
@@ -126,7 +131,18 @@
         //options - object - optional parameters for how to handle getting coordinates
         navigator.geolocation.getCurrentPosition(success, error, options);
 
-
+        $("#accept").on("click",function(){
+            var recentAddress = $("#correctAddress").val();
+            if(database.users[userObj.uid].address!=recentAddress){
+                dB.ref("/users/"+userObj.uid).set({
+                    iconnect: true,
+                    name : userObj.displayName,
+                    phoneNumber: $("#phoneNumber-su").val(),
+                    email: userObj.email,
+                    address:recentAddress
+                });            
+            }
+        })
 
         $("#reject").on("click",function(){
             $("#address").css("display","none");
@@ -139,7 +155,14 @@
 
 
         $("#submit").on("click",function(){
-
+            var recentAddress = $("#correctAddress").val();
+            dB.ref("/users/"+userObj.uid).set({
+                iconnect: true,
+                name : userObj.displayName,
+                phoneNumber: $("#phoneNumber-su").val(),
+                email: userObj.email,
+                address:recentAddress
+            });
         })
 
     </script>
