@@ -133,7 +133,7 @@
 
         $("#accept").on("click",function(){
             var recentAddress = $("#correctAddress").val();
-            if(database.users[userObj.uid].address!=recentAddress){
+            if(databaseObj.users[userObj.uid].address!=recentAddress){
                 dB.ref("/users/"+userObj.uid).set({
                     iconnect: true,
                     name : userObj.displayName,
