@@ -1,0 +1,151 @@
+<html>
+
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <style type="text/css">
+        
+        #correctAddress,#submit,#accept,#reject,#instruct{
+            display:none;
+        }
+
+        #returnedAddress{
+            font-weight:bold;
+            font-size:20px;
+            color:blue;
+        }
+
+    </style>
+
+<body>
+
+    <div id = "userInfo">
+        
+    </div>
+    
+    <div id="address"></div>
+    
+    <button id="accept">Accept</button>
+    <button id="reject">Reject</button>
+
+    <div id="instruct">Please enter your correct address.</div>
+    <input type="text" id="correctAddress">
+    <button id="submit">Submit</button>
+
+    <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+    <script type="text/javascript">
+
+    //////////////////////////////////////////////firebase code/////////////////////////////////////////////////
+
+        var config = {
+            apiKey: "AIzaSyBzJ9AknkEz3TmAHLEryoXaT74nLSf9mQQ",
+            authDomain: "project1-ad91c.firebaseapp.com",
+            databaseURL: "https://project1-ad91c.firebaseio.com",
+            projectId: "project1-ad91c",
+            storageBucket: "project1-ad91c.appspot.com",
+            messagingSenderId: "297815876711"
+        };
+        firebase.initializeApp(config);
+
+        var dB = firebase.database();
+        var Auth = firebase.auth();
+        var cloud = firebase.storage();
+        var provider_fb = new firebase.auth.FacebookAuthProvider();
+        var provider_goog = new firebase.auth.GoogleAuthProvider();
+        var userLoggedIn=false;
+        var myRefToDisconnect;
+
+        var userObj;//will be user object with all kinds of datas
+        var databaseObj;
+        //get instance of real-time database
+        dB.ref().on("value",function(snapshot){
+            databaseObj = snapshot.toJSON();
+            //firebase function to check whether user is logged into site
+            Auth.onAuthStateChanged(function(user) {
+                if (user) {
+                    userObj = user;
+                    userLoggedIn=true;//used below to state user is logged in and to proceed to next page
+                    if(databaseObj!=null){
+                        var name = databaseObj.users[userObj.uid].name;
+                        var email = databaseObj.users[userObj.uid].phoneNumber;
+                        var phoneNumber = databaseObj.users[userObj.uid].email;
+                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>" + phoneNumber + "</li><li>");//provides welcome greeting
+                    }
+                } else {
+                    userLoggedIn=false;//used below to state user is not logged in and to prompt user with a modal
+                }
+            });
+        });
+
+
+    //////////////////////////////////////////////html5 geolocation api/////////////////////////////////////////
+        var options = {
+          enableHighAccuracy: true,//set it to this so that we can access the most accurate gps system available on user's system
+          timeout: 5000,
+          maximumAge: 0
+        };
+
+        //if the getCurrentPosition function was able to get your gps location, then 
+
+        var lat,long;
+        function success(pos) {
+          var crd = pos.coords;
+          console.log(navigator.geolocation);
+          console.log(crd);
+          console.log(pos);
+          console.log('Your current position is:');
+          console.log(`Latitude : ${crd.latitude}`);
+          lat = crd.latitude;
+          console.log(`Longitude: ${crd.longitude}`);
+          long = crd.longitude;
+          console.log(`More or less ${crd.accuracy} meters.`);
+
+          /////GOOGLE MAPS GEOCODE API FUNCTIONS
+          var geocoder = new google.maps.Geocoder;
+          var geopos = {lat:lat,lng:long};
+          geocoder.geocode({"location":geopos},function(results,status){
+            if(status==="OK"){
+                if(results[0]){
+                    console.log(results);
+                    console.log(status);
+                    $("#address").html("We have calculated your address to be <span id='returnedAddress'>"+results[0].formatted_address+"</span>. Is this correct?");
+                    $("#accept").css("display","block");
+                    $("#reject").css("display","block");
+                }
+            }
+          })
+
+        };
+
+        function error(err) {
+          console.warn(`ERROR(${err.code}): ${err.message}`);
+        };
+
+        //geolocation.getCurrentPosition takes three parameters, 
+        //success - function - what do you want to do with the information returned if the function getCurrentPosition runs successfully
+        //error - function - how to handle errors
+        //options - object - optional parameters for how to handle getting coordinates
+        navigator.geolocation.getCurrentPosition(success, error, options);
+
+
+
+        $("#reject").on("click",function(){
+            $("#address").css("display","none");
+            $("#accept").css("display","none");
+            $("#reject").css("display","none");
+            $("#correctAddress").css("display","block");
+            $("#submit").css("display","block");
+            $("#instruct").css("display","block");
+        })
+
+
+        $("#submit").on("click",function(){
+
+        })
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJRXIv3oHTTTjcAfMJuM-kILQXbkYJNCk&callback=initMap">
+    </script>
+
+</body>
+
+</html>
