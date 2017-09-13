@@ -82,7 +82,7 @@
             font-size:30px;
             animation-name:test;
             animation-iteration-count:infinite;
-            animation-duration:3s;
+            animation-duration:1s;
         }
 
         @keyframes test{
@@ -131,7 +131,7 @@
 
                     <button id="reject">Reject</button>
 
-                    <div id="instruct">Please enter your correct address.</div>
+                    <div id="instruct">Please enter your correct address. Provided is your currently stored address, if set.</div>
                     <input class="text-center" type="text" id="correctAddress" placeholder="1234 Simpleton Dr, Dallas TX 75204">
                     <button id="submit" class="btn btn-default btn-block">
                         Submit<i class="fa fa-fw"></i><i class="fa fa-arrow-right" id="animateArrow"></i>
@@ -279,6 +279,9 @@
             $("#address").css("display","none");
             $("#accept").css("display","none");
             $("#reject").css("display","none");
+            if(databaseObj.users[userObj.uid].address!=undefined){
+                $("#correctAddress").val(databaseObj.users[userObj.uid].address);
+            }
             $("#correctAddress").css("display","block");
             $("#submit").css("display","block");
             $("#instruct").css("display","block");
