@@ -355,7 +355,7 @@
             $("#submit").css("display","none");
             $(".modal-body").append("Thank you. Click button to continue.");
             $("#Proceed").css("display","block");
-            
+
         })
 
         var map;
@@ -416,8 +416,8 @@
                 });      
 
                 markers.push(marker);               
-                for (var i = 0; i < markers.length; i++) {
-                    bounds.extend(markers[i].getPosition());
+                for (var j = 0; j < markers.length; j++) {
+                    bounds.extend(markers[j].getPosition());
                 }
 
                 
