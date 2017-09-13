@@ -349,7 +349,10 @@
 			  	if (user) {
 			    	userObj = user;
 			    	userLoggedIn=true;//used below to state user is logged in and to proceed to next page
-					if(databaseObj!=null){			    	
+					if(databaseObj!=null){
+				    	myRefToDisconnect = dB.ref("/users/" + userObj.uid +"/iconnect")
+				    	myRefToDisconnect.set(true);
+				    	myRefToDisconnect.onDisconnect().set("disconnected");			    	
 			    		$("#Welcome").html("Welcome back, " + databaseObj.users[userObj.uid].name);//provides welcome greeting
 			    	}
 			  	} else {
@@ -434,7 +437,7 @@
 
 	  	//when google login button is clicked for sign up
 	  	$("#google-su").on("click",function(){
-	  		federatedLogin("su",provider_goog);
+	  		federatedLogfin("su",provider_goog);
 		})
 
 	  	//when google login button is clicked for sign in
