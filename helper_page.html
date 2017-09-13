@@ -66,9 +66,9 @@
                     userLoggedIn=true;//used below to state user is logged in and to proceed to next page
                     if(databaseObj!=null){
                         var name = databaseObj.users[userObj.uid].name;
-                        var email = databaseObj.users[userObj.uid].phoneNumber;
-                        var phoneNumber = databaseObj.users[userObj.uid].email;
-                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>" + phoneNumber + "</li><li>");//provides welcome greeting
+                        var email = databaseObj.users[userObj.uid].email;
+                        var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
+                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>" + phoneNumber + "</li></ul>");//provides welcome greeting
                     }
                 } else {
                     userLoggedIn=false;//used below to state user is not logged in and to prompt user with a modal
