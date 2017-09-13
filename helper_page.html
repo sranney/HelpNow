@@ -68,10 +68,10 @@
                         var name = databaseObj.users[userObj.uid].name;
                         var email = databaseObj.users[userObj.uid].email;
                         var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
-                        if(database.users[userObj.uid].address !=null){
-                            $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+database.users[userObj.uid].address+"</ul>");//provides welcome greeting
+                        if(databaseObj.users[userObj.uid].address !=null){
+                            $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</ul>");//provides welcome greeting
                         } else {
-                            $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+database.users[userObj.uid].address+"</li></ul>");//provides welcome greeting
+                            $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li></ul>");//provides welcome greeting
                         }
                     }
                 } else {
