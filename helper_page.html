@@ -123,6 +123,13 @@
             color:#454545;
             background-color:#E5E5DB;
             border:5px solid #454545;
+            font-size:40px;
+            font-weight:bold;
+        }
+
+        #confirm>p{
+            display:inline;
+            margin:10px;
         }
 
     </style>
@@ -447,7 +454,7 @@
 
         $(document).on("click",".contact",function(){
             $("#confirm").css("display","block");
-            $("#confirm").append("<p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with '" + $(this).parent().find("#help_request").html()+"?</p><button id='confirmBtn' class='btn btn-primary'>Continue</button>");
+            $("#confirm").append("<div class='text-center'><p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with '" + $(this).parent().find("#request").html()+"?</p><button id='confirmBtn' class='btn btn-primary'>Continue</button></div>");
         })
 
     </script>
