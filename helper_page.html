@@ -410,7 +410,7 @@
             for (var i=0; i<Object.keys(databaseObj.helpRequests).length;i++){
                 var helpuid = Object.keys(databaseObj.helpRequests)[i];
 
-                if(helpuid!=)
+                if(helpuid!=userObj.uid){
                     var helpAddress=databaseObj.users[helpuid].address;
                     var lat_help = databaseObj.users[helpuid].coords.lat;
                     var long_help = databaseObj.users[helpuid].coords.long;
@@ -431,7 +431,7 @@
                     content = "<div><p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact'>Contact</button></div>";
 
                     attachListener(marker,content);
-
+                }
 
             }
 
