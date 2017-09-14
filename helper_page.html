@@ -217,7 +217,7 @@
         var provider_fb = new firebase.auth.FacebookAuthProvider();
         var provider_goog = new firebase.auth.GoogleAuthProvider();
         var userLoggedIn=false;
-        var myRefToDisconnect;
+        var myReftoDisconnect;
         var myLocationRef;
 
         var userObj;//will be user object with all kinds of datas
@@ -231,7 +231,7 @@
                     userObj = user;
                     myReftoDisconnect = dB.ref("/users/"+userObj.uid+"/iconnect");
                     myReftoDisconnect.set(true);
-                    myRefToDisconnect.onDisconnect().set("disconnected");
+                    myReftoDisconnect.onDisconnect().set("disconnected");
                     userLoggedIn=true;//used below to state user is logged in and to proceed to next page
                     if(databaseObj!=null&&databaseObj!=undefined){
                         var name = databaseObj.users[userObj.uid].name;
