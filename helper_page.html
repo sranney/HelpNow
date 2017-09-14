@@ -117,6 +117,14 @@
             font-size:20px;
         }
 
+        #confirm{
+            display:none;
+            border-radius:15px;
+            color:#454545;
+            background-color:#E5E5DB;
+            border:5px solid #454545;
+        }
+
     </style>
 
 <body>
@@ -438,7 +446,8 @@
         }
 
         $(document).on("click",".contact",function(){
-            console.log($(this).parent().find("#help_name").html());
+            $("#confirm").css("display","block");
+            $("#confirm").append("<p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with '" + $(this).parent().find("#help_request").html()+"?</p><button id='confirmBtn' class='btn btn-primary'>Continue</button>");
         })
 
     </script>
