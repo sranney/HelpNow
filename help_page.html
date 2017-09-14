@@ -1,0 +1,408 @@
+<html>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/2a8a6780db.js"></script>
+
+    <style type="text/css">
+        body{
+            background-color:#032642;
+        }
+
+        .jumbotron{
+            background-color:#032642;
+            height:130px;
+            padding:10px;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+        ul{
+            float:left;
+            color:white;
+        }
+        ul>li{
+            color:white;
+        }
+
+        img{
+            height:100px;
+            float:right;
+        }
+
+        #correctAddress,#submit,#accept,#reject,#instruct{
+            display:none;
+        }
+
+        #returnedAddress{
+            font-weight:bold;
+            font-size:20px;
+            color:blue;
+        }
+
+        #accept{
+            background-color:#003600;
+            color:white;
+            font-size:30px;
+            font-weight:bold;
+        }
+
+        #reject{
+            background-color:#991E37;
+            color:white;
+            font-size:30px;
+            font-weight:bold;
+        }
+
+        #userInfo{
+            color:white;
+        }
+
+        #correctAddress{
+            width:100%;
+        }
+
+        #submit{
+            border:3px solid #454545;
+            color:#454545;
+            font-size:30px;
+            font-weight:bold;
+        }
+
+        input{
+            font-size:20px;
+        }
+
+        #animateArrow{
+            font-size:30px;
+            animation-name:test;
+            animation-iteration-count:infinite;
+            animation-duration:1s;
+        }
+
+        @keyframes test{
+              0%{
+                font-size:30px;
+              }
+              50%{
+                font-size:33px;
+              }
+              100%{
+                font-size:30px;
+              }
+        } 
+
+        #Proceed{
+            display:none;
+        }       
+
+        #request{
+            color:red;
+            font-weight:bold;
+            font-style:italic;
+        }
+
+        #requestInput{
+            font-size:45px;
+            border:5px solid grey;
+            width:100%;
+            color:grey;
+        }
+
+        #requestSubmit{
+            background-color:#991E37;
+            color:white;
+            font-size:30px;
+            font-weight:bold;
+        }
+
+        #pendingRequest{
+            display:none;
+        }
+
+    </style>
+
+<body>
+
+    <div class="jumbotron">
+        
+        <div id = "userInfo"></div>
+    
+        <img src="HelpNow Logo.png">
+
+    </div>
+
+    <input id="requestInput" class="text-center" placeholder="What do you need help with today?">
+    <button id="requestSubmit" class="btn btn-default btn-block">Request Help!</button>
+
+    <div id="pendingRequest">
+        You have a pending request. Click button to close.
+    </div>
+
+    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body text-center">
+        
+                    <div id="address"></div><!--will display message with calculated address-->
+                    
+                    <button class="btn btn-default btn-block" id="accept">
+                        <i class="fa fa-check"></i><i class="fa fa-fw"></i>Accept
+                    </button>
+
+                    <button class="btn btn-default btn-block" id="reject">
+                        <i class="fa fa-times"></i><i class="fa fa-fw"></i>Reject
+                    </button>
+
+                    <button id="reject">Reject</button>
+
+                    <div id="instruct">Please enter your correct address. Provided is your currently stored address, if set.</div>
+                    <input class="text-center" type="text" id="correctAddress" placeholder="1234 Simpleton Dr, Dallas TX 75204">
+                    <button id="submit" class="btn btn-default btn-block">
+                        Submit<i class="fa fa-fw"></i><i class="fa fa-arrow-right" id="animateArrow"></i>
+                    </button>
+
+                </div>
+
+                <div class="modal-footer text-center">
+
+                    <button class = "btn btn-primary" type="button" data-dismiss="modal" aria-hidden="true" id ="Proceed">Continue to Site</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--ADD chat text modal-->
+    <!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal-->
+
+    <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+    <script type="text/javascript">
+
+    //////////////////////////////////////////////firebase code/////////////////////////////////////////////////
+
+        var config = {
+            apiKey: "AIzaSyBzJ9AknkEz3TmAHLEryoXaT74nLSf9mQQ",
+            authDomain: "project1-ad91c.firebaseapp.com",
+            databaseURL: "https://project1-ad91c.firebaseio.com",
+            projectId: "project1-ad91c",
+            storageBucket: "project1-ad91c.appspot.com",
+            messagingSenderId: "297815876711"
+        };
+        firebase.initializeApp(config);
+
+        var dB = firebase.database();
+        var Auth = firebase.auth();
+        var cloud = firebase.storage();
+        var provider_fb = new firebase.auth.FacebookAuthProvider();
+        var provider_goog = new firebase.auth.GoogleAuthProvider();
+        var userLoggedIn=false;
+        var myRefToDisconnect;
+
+        var userObj;//will be user object with all kinds of datas
+        var databaseObj;
+        //get instance of real-time database
+        dB.ref().on("value",function(snapshot){
+            databaseObj = snapshot.toJSON();
+            //firebase function to check whether user is logged into site
+            Auth.onAuthStateChanged(function(user) {
+                if (user) {
+                    $("#requestInput").attr("placeholder","What do you need help with today, " + user.displayName + "?");
+                    userObj = user;
+                    userLoggedIn=true;//used below to state user is logged in and to proceed to next page
+                    if(databaseObj!=null){
+                        var name = databaseObj.users[userObj.uid].name;
+                        var email = databaseObj.users[userObj.uid].email;
+                        var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
+                        if(databaseObj.users[userObj.uid].address !=undefined){
+                            $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li></ul>");//provides welcome greeting
+                        } else {
+                            $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li></ul>");//provides welcome greeting
+                        }
+                        if(databaseObj!=undefined){
+                            if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){
+                                var clearCode = setInterval(function(){                            
+                                    if(address!=undefined){//want to continually run this query to see when address is set - when this becomes false, when address is set, then we want to quit this interval and show the modal that asks about current address
+                                        if(submitPushed==false){
+                                            myRefToDisconnect = dB.ref("/users/" + userObj.uid +"/iconnect")
+                                            myRefToDisconnect.set(true);
+                                            myRefToDisconnect.onDisconnect().set("disconnected");
+                                            $("#loginModal").modal({backdrop: 'static', keyboard: false});
+                                            $("#loginModal").modal("show");                                
+                                            $("#address").html("We have calculated your address to be:<br><span id='returnedAddress'>"+address+"</span><br>Is this correct?");
+                                            $("#accept").css("display","block");
+                                            $("#reject").css("display","block");
+                                            clearInterval(clearCode);
+                                        }
+                                    }
+                                },300);
+                            } else {
+                                if(acceptPushed==false&&submitPushed==false){
+                                    geocoder.geocode({"address":address},function(results,status){
+                                        if(status==="OK"){
+                                            loc_GoogMaps = results[0].geometry.location;
+                                            moveToLocation();
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    userLoggedIn=false;//used below to state user is not logged in and to prompt user with a modal
+                }
+            });
+        });
+
+
+    //////////////////////////////html5 geolocation api mixed with Goog Maps API Geocoding///////////////////////////////
+
+        var options = {
+          enableHighAccuracy: true,//set it to this so that we can access the most accurate gps system available on user's system
+          timeout: 5000,
+          maximumAge: 0
+        };
+
+        //if the getCurrentPosition function was able to get your gps location, then we want to do the following function, including running google maps geocode api
+
+        var lat,long,address,success,geocoder;
+        function success(pos) {
+
+            var crd = pos.coords;
+            lat = crd.latitude;
+            long = crd.longitude;
+
+            /////GOOGLE MAPS GEOCODE API FUNCTIONS - gets address
+            geocoder = new google.maps.Geocoder;
+            var geopos = {lat:lat,lng:long};
+            geocoder.geocode({"location":geopos},function(results,status){
+                if(status==="OK"){
+                    if(results[0]){
+                        address = results[0].formatted_address;//formatted address with street address
+                    }
+                }
+          })
+
+        };
+
+        function error(err) {
+          console.warn(`ERROR(${err.code}): ${err.message}`);
+        };
+
+        //geolocation.getCurrentPosition takes three parameters, 
+        //success - function - what do you want to do with the information returned if the function getCurrentPosition runs successfully
+        //error - function - how to handle errors
+        //options - object - optional parameters for how to handle getting coordinates
+        navigator.geolocation.getCurrentPosition(success, error, options);
+
+        var loc_GoogMaps,acceptPushed = false,submitPushed = false;
+        $("#accept").on("click",function(){
+            acceptPushed=true;
+            var currentAddress = address;
+            if(databaseObj.users[userObj.uid].address!=currentAddress){
+                dB.ref("/users/"+userObj.uid).set({
+                    iconnect: true,
+                    name : userObj.displayName,
+                    phoneNumber: databaseObj.users[userObj.uid].phoneNumber,
+                    email: userObj.email,
+                    address:currentAddress,
+                    coords:{"lat":lat,"long":long}
+                });            
+            }
+            loc_GoogMaps = new google.maps.LatLng(lat, long);
+            moveToLocation();
+            $("#address").css("display","none");
+            $("#accept").css("display","none");
+            $("#reject").css("display","none");
+            $("#reject").css("display","none");
+            $("#reject").css("display","none");
+            $(".modal-body").append("Thank you. Click button to continue.");
+            $("#Proceed").css("display","block");
+        })
+
+        $("#reject").on("click",function(){
+            $("#address").css("display","none");
+            $("#accept").css("display","none");
+            $("#reject").css("display","none");
+            if(databaseObj.users[userObj.uid].address!=undefined){
+                $("#correctAddress").val(databaseObj.users[userObj.uid].address);
+            }
+            $("#correctAddress").css("display","block");
+            $("#submit").css("display","block");
+            $("#instruct").css("display","block");
+        })
+
+        
+        $("#submit").on("click",function(){
+            submitPushed=true;
+            var correctAddress = $("#correctAddress").val();
+                        
+            geocoder = new google.maps.Geocoder;
+            geocoder.geocode({"address":correctAddress},function(results,status){
+                if(status==="OK"){
+                    loc_GoogMaps = results[0].geometry.location;
+                    lat=results[0].geometry.location.lat();
+                    long=results[0].geometry.location.lng();
+                    dB.ref("/users/"+userObj.uid).set({
+                        iconnect: true,
+                        name : userObj.displayName,
+                        phoneNumber: databaseObj.users[userObj.uid].phoneNumber,
+                        email: userObj.email,
+                        address: correctAddress,
+                        coords:{"lat":lat,"long":long}
+                    });
+                    moveToLocation();
+                }
+
+
+            })
+
+            $("#instruct").css("display","none");
+            $("#address").css("display","none");
+            $("#accept").css("display","none");
+            $("#reject").css("display","none");
+            $("#correctAddress").css("display","none");
+            $("#submit").css("display","none");
+            $(".modal-body").append("Thank you. Click button to continue.");
+            $("#Proceed").css("display","block");
+
+        })
+
+        //add new help request
+
+        $("#requestSubmit").on("click",function(){
+            $("#pendingRequest").css("display","block");
+            var Drp = $("<div>");
+            Drp.addClass("dropdown-menu");
+            Drp.append("<a class='dropdown-item' href='#' onclick='withdraw();'>Withdraw Request</a>");
+            Drp.append("<a class='dropdown-item' href='#' onclick='complete();'>Mark Complete</a>");
+            Drp.append("<a class='dropdown-item' href='#' onclick='completeAndThanks();'>Mark Complete and Send Thank You</a>");
+            var Btn = $("<button>");
+            Btn.addClass("btn btn-default btn-block dropdown-toggle");
+            Btn.attr("id","actions");
+            Btn.attr("data-toggle","dropdown");
+            Btn.html("<i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>" + $("#requestInput").val());
+            var parent = $("<div>");
+            parent.addClass("input-group-btn");
+            parent.append(Btn);
+            parent.append(Drp);
+            $("#pendingRequest").append(parent);
+            $("#requestSubmit").prop("disabled",true);
+            dB.ref("/helpRequests/"+userObj.uid).set(userObj.uid);
+            dB.ref("/users/"+userObj.uid+"/helpRequests/").set($("#requestInput").val());
+            $("#requestInput").val("");
+        })
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////ADD FUNCTIONALITY FOR CLOSING REQUEST/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJRXIv3oHTTTjcAfMJuM-kILQXbkYJNCk&libraries=geometry>
+    </script>
+
+</body>
+
+</html>
