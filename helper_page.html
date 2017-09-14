@@ -192,6 +192,8 @@
         </div>
     </div>
 
+    <!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES-->
+
 
     <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
     <script type="text/javascript">
@@ -294,7 +296,7 @@
                         address = results[0].formatted_address;//formatted address with street address
                     }
                 }
-          })
+            })
 
         };
 
@@ -311,16 +313,9 @@
         var loc_GoogMaps,acceptPushed = false,submitPushed = false;
         $("#accept").on("click",function(){
             acceptPushed=true;
-            var currentAddress = address;
-            if(databaseObj.users[userObj.uid].address!=currentAddress){
-                dB.ref("/users/"+userObj.uid).set({
-                    iconnect: true,
-                    name : userObj.displayName,
-                    phoneNumber: databaseObj.users[userObj.uid].phoneNumber,
-                    email: userObj.email,
-                    address:currentAddress,
-                    coords:{"lat":lat,"long":long}
-                });            
+            if(databaseObj.users[userObj.uid].address!=address){
+                dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
+                dB.ref("/users/"+userObj.uid+"/address").set(address);
             }
             loc_GoogMaps = new google.maps.LatLng(lat, long);
             moveToLocation();
@@ -345,7 +340,6 @@
             $("#instruct").css("display","block");
         })
 
-        
         $("#submit").on("click",function(){
             submitPushed=true;
             var correctAddress = $("#correctAddress").val();
@@ -356,17 +350,10 @@
                     loc_GoogMaps = results[0].geometry.location;
                     lat=results[0].geometry.location.lat();
                     long=results[0].geometry.location.lng();
-                    dB.ref("/users/"+userObj.uid).set({
-                        iconnect: true,
-                        name : userObj.displayName,
-                        phoneNumber: databaseObj.users[userObj.uid].phoneNumber,
-                        email: userObj.email,
-                        address: correctAddress,
-                        coords:{"lat":lat,"long":long}
-                    });
+                    dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
+                    dB.ref("/users/"+userObj.uid+"/address").set(correctAddress);
                     moveToLocation();
                 }
-
 
             })
 
@@ -416,32 +403,35 @@
 
         function addRequestMarkersWithinRadius(){
             var bounds = new google.maps.LatLngBounds();
-            var infowindow,marker;
-            var listeners=[];
+
+            var listeners=[];//for content to be added to markers
             var content;
 
             for (var i=0; i<Object.keys(databaseObj.helpRequests).length;i++){
                 var helpuid = Object.keys(databaseObj.helpRequests)[i];
-                var helpAddress=databaseObj.users[helpuid].address;
-                var lat_help = databaseObj.users[helpuid].coords.lat;
-                var long_help = databaseObj.users[helpuid].coords.long;
-                var loc_GoogMaps_help = new google.maps.LatLng(lat_help, long_help);  
-                
-                var marker = new google.maps.Marker({
-                  position: loc_GoogMaps_help,
-                  map: map,
-                  animation: google.maps.Animation.DROP
-                });
 
-                markers.push(marker);
+                if(helpuid!=)
+                    var helpAddress=databaseObj.users[helpuid].address;
+                    var lat_help = databaseObj.users[helpuid].coords.lat;
+                    var long_help = databaseObj.users[helpuid].coords.long;
+                    var loc_GoogMaps_help = new google.maps.LatLng(lat_help, long_help);  
+                    
+                    var marker = new google.maps.Marker({
+                      position: loc_GoogMaps_help,
+                      map: map,
+                      animation: google.maps.Animation.DROP
+                    });
 
-                for (var j = 0; j < markers.length; j++) {
-                    bounds.extend(markers[j].getPosition());
-                }
+                    markers.push(marker);
 
-                content = "<div><p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact'>Contact</button></div>";
+                    for (var j = 0; j < markers.length; j++) {
+                        bounds.extend(markers[j].getPosition());
+                    }
 
-                attachListener(marker,content);
+                    content = "<div><p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact'>Contact</button></div>";
+
+                    attachListener(marker,content);
+
 
             }
 
@@ -462,6 +452,8 @@
             $("#confirm").css("display","block");
             $("#confirm").append("<div class='text-center'><p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with '" + $(this).parent().find("#request").html()+"'?</p><button id='confirmBtn' class='btn btn-primary btn-block'>Continue</button></div>");
         })
+
+        //ADD FUNCTIONALITY FOR CLOSING REQUESTS
 
     </script>
     <script async defer

@@ -300,16 +300,9 @@
         var loc_GoogMaps,acceptPushed = false,submitPushed = false;
         $("#accept").on("click",function(){
             acceptPushed=true;
-            var currentAddress = address;
-            if(databaseObj.users[userObj.uid].address!=currentAddress){
-                dB.ref("/users/"+userObj.uid).set({
-                    iconnect: true,
-                    name : userObj.displayName,
-                    phoneNumber: databaseObj.users[userObj.uid].phoneNumber,
-                    email: userObj.email,
-                    address:currentAddress,
-                    coords:{"lat":lat,"long":long}
-                });            
+            if(databaseObj.users[userObj.uid].address!=address){
+                dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
+                dB.ref("/users/"+userObj.uid+"/address").set(address);
             }
             loc_GoogMaps = new google.maps.LatLng(lat, long);
             moveToLocation();
@@ -345,18 +338,10 @@
                     loc_GoogMaps = results[0].geometry.location;
                     lat=results[0].geometry.location.lat();
                     long=results[0].geometry.location.lng();
-                    dB.ref("/users/"+userObj.uid).set({
-                        iconnect: true,
-                        name : userObj.displayName,
-                        phoneNumber: databaseObj.users[userObj.uid].phoneNumber,
-                        email: userObj.email,
-                        address: correctAddress,
-                        coords:{"lat":lat,"long":long}
-                    });
+                    dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
+                    dB.ref("/users/"+userObj.uid+"/address").set(correctAddress);
                     moveToLocation();
                 }
-
-
             })
 
             $("#instruct").css("display","none");
@@ -392,6 +377,8 @@
             $("#requestSubmit").prop("disabled",true);
             dB.ref("/helpRequests/"+userObj.uid).set(userObj.uid);
             dB.ref("/users/"+userObj.uid+"/helpRequests/").set($("#requestInput").val());
+            //////////////////I need to make sure that this stuff is not erased when navigating between pages
+            //////////////////the sets for the user nodes should incorporate all user data
             $("#requestInput").val("");
         })
 
