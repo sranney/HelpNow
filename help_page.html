@@ -125,7 +125,9 @@
           height:40px;
           font-size:30px;
           border-radius:15px;
+          padding:10px;
         }
+
         .collapsed{
           width:100%;
           display:block;
@@ -135,11 +137,13 @@
           text-align:center;
           border-radius:15px;
         }
+
         .animation-show{
           animation-duration:.1s;
           animation-name:expand;
           animation-fill-mode:forwards;
         }
+        
         @keyframes expand{
           0%{
             opacity:0;
@@ -152,19 +156,23 @@
             height:40px;
             font-size:30px;
             display:block;
+            padding:10px;
           }
         }
+        
         .animation-hide{
           animation-duration:.1s;
           animation-name:collapse;
           animation-fill-mode:forwards;
         }
+        
         @keyframes collapse{
           0%{
             opacity:1;
             height:40px;
             font-size:30px;
             display:block;
+            padding:10px;
           }
           100%{
             opacity:0;
@@ -173,6 +181,8 @@
             display:none;
           }
         }
+
+        #actions
 
     </style>
 
@@ -421,8 +431,6 @@
             $("#requestSubmit").prop("disabled",true);
             dB.ref("/helpRequests/"+userObj.uid).set(userObj.uid);
             dB.ref("/users/"+userObj.uid+"/helpRequests/").set($("#requestInput").val());
-            //////////////////I need to make sure that this stuff is not erased when navigating between pages
-            //////////////////the sets for the user nodes should incorporate all user data
             $("#requestInput").val("");
         })
 
