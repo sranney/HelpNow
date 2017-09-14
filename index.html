@@ -307,7 +307,7 @@
 					</form>
 					<div id = "errorMsg"></div>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer text-center">
 					<button class = "btn btn-primary" type="button" data-dismiss="modal" aria-hidden="true" id ="logInComplete">Continue to Site</button>
 				</div>
 			</div>
@@ -373,6 +373,7 @@
 				$("#loginModal").modal("show");
 				pageToLoad = "helper_page.html";
 			} else {
+				dB.ref("/users/" + userObj.uid + "/cameFromOtherPage").set(false);
 				var win = window.open("helper_page.html","_self");
         		win.focus();
 			}
@@ -387,6 +388,7 @@
 				$("#loginModal").modal("show");
 				pageToLoad = "help_page.html";
 			} else {
+				dB.ref("/users/" + userObj.uid + "/cameFromOtherPage").set(false);
 				var win = window.open("help_page.html","_self");
         		win.focus();
 			}
@@ -667,6 +669,7 @@
 
 		//after signing in or up, user is prompted with the logincomplete button to proceed to next page
 		$("#logInComplete").on("click",function(){
+			dB.ref("/users/" + userObj.uid + "/cameFromOtherPage").set(false);
 	    	myRefToDisconnect = dB.ref("/users/" + userObj.uid +"/iconnect")
 	    	myRefToDisconnect.set(true);
 	    	myRefToDisconnect.onDisconnect().set("disconnected");
