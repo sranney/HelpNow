@@ -360,16 +360,16 @@
 
         $("#requestSubmit").on("click",function(){
             $("#pendingRequest").css("display","block");
-            var Drp = $("<div>");
+            var Drp = $("<ul>");
             Drp.addClass("dropdown-menu");
-            Drp.append("<a class='dropdown-item' href='#' onclick='withdraw();'>Withdraw Request</a>");
-            Drp.append("<a class='dropdown-item' href='#' onclick='complete();'>Mark Complete</a>");
-            Drp.append("<a class='dropdown-item' href='#' onclick='completeAndThanks();'>Mark Complete and Send Thank You</a>");
+            Drp.append("<li><button class='dropdown-item btn btn-block' href='#' onclick='withdraw();'><i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>Withdraw Request</button></li>");
+            Drp.append("<li><button class='dropdown-item btn btn-block' href='#' onclick='complete();'><i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>Mark Complete</button></li>");
+            Drp.append("<li><button class='dropdown-item btn btn-block' href='#' onclick='completeAndThanks();'><i class='fa fa-handshake-o'></i><i class='fa fa-fw'></i>Mark Complete and Send Thank You</button></li>");
             var Btn = $("<button>");
             Btn.addClass("btn btn-default btn-block dropdown-toggle");
             Btn.attr("id","actions");
             Btn.attr("data-toggle","dropdown");
-            Btn.html("<i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>" + $("#requestInput").val());
+            Btn.html("" + $("#requestInput").val());
             var parent = $("<div>");
             parent.addClass("input-group-btn");
             parent.append(Btn);
