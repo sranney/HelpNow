@@ -264,7 +264,7 @@
                                 }
                             }
                         } else {//will run when the user came from the other page because cameFromOtherPage will be false - address just set by user on the other page, so asking for address again is not necessary
-                            loc_GoogMaps = new google.maps.LatLng(databaseObj.users[userObj.uid].coords.lat, databaseObj.users[userObj.uid].coords.lat);
+                            loc_GoogMaps = new google.maps.LatLng(databaseObj.users[userObj.uid].coords.lat, databaseObj.users[userObj.uid].coords.long);
                             moveToLocation();
                         }
                     }
