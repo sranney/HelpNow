@@ -120,8 +120,58 @@
             display:none;
         }
 
-        .dropdown-menu{
-            width:100%;
+        #actions{
+          width:100%;
+          height:40px;
+          font-size:30px;
+          border-radius:15px;
+        }
+        .collapsed{
+          width:100%;
+          display:block;
+          height:0px;
+          opacity:0;
+          font-size:0px;
+          text-align:center;
+          border-radius:15px;
+        }
+        .animation-show{
+          animation-duration:.1s;
+          animation-name:expand;
+          animation-fill-mode:forwards;
+        }
+        @keyframes expand{
+          0%{
+            opacity:0;
+            height:0px;
+            font-size:0px;
+            display:none;
+          }
+          100%{
+            opacity:1;
+            height:40px;
+            font-size:30px;
+            display:block;
+          }
+        }
+        .animation-hide{
+          animation-duration:.1s;
+          animation-name:collapse;
+          animation-fill-mode:forwards;
+        }
+        @keyframes collapse{
+          0%{
+            opacity:1;
+            height:40px;
+            font-size:30px;
+            display:block;
+          }
+          100%{
+            opacity:0;
+            height:0px;
+            font-size:0px;
+            display:none;
+          }
         }
 
     </style>
@@ -359,27 +409,34 @@
 
         $("#requestSubmit").on("click",function(){
             $("#pendingRequest").css("display","block");
-            var Drp = $("<ul>");
-            Drp.addClass("dropdown-menu");
-            Drp.append("<li><button class='dropdown-item btn btn-block' href='#' onclick='withdraw();'><i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>Withdraw Request</button></li>");
-            Drp.append("<li><button class='dropdown-item btn btn-block' href='#' onclick='complete();'><i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>Mark Complete</button></li>");
-            Drp.append("<li><button class='dropdown-item btn btn-block' href='#' onclick='completeAndThanks();'><i class='fa fa-handshake-o'></i><i class='fa fa-fw'></i>Mark Complete and Send Thank You</button></li>");
-            var Btn = $("<button>");
-            Btn.addClass("btn btn-default btn-block dropdown-toggle");
-            Btn.attr("id","actions");
-            Btn.attr("data-toggle","dropdown");
-            Btn.html("" + $("#requestInput").val());
-            var parent = $("<div>");
-            parent.addClass("input-group-btn");
-            parent.append(Btn);
-            parent.append(Drp);
-            $("#pendingRequest").append(parent);
+            
+            var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: " + $("#requestInput").val() + "<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
+            $("#pendingRequest").append(menuBtn);
+            var DrpBtn1 = $("<button class='collapsed btn btn-block' id='withdraw' href='#' onclick='withdraw();'><i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>Withdraw Request</button>");
+            $("#pendingRequest").append(DrpBtn1);
+            var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete' href='#' onclick='complete();'><i class='fa fa-check-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
+            $("#pendingRequest").append(DrpBtn2);
+            var DrpBtn3 = $("<button class='collapsed btn btn-block' id = 'thanks' href='#' onclick='Thanks();'><i class='fa fa-handshake-o'></i><i class='fa fa-fw'></i>Mark Complete and Send Thank You</button>");
+            $("#pendingRequest").append(DrpBtn3);
             $("#requestSubmit").prop("disabled",true);
             dB.ref("/helpRequests/"+userObj.uid).set(userObj.uid);
             dB.ref("/users/"+userObj.uid+"/helpRequests/").set($("#requestInput").val());
             //////////////////I need to make sure that this stuff is not erased when navigating between pages
             //////////////////the sets for the user nodes should incorporate all user data
             $("#requestInput").val("");
+        })
+
+        $(document).on("click","#actions",function(){
+            if($(".collapsed").hasClass("animation-show")){
+            $(".collapsed").removeClass("animation-show").addClass("animation-hide");
+            $("#actions").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+          } else if($(".collapsed").hasClass("animation-hide")){
+            $("#actions").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+            $(".collapsed").removeClass("animation-hide").addClass("animation-show");
+          } else {
+            $(".collapsed").addClass("animation-show");
+            $("#actions").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+          }
         })
 
         $("#goHelp>button").on("click",function(){
