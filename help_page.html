@@ -251,48 +251,51 @@
             });
         });
 
-
-    //////////////////////////////html5 geolocation api mixed with Goog Maps API Geocoding///////////////////////////////
-
-        var options = {
-          enableHighAccuracy: true,//set it to this so that we can access the most accurate gps system available on user's system
-          timeout: 5000,
-          maximumAge: 0
-        };
-
-        //if the getCurrentPosition function was able to get your gps location, then we want to do the following function, including running google maps geocode api
-
-        var lat,long,address,success,geocoder;
-        function success(pos) {
-
-            var crd = pos.coords;
-            lat = crd.latitude;
-            long = crd.longitude;
-
-            /////GOOGLE MAPS GEOCODE API FUNCTIONS - gets address
-            geocoder = new google.maps.Geocoder;
-            var geopos = {lat:lat,lng:long};
-            geocoder.geocode({"location":geopos},function(results,status){
-                if(status==="OK"){
-                    if(results[0]){
-                        address = results[0].formatted_address;//formatted address with street address
-                    }
-                }
-          })
-
-        };
-
-        function error(err) {
-          console.warn(`ERROR(${err.code}): ${err.message}`);
-        };
-
-        //geolocation.getCurrentPosition takes three parameters, 
-        //success - function - what do you want to do with the information returned if the function getCurrentPosition runs successfully
-        //error - function - how to handle errors
-        //options - object - optional parameters for how to handle getting coordinates
-        navigator.geolocation.getCurrentPosition(success, error, options);
-
         var loc_GoogMaps,acceptPushed = false,submitPushed = false;
+        var lat,long,address,success,geocoder;
+
+        function getAddress(){
+                //////////////////////////////html5 geolocation api mixed with Goog Maps API Geocoding///////////////////////////////
+
+            var options = {
+              enableHighAccuracy: true,//set it to this so that we can access the most accurate gps system available on user's system
+              timeout: 5000,
+              maximumAge: 0
+            };
+
+            //if the getCurrentPosition function was able to get your gps location, then we want to do the following function, including running google maps geocode api
+
+            
+            function success(pos) {
+
+                var crd = pos.coords;
+                lat = crd.latitude;
+                long = crd.longitude;
+
+                /////GOOGLE MAPS GEOCODE API FUNCTIONS - gets address
+                geocoder = new google.maps.Geocoder;
+                var geopos = {lat:lat,lng:long};
+                geocoder.geocode({"location":geopos},function(results,status){
+                    if(status==="OK"){
+                        if(results[0]){
+                            address = results[0].formatted_address;//formatted address with street address
+                        }
+                    }
+              })
+
+            };
+
+            function error(err) {
+              console.warn(`ERROR(${err.code}): ${err.message}`);
+            };
+
+            //geolocation.getCurrentPosition takes three parameters, 
+            //success - function - what do you want to do with the information returned if the function getCurrentPosition runs successfully
+            //error - function - how to handle errors
+            //options - object - optional parameters for how to handle getting coordinates
+            navigator.geolocation.getCurrentPosition(success, error, options);
+        })
+
         $("#accept").on("click",function(){
             acceptPushed=true;
             if(databaseObj.users[userObj.uid].address!=address){
@@ -387,7 +390,7 @@
 
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJRXIv3oHTTTjcAfMJuM-kILQXbkYJNCk&libraries=geometry>
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJRXIv3oHTTTjcAfMJuM-kILQXbkYJNCk&libraries=geometry&callback=getAddress>
     </script>
 
 </body>
