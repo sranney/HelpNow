@@ -209,10 +209,10 @@
             //firebase function to check whether user is logged into site
             Auth.onAuthStateChanged(function(user) {
                 if (user) {
-                    dB.ref("/users/"+userObj.uid+"/iconnect").set(true);
-                    myRefToDisconnect.onDisconnect().set("disconnected");
                     $("#requestInput").attr("placeholder","What do you need help with today, " + user.displayName + "?");
                     userObj = user;
+                    dB.ref("/users/"+userObj.uid+"/iconnect").set(true);
+                    myRefToDisconnect.onDisconnect().set("disconnected");
                     userLoggedIn=true;//used below to state user is logged in and to proceed to next page
                     if(databaseObj!=null){
                         var name = databaseObj.users[userObj.uid].name;
