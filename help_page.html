@@ -132,6 +132,11 @@
 
     </div>
 
+    <div id="goHelp" class="text-center">
+        <button class="btn btn-default" id="goto-GetHelp">GO HELP</button>
+    </div>
+
+
     <input id="requestInput" class="text-center" placeholder="What do you need help with today?">
     <button id="requestSubmit" class="btn btn-default btn-block">Request Help!</button>
 
@@ -209,28 +214,26 @@
             //firebase function to check whether user is logged into site
             Auth.onAuthStateChanged(function(user) {
                 if (user) {
-                    $("#requestInput").attr("placeholder","What do you need help with today, " + user.displayName + "?");
+                    $("#requestInput").attr("placeholder","What do you need help with today, " + user.displayName.substr(0,user.displayName.indexOf(' ')) + "?");
                     userObj = user;
-                    dB.ref("/users/"+userObj.uid+"/iconnect").set(true);
+                    myReftoDisconnect = dB.ref("/users/"+userObj.uid+"/iconnect");
+                    myReftoDisconnect.set(true);
                     myRefToDisconnect.onDisconnect().set("disconnected");
                     userLoggedIn=true;//used below to state user is logged in and to proceed to next page
-                    if(databaseObj!=null){
+                    if(databaseObj!=null&&databaseObj!=undefined){
                         var name = databaseObj.users[userObj.uid].name;
                         var email = databaseObj.users[userObj.uid].email;
                         var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
-                        if(databaseObj.users[userObj.uid].address !=undefined){
+                        if(databaseObj.users[userObj.uid].address !=undefined){//set user info on page depending on what has been set by user thus far
                             $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li></ul>");//provides welcome greeting
                         } else {
                             $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li></ul>");//provides welcome greeting
                         }
-                        if(databaseObj!=undefined){
+                        if(databaseObj.users[userObj.uid].cameFromOtherPage == false){//will run when the user came from the other page because cameFromOtherPage will be false - address just set by user on the other page, so asking for address again is not necessary
                             if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){
                                 var clearCode = setInterval(function(){                            
                                     if(address!=undefined){//want to continually run this query to see when address is set - when this becomes false, when address is set, then we want to quit this interval and show the modal that asks about current address
                                         if(submitPushed==false){
-                                            myRefToDisconnect = dB.ref("/users/" + userObj.uid +"/iconnect")
-                                            myRefToDisconnect.set(true);
-                                            myRefToDisconnect.onDisconnect().set("disconnected");
                                             $("#loginModal").modal({backdrop: 'static', keyboard: false});
                                             $("#loginModal").modal("show");                                
                                             $("#address").html("We have calculated your address to be:<br><span id='returnedAddress'>"+address+"</span><br>Is this correct?");
@@ -242,12 +245,7 @@
                                 },300);
                             } else {
                                 if(acceptPushed==false&&submitPushed==false){
-                                    geocoder.geocode({"address":address},function(results,status){
-                                        if(status==="OK"){
-                                            loc_GoogMaps = results[0].geometry.location;
-                                            moveToLocation();
-                                        }
-                                    })
+
                                 }
                             }
                         }
@@ -384,6 +382,11 @@
             $("#requestInput").val("");
         })
 
+        $("#goHelp>button").on("click",function(){
+            dB.ref("/users/" + userObj.uid + "/cameFromOtherPage").set(true);
+            var win = window.open("helper_page.html","_self");
+            win.focus();           
+        })
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////ADD FUNCTIONALITY FOR CLOSING REQUEST/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
