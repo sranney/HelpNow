@@ -107,7 +107,7 @@
             font-style:italic;
         }
 
-        #contact{
+        .contact{
             width:100%;
             background-color:#003600;
             border-radius:10px;
@@ -132,6 +132,8 @@
     <div id="map">
         
     </div>
+
+    <div id="confirm"></div>
 
     <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -416,7 +418,7 @@
                     bounds.extend(markers[j].getPosition());
                 }
 
-                content = "<p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact'>Contact</button>";
+                content = "<p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact' data-name="+databaseObj.users[helpuid].name+" data-request="+databaseObj.users[helpuid].helpRequest+">Contact</button>";
 
                 attachListener(marker,content);
 
@@ -436,7 +438,7 @@
         }
 
         $(document).on("click","#contact",function(){
-            console.log("map button pushed");
+            console.log($(this).attr("data-request"));
         })
 
     </script>
