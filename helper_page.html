@@ -171,7 +171,7 @@
 
     <div id="confirm"></div>
 
-    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div id="gpsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
@@ -261,8 +261,8 @@
                                 var clearCode = setInterval(function(){                            
                                     if(address!=undefined){//want to continually run this query to see when address is set - when this becomes false, when address is set, then we want to quit this interval and show the modal that asks about current address
                                         if(acceptPushed==false&&submitPushed==false){
-                                            $("#loginModal").modal({backdrop: 'static', keyboard: false});
-                                            $("#loginModal").modal("show");                                
+                                            $("#gpsModal").modal({backdrop: 'static', keyboard: false});
+                                            $("#gpsModal").modal("show");                                
                                             $("#address").html("We have calculated your address to be:<br><span id='returnedAddress'>"+address+"</span><br>Is this correct?");
                                             $("#accept").css("display","block");
                                             $("#reject").css("display","block");
