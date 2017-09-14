@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery.js"></script>
@@ -303,7 +303,6 @@
                 dB.ref("/users/"+userObj.uid+"/address").set(address);
             }
             loc_GoogMaps = new google.maps.LatLng(lat, long);
-            moveToLocation();
             $("#address").css("display","none");
             $("#accept").css("display","none");
             $("#reject").css("display","none");
@@ -338,7 +337,6 @@
                     long=results[0].geometry.location.lng();
                     dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
                     dB.ref("/users/"+userObj.uid+"/address").set(correctAddress);
-                    moveToLocation();
                 }
             })
 
