@@ -393,7 +393,10 @@
 
         function addRequestMarkersWithinRadius(){
             var bounds = new google.maps.LatLngBounds();
-            
+            var infowindow,marker;
+            var listeners=[];
+            var content;
+
             for (var i=0; i<Object.keys(databaseObj.helpRequests).length;i++){
                 var helpuid = Object.keys(databaseObj.helpRequests)[i];
                 var helpAddress=databaseObj.users[helpuid].address;
@@ -407,51 +410,29 @@
                   animation: google.maps.Animation.DROP
                 });
 
-                var infowindow = new google.maps.InfoWindow({
-                  content: "<p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact'>Contact</button>"
-                });
+                markers.push(marker);
 
-                markers.push(marker);               
                 for (var j = 0; j < markers.length; j++) {
                     bounds.extend(markers[j].getPosition());
                 }
 
+                content = "<p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact'>Contact</button>";
 
-                function setPositionAsContent(){
-                  infoWindow.open(this.map, this);
-                }
+                attachListener(marker,content);
 
-                google.maps.event.addListener(marker, "click", setPositionAsContent);   
-                
-/*                geocoder2.geocode({"address":helpAddress},function(results,status){
-                    if(status==="OK"){
-                        var loc_GoogMaps_help = results[0].geometry.location;
-                        var marker = new google.maps.Marker({
-                          position: loc_GoogMaps_help,
-                          map: map,
-                          animation: google.maps.Animation.DROP
-                        });
-
-                        var infowindow = new google.maps.InfoWindow({
-                          content: databaseObj.users[helpuid].helpRequest
-                        });
-
-                        marker.addListener('click', function() {
-                          infowindow.open(map, marker);
-                        });      
-
-                        markers.push(marker);               
-                        for (var i = 0; i < markers.length; i++) {
-                            bounds.extend(markers[i].getPosition());
-                        }
-
-                        map.fitBounds(bounds);
-
-                    }
-                })*/                
             }
 
             map.fitBounds(bounds);
+        }
+
+        function attachListener(marker,content){
+            var infowindow = new google.maps.InfoWindow({
+                content:content
+            });
+
+            marker.addListener("click",function(){
+                infowindow.open(marker.get("map"),marker);
+            });
         }
 
         $(document).on("click","#contact",function(){
