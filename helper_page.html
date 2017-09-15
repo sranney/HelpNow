@@ -330,8 +330,6 @@
                 dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
                 dB.ref("/users/"+userObj.uid+"/address").set(address);
             }
-            loc_GoogMaps = new google.maps.LatLng(lat, long);
-            moveToLocation();
             $("#address").css("display","none");
             $("#accept").css("display","none");
             $("#reject").css("display","none");
@@ -339,6 +337,8 @@
             $("#reject").css("display","none");
             $(".modal-body").append("Thank you. Click button to continue.");
             $("#Proceed").css("display","block");
+            loc_GoogMaps = new google.maps.LatLng(lat, long);
+            moveToLocation();
         })
 
         $("#reject").on("click",function(){
