@@ -548,7 +548,7 @@
             win.focus();           
         })
 
-        $("#signOut").on("click",function(){
+        $(document).on("click","#signOut",function(){
             firebase.auth().signOut().then(function() {
                 var win = window.open("index.html","_self");
                 win.focus();     
