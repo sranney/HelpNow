@@ -294,9 +294,9 @@
                     var email = databaseObj.users[userObj.uid].email;
                     var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
                     if(databaseObj.users[userObj.uid].address !=undefined){
-                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li></ul>");//provides welcome greeting
+                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li>Sign Out</li></ul>");//provides welcome greeting
                     } else {
-                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li></ul>");//provides welcome greeting
+                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     }
 
                     if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&processed==false){
@@ -546,6 +546,15 @@
             dB.ref("/users/" + userObj.uid + "/cameFromOtherPage").set(true);
             var win = window.open("help_page.html","_self");
             win.focus();           
+        })
+
+        $("#signOut").on("click",function(){
+            firebase.auth().signOut().then(function() {
+                var win = window.open("index.html","_self");
+                win.focus();     
+            }, function(error) {
+                console.error('Sign Out Error', error);
+            });
         })
 
         //ADD FUNCTIONALITY FOR CLOSING REQUESTS
