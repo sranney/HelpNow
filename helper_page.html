@@ -135,7 +135,7 @@
 
         #confirmModalBody{
             padding:0;
-            border-radius:20px;
+            border-radius:-5px;
         }
 
         #confirmBtn{
@@ -571,7 +571,7 @@
                             bounds.extend(markers[j].getPosition());
                         }
 
-                        content = "<div><p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact'>Contact</button></div>";
+                        content = "<div><p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact'>Help!</button></div>";
 
                         attachListener(marker,content);
                     }
