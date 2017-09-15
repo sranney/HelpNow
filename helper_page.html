@@ -464,35 +464,40 @@
             var listeners=[];//for content to be added to markers
             var content;
 
-            for (var i=0; i<Object.keys(databaseObj.helpRequests).length;i++){
-                var helpuid = Object.keys(databaseObj.helpRequests)[i];
+            if(databaseObj.helpRequests!=null&&databaseObj.helpRequests!=undefined){
 
-                if(helpuid!=userObj.uid){
-                    var helpAddress=databaseObj.users[helpuid].address;
-                    var lat_help = databaseObj.users[helpuid].coords.lat;
-                    var long_help = databaseObj.users[helpuid].coords.long;
-                    var loc_GoogMaps_help = new google.maps.LatLng(lat_help, long_help);  
-                    
-                    var marker = new google.maps.Marker({
-                      position: loc_GoogMaps_help,
-                      map: map,
-                      animation: google.maps.Animation.DROP
-                    });
+                for (var i=0; i<Object.keys(databaseObj.helpRequests).length;i++){
+                    var helpuid = Object.keys(databaseObj.helpRequests)[i];
 
-                    markers.push(marker);
+                    if(helpuid!=userObj.uid){
+                        var helpAddress=databaseObj.users[helpuid].address;
+                        var lat_help = databaseObj.users[helpuid].coords.lat;
+                        var long_help = databaseObj.users[helpuid].coords.long;
+                        var loc_GoogMaps_help = new google.maps.LatLng(lat_help, long_help);  
+                        
+                        var marker = new google.maps.Marker({
+                          position: loc_GoogMaps_help,
+                          map: map,
+                          animation: google.maps.Animation.DROP
+                        });
 
-                    for (var j = 0; j < markers.length; j++) {
-                        bounds.extend(markers[j].getPosition());
+                        markers.push(marker);
+
+                        for (var j = 0; j < markers.length; j++) {
+                            bounds.extend(markers[j].getPosition());
+                        }
+
+                        content = "<div><p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact'>Contact</button></div>";
+
+                        attachListener(marker,content);
                     }
 
-                    content = "<div><p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact'>Contact</button></div>";
-
-                    attachListener(marker,content);
                 }
 
+                map.fitBounds(bounds);
             }
 
-            map.fitBounds(bounds);
+                
         }
 
         function attachListener(marker,content){
