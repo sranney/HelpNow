@@ -118,10 +118,6 @@
             font-weight:bold;
         }
 
-        #pendingRequest{
-            display:none;
-        }
-
         #actions{
           width:100%;
           height:100%;
@@ -216,6 +212,27 @@
             color:white;
             border:4px solid white;
         }
+
+        #pendingRequest{
+            color:white;
+            font-size:20px;
+        }
+
+        #pendingRequest>a{
+            color:white;
+            font-size:20px;
+        }
+
+        #pendingRequest>a:hover{
+            background-color:#003600;
+            font-size:22px;
+            font-weight:bold;
+            border:3px solid white;
+            border-radius:5px;
+            padding:3px;
+        }
+
+
     </style>
 
 <body>
@@ -228,16 +245,11 @@
 
     </div>
 
-    <div id="goHelp" class="text-center">
-        <button class="btn btn-default" id="goto-GetHelp">GO HELP</button>
-    </div>
-
-
     <input id="requestInput" class="text-center" placeholder="What do you need help with today?">
     <button id="requestSubmit" class="btn btn-default btn-block">Request Help!</button>
 
     <div id="pendingRequest">
-        You have a pending request. Click button to close.
+        Click button to manage pending request. <a href="helper_page.html">Click here to go help someone in need.</a>
     </div>
 
     <div id="gpsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -445,8 +457,7 @@
 
         })
 
-        $("#requestSubmit").on("click",function(){//submits request and adds an actions button that will serve as operations for the 
-            $("#pendingRequest").css("display","block");
+        $("#requestSubmit").on("click",function(){//submits request and adds an actions button that will serve as operations for the user to manage their request            
             
             var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + $("#requestInput").val() + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
             $("#pendingRequest").append(menuBtn);
@@ -458,8 +469,6 @@
             $("#pendingRequest").append(DrpBtn3);
             var DrpBtn4 = $("<button class='collapsed btn btn-block' id = 'status' href='#' onclick='status();'><i class='fa fa-info-circle'></i><i class='fa fa-fw'></i>Check Status of Request</button>");
             $("#pendingRequest").append(DrpBtn4);
-            var DrpBtn5 = $("<button class='collapsed btn btn-block' id = 'status' href='#' onclick='status();'><i class='fa fa-info-circle'></i><i class='fa fa-fw'></i>Check Status of Request</button>");
-            $("#pendingRequest").append(DrpBtn5);
             $("#requestSubmit").prop("disabled",true);
             dB.ref("/helpRequests/"+userObj.uid).set("open");
             dB.ref("/users/"+userObj.uid+"/helpRequest/").set($("#requestInput").val());
