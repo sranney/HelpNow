@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+    <link rel="shortcut icon" type="image/x-icon" href="helpnow_favicon.ico"/>
+    <title>HelpNow - Get Help</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/2a8a6780db.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+    <style type="text/css">
+        body{
+            background-color:#032642;
+        }
+
+        .jumbotron{
+            background-color:#032642;
+            height:130px;
+            padding:10px;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+        ul{
+            float:left;
+            color:white;
+        }
+        ul>li{
+            color:white;
+        }
+
+        img{
+            height:100px;
+            float:right;
+        }
+
+        #correctAddress,#submit,#accept,#reject,#instruct{
+            display:none;
+        }
+
+        #returnedAddress{
+            font-weight:bold;
+            font-size:20px;
+            color:blue;
+        }
+
+        #accept{
+            background-color:#003600;
+            color:white;
+            font-size:30px;
+            font-weight:bold;
+        }
+
+        #reject{
+            background-color:#991E37;
+            color:white;
+            font-size:30px;
+            font-weight:bold;
+        }
+
+        #userInfo{
+            color:white;
+        }
+
+        #correctAddress{
+            width:100%;
+        }
+
+        #submit{
+            border:3px solid #454545;
+            color:#454545;
+            font-size:30px;
+            font-weight:bold;
+        }
+
+        /*********************************Map stuff*******************************************/
+        #map{
+            height:400px;
+        }
+
+        input{
+            font-size:20px;
+        }
+
+        #animateArrow{
+            font-size:30px;
+            animation-name:test;
+            animation-iteration-count:infinite;
+            animation-duration:1s;
+        }
+
+        @keyframes test{
+              0%{
+                font-size:30px;
+              }
+              50%{
+                font-size:33px;
+              }
+              100%{
+                font-size:30px;
+              }
+        } 
+
+        #Proceed{
+            display:none;
+        }       
+
+        #request{
+            color:red;
+            font-weight:bold;
+            font-style:italic;
+        }
+
+        .contact{
+            width:100%;
+            background-color:#003600;
+            border-radius:10px;
+            color:white;
+            border:none;
+            outline:none;
+            font-size:20px;
+        }
+
+        #confirm{
+            display:none;
+            border-radius:15px;
+            color:#454545;
+            background-color:#E5E5DB;
+            border:5px solid #454545;
+            font-size:40px;
+            font-weight:bold;
+        }
+
+        #confirm>p{
+            display:inline;
+            margin:10px;
+        }
+
+        #confirmBtn{
+            font-size:30px;
+            background-color:#454545;
+            color:#E5E5DB
+        }
+
+        #getHelp>button{
+            margin-top:10px;
+            margin-bottom:10px;
+            width:50%;
+            font-size:25px;
+            background-color:#991E37;
+            color:white;
+            border:4px solid white;
+        }
+
+        #disclaimer{
+            font-style:italic;
+            font-size:12px;
+            color:white;
+        }
+
+        #markerInfo{
+            display:inline-block;
+        }
+
+        #markerInfo>div{
+            display:inline-block;
+        }
+        #markerInfo>div>img{
+            height:30px;
+            display:inline;
+        }
+
+        #markerInfo>div>p{
+            height:30px;
+            display:inline;
+            color:white;
+        }
+
+    </style>
+
+<body>
+
+    <div class="jumbotron">
+        
+        <div id = "userInfo"></div>
+    
+        <img src="HelpNow Logo.png">
+
+    </div>
+
+    <div id="getHelp" class="text-center">
+        <button class="btn btn-default" id="goto-GetHelp">GET HELP</button>
+    </div>
+    <div id="markerInfo">
+        <div><img src="http://maps.google.com/mapfiles/ms/icons/green-dot.png"><p>current location:</p></div>
+        <div><img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png"><p>open help requests:</p></div>
+    </div>
+    <br>
+    <div id="map">
+        
+    </div>
+
+    <p id="disclaimer">Disclaimer: Please note that, if you have an open request, your request has been filtered out from your view.</p>
+
+    <div id="confirm"></div>
+
+    <div id="gpsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body text-center">
+        
+                    <div id="address"></div><!--will display message with calculated address-->
+                    
+                    <button class="btn btn-default btn-block" id="accept">
+                        <i class="fa fa-check"></i><i class="fa fa-fw"></i>Accept
+                    </button>
+
+                    <button class="btn btn-default btn-block" id="reject">
+                        <i class="fa fa-times"></i><i class="fa fa-fw"></i>Reject
+                    </button>
+
+                    <button id="reject">Reject</button>
+
+                    <div id="instruct">Please enter your correct address. Provided is your currently stored address, if set.</div>
+                    <input class="text-center" type="text" id="correctAddress" placeholder="1234 Simpleton Dr, Dallas TX 75204">
+                    <button id="submit" class="btn btn-default btn-block">
+                        Submit<i class="fa fa-fw"></i><i class="fa fa-arrow-right" id="animateArrow"></i>
+                    </button>
+
+                </div>
+
+                <div class="modal-footer text-center">
+
+                    <button class = "btn btn-primary" type="button" data-dismiss="modal" aria-hidden="true" id ="Proceed">Continue to Site</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES-->
+
+
+    <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+    <script type="text/javascript">
+
+    //////////////////////////////////////////////firebase code/////////////////////////////////////////////////
+
+        var config = {
+            apiKey: "AIzaSyBzJ9AknkEz3TmAHLEryoXaT74nLSf9mQQ",
+            authDomain: "project1-ad91c.firebaseapp.com",
+            databaseURL: "https://project1-ad91c.firebaseio.com",
+            projectId: "project1-ad91c",
+            storageBucket: "project1-ad91c.appspot.com",
+            messagingSenderId: "297815876711"
+        };
+        firebase.initializeApp(config);
+
+        var dB = firebase.database();
+        var Auth = firebase.auth();
+        var cloud = firebase.storage();
+        var provider_fb = new firebase.auth.FacebookAuthProvider();
+        var provider_goog = new firebase.auth.GoogleAuthProvider();
+        var userLoggedIn=false;
+        var myReftoDisconnect;
+        var myLocationRef;
+
+        var userObj;//will be user object with all kinds of datas
+        var databaseObj;
+        //get instance of real-time database
+        dB.ref().on("value",function(snapshot){
+            databaseObj = snapshot.toJSON();
+            //firebase function to check whether user is logged into site
+            Auth.onAuthStateChanged(function(user) {
+                if (user) {
+                    userObj = user;
+                    myReftoDisconnect = dB.ref("/users/"+userObj.uid+"/iconnect");
+                    myReftoDisconnect.set(true);
+                    myReftoDisconnect.onDisconnect().set("disconnected");
+                    userLoggedIn=true;//used below to state user is logged in and to proceed to next page
+                    if(databaseObj!=null&&databaseObj!=undefined){
+                        var name = databaseObj.users[userObj.uid].name;
+                        var email = databaseObj.users[userObj.uid].email;
+                        var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
+                        if(databaseObj.users[userObj.uid].address !=undefined){
+                            $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li></ul>");//provides welcome greeting
+                        } else {
+                            $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li></ul>");//provides welcome greeting
+                        }
+                        if(databaseObj.users[userObj.uid].cameFromOtherPage == false){//will run when the user came from the other page because cameFromOtherPage will be false - address just set by user on the other page, so asking for address again is not necessary
+                            if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){
+                                var clearCode = setInterval(function(){                            
+                                    if(address!=undefined){//want to continually run this query to see when address is set - when this becomes false, when address is set, then we want to quit this interval and show the modal that asks about current address
+                                        if(acceptPushed==false&&submitPushed==false){
+                                            $("#gpsModal").modal({backdrop: 'static', keyboard: false});
+                                            $("#gpsModal").modal("show");                                
+                                            $("#address").html("We have calculated your address to be:<br><span id='returnedAddress'>"+address+"</span><br>Is this correct?");
+                                            $("#accept").css("display","block");
+                                            $("#reject").css("display","block");
+                                            clearInterval(clearCode);
+                                        }
+                                    }
+                                },300);
+                            } else {//will run when the address generated by the navigator.geolocation matches what is in the database
+                                if(acceptPushed==false&&submitPushed==false){
+                                //when either the accept button is pushed or the submit button is pushed, we push new information to firebase under certain circumstances, and then we call google maps functions to perform map operations. if we don't have this condition, the operations will be performed twice when those buttons are pushed because this code will be executed on the firebase onvalue change trigger
+                                    loc_GoogMaps = new google.maps.LatLng(databaseObj.users[userObj.uid].coords.lat, databaseObj.users[userObj.uid].coords.long);
+                                    moveToLocation();
+                                }
+                            }
+                        } else {//will run when the user came from the other page because cameFromOtherPage will be false - address just set by user on the other page, so asking for address again is not necessary
+                            loc_GoogMaps = new google.maps.LatLng(databaseObj.users[userObj.uid].coords.lat, databaseObj.users[userObj.uid].coords.long);
+                            moveToLocation();
+                        }
+                    }
+                } else {
+                    userLoggedIn=false;//used below to state user is not logged in and to prompt user with a modal
+                }
+            });
+        });
+
+        var lat,long,address,success,geocoder;
+        var loc_GoogMaps,acceptPushed = false,submitPushed = false;
+        $("#accept").on("click",function(){
+            acceptPushed=true;
+            if(databaseObj.users[userObj.uid].address!=address){
+                dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
+                dB.ref("/users/"+userObj.uid+"/address").set(address);
+            }
+            loc_GoogMaps = new google.maps.LatLng(lat, long);
+            moveToLocation();
+            $("#address").css("display","none");
+            $("#accept").css("display","none");
+            $("#reject").css("display","none");
+            $("#reject").css("display","none");
+            $("#reject").css("display","none");
+            $(".modal-body").append("Thank you. Click button to continue.");
+            $("#Proceed").css("display","block");
+        })
+
+        $("#reject").on("click",function(){
+            $("#address").css("display","none");
+            $("#accept").css("display","none");
+            $("#reject").css("display","none");
+            if(databaseObj.users[userObj.uid].address!=undefined){
+                $("#correctAddress").val(databaseObj.users[userObj.uid].address);
+            }
+            $("#correctAddress").css("display","block");
+            $("#submit").css("display","block");
+            $("#instruct").css("display","block");
+        })
+
+        $("#submit").on("click",function(){
+            submitPushed=true;
+            var correctAddress = $("#correctAddress").val();
+                        
+            geocoder = new google.maps.Geocoder;
+            geocoder.geocode({"address":correctAddress},function(results,status){
+                if(status==="OK"){
+                    loc_GoogMaps = results[0].geometry.location;
+                    lat=results[0].geometry.location.lat();
+                    long=results[0].geometry.location.lng();
+                    dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
+                    dB.ref("/users/"+userObj.uid+"/address").set(correctAddress);
+                    moveToLocation();
+                }
+
+            })
+            var newDateObj = moment(new Date()).add(30, 'm');
+            dB.ref("/users/"+userObj.uid+"/loc_Expire").set(newDateObj._d.getTime());
+            $("#instruct").css("display","none");
+            $("#address").css("display","none");
+            $("#accept").css("display","none");
+            $("#reject").css("display","none");
+            $("#correctAddress").css("display","none");
+            $("#submit").css("display","none");
+            $(".modal-body").append("Thank you. Click button to continue.");
+            $("#Proceed").css("display","block");
+
+        })
+
+        var map;
+        function initMap(){
+            var center={lat:32.7767,lng:-96.7970};
+            map = new google.maps.Map(document.getElementById('map'),{
+                zoom:15,
+                center:center
+            });
+
+        //////////////////////////////html5 geolocation api mixed with Goog Maps API Geocoding///////////////////////////////
+
+            var options = {
+              enableHighAccuracy: true,//set it to this so that we can access the most accurate gps system available on user's system
+              timeout: 5000,
+              maximumAge: 0
+            };
+
+            //if the getCurrentPosition function was able to get your gps location, then we want to do the following function, including running google maps geocode api
+
+            
+            function success(pos) {
+
+                var crd = pos.coords;
+                lat = crd.latitude;
+                long = crd.longitude;
+
+                /////GOOGLE MAPS GEOCODE API FUNCTIONS - gets address
+                geocoder = new google.maps.Geocoder;
+                var geopos = {lat:lat,lng:long};
+                geocoder.geocode({"location":geopos},function(results,status){
+                    if(status==="OK"){
+                        if(results[0]){
+                            address = results[0].formatted_address;//formatted address with street address
+                        }
+                    }
+                })
+
+            };
+
+            function error(err) {
+              console.warn(`ERROR(${err.code}): ${err.message}`);
+            };
+
+            //geolocation.getCurrentPosition takes three parameters, 
+            //success - function - what do you want to do with the information returned if the function getCurrentPosition runs successfully
+            //error - function - how to handle errors
+            //options - object - optional parameters for how to handle getting coordinates
+            navigator.geolocation.getCurrentPosition(success, error, options);
+
+        }
+
+        var markers=[];//array to push markers into
+
+        function moveToLocation(){
+            // using global variable:
+            map.panTo(loc_GoogMaps);
+            //helper marker
+            var marker = new google.maps.Marker({
+              position: loc_GoogMaps,
+              map: map,
+              animation: google.maps.Animation.DROP,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+            });
+            var infowindow = new google.maps.InfoWindow({
+              content: "You are here"
+            });
+            marker.addListener('click', function() {
+              infowindow.open(map, marker);
+            });
+            markers.push(marker);
+            //helpRequest markers
+            addRequestMarkersWithinRadius();
+        }
+
+
+        function addRequestMarkersWithinRadius(){
+            var bounds = new google.maps.LatLngBounds();
+
+            var listeners=[];//for content to be added to markers
+            var content;
+
+            for (var i=0; i<Object.keys(databaseObj.helpRequests).length;i++){
+                var helpuid = Object.keys(databaseObj.helpRequests)[i];
+
+                if(helpuid!=userObj.uid){
+                    var helpAddress=databaseObj.users[helpuid].address;
+                    var lat_help = databaseObj.users[helpuid].coords.lat;
+                    var long_help = databaseObj.users[helpuid].coords.long;
+                    var loc_GoogMaps_help = new google.maps.LatLng(lat_help, long_help);  
+                    
+                    var marker = new google.maps.Marker({
+                      position: loc_GoogMaps_help,
+                      map: map,
+                      animation: google.maps.Animation.DROP
+                    });
+
+                    markers.push(marker);
+
+                    for (var j = 0; j < markers.length; j++) {
+                        bounds.extend(markers[j].getPosition());
+                    }
+
+                    content = "<div><p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact'>Contact</button></div>";
+
+                    attachListener(marker,content);
+                }
+
+            }
+
+            map.fitBounds(bounds);
+        }
+
+        function attachListener(marker,content){
+            var infowindow = new google.maps.InfoWindow({
+                content:content
+            });
+
+            marker.addListener("click",function(){
+                infowindow.open(marker.get("map"),marker);
+            });
+        }
+
+        $(document).on("click",".contact",function(){
+            $("#confirm").css("display","block");
+            $("#confirm").append("<div class='text-center'><p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block'>Continue</button></div>");
+        })
+
+        $("#getHelp>button").on("click",function(){
+            dB.ref("/users/" + userObj.uid + "/cameFromOtherPage").set(true);
+            var win = window.open("help_page.html","_self");
+            win.focus();           
+        })
+
+        //ADD FUNCTIONALITY FOR CLOSING REQUESTS
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJRXIv3oHTTTjcAfMJuM-kILQXbkYJNCk&libraries=geometry&callback=initMap">
+    </script>
+
+</body>
+
+</html>

@@ -466,6 +466,7 @@
 			  	$("#sign-"+type_ext).css("display","none");
 			  	if(provider.providerId==="google.com"){$("#facebook-"+type).css("display","none");} else {$("#google-"+type).css("display","none");}
 			  	$("#form-"+type).css("display","none");
+			  	$("form#sign-in-form>p").css("display","none");
 			  	$("form#sign-up-form>p").css("display","none");
 				$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");			  	
 			  	$("form#sign-up-form").prepend("<p>Welcome, " + userObj.displayName + "</p>");
