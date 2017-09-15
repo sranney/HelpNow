@@ -450,7 +450,7 @@
 	  	var FederatedSignIn_flag = false; //needed to distinguish sign-ups from sign-ins
 	  	//function that runs for federated logins (google and facebook), complete with error handling
 	  	function federatedLogin(type,provider){
-		  	$("#sign-"+type+"-form").css("display","none");
+		  	
 		  	Auth.signInWithPopup(provider).then(function(result) {
 			  // This gives you a Federated Provider Access Token. You can use it to access the Facebook API.
 			  var token = result.credential.accessToken;
@@ -459,8 +459,9 @@
 			  // ...
 			  //google and facebook doesn't provide phone number, so we need to ask for this information from user
 			  //the code below sets modal to show instructions to user to enter phone number when signing up
-			  $("errorMsg").empty();
+			  $("#errorMsg").empty();
 			  var type_ext = type=="su" ? "up":"in";
+			  $("#sign-"+type_ext+"-form").css("display","none");
 			  FederatedSignIn_flag = type == "su" ? false : true;
 			  if(type=="su" || databaseObj == null){
 			  	$("#sign-"+type_ext).css("display","none");
