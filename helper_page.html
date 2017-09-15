@@ -295,8 +295,10 @@
 
     <div id="confirmModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
-            <div class="modal-content" id="confirm">
-
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="confirmMessage"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -404,7 +406,7 @@
             $("#reject").css("display","none");
             $("#reject").css("display","none");
             $("#reject").css("display","none");
-            $(".modal-body#gps-body").append("Thank you. Click button to continue.");
+            $("#gps-body").append("Thank you. Click button to continue.");
             $("#Proceed").css("display","block");
             loc_GoogMaps = new google.maps.LatLng(lat, long);
             moveToLocation();
@@ -435,7 +437,7 @@
             $("#reject").css("display","none");
             $("#correctAddress").css("display","none");
             $("#submit").css("display","none");
-            $(".modal-body#gps-modal").append("Thank you. Click button to continue.");
+            $("#gps-body").append("Thank you. Click button to continue.");
             $("#Proceed").css("display","block");
 
             var correctAddress = $("#correctAddress").val();
@@ -583,14 +585,18 @@
                 content:content
             });
 
-            marker.addListener("click",function(){
+            marker.addListener("mouseover",function(){
                 infowindow.open(marker.get("map"),marker);
+            });
+
+            marker.addListener("mouseout",function(){
+                infowindow.close();
             });
         }
 
         $(document).on("click",".contact",function(){
             $("#confirmModal").modal("show");
-            $("#confirm").html("<div class='text-center'><p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button></div>");
+            $(".confirmMessage").append("<div class='text-center' style='width:100px;height:100px'><p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button></div>");
         })
 
 
@@ -609,11 +615,15 @@
             });
         })
 
+
         //ADD FUNCTIONALITY FOR CLOSING REQUESTS
 
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJRXIv3oHTTTjcAfMJuM-kILQXbkYJNCk&libraries=geometry&callback=initMap">
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/directionsjs?key=AIzaSyArQ_SfoEHFiJBa9dPXJ-W5oLq-fToKxKU&libraries=geometry&callback=initMap">
     </script>
 
 </body>
