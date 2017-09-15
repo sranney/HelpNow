@@ -327,37 +327,44 @@
                     myReftoDisconnect.set(true);
                     myReftoDisconnect.onDisconnect().set("disconnected");
                     userLoggedIn=true;//used below to state user is logged in and to proceed to next page
-                    if(databaseObj!=null&&databaseObj!=undefined){
-                        var name = databaseObj.users[userObj.uid].name;
-                        var email = databaseObj.users[userObj.uid].email;
-                        var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
-                        if(databaseObj.users[userObj.uid].address !=undefined){
-                            $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li></ul>");//provides welcome greeting
-                        } else {
-                            $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li></ul>");//provides welcome greeting
-                        }
-                        if(databaseObj.users[userObj.uid].cameFromOtherPage == false){//will run when the user came from the other page because cameFromOtherPage will be false - address just set by user on the other page, so asking for address again is not necessary
-                            if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){
-                                var clearCode = setInterval(function(){                            
-                                    if(address!=undefined){//want to continually run this query to see when address is set - when this becomes false, when address is set, then we want to quit this interval and show the modal that asks about current address
-                                        if(acceptPushed==false&&submitPushed==false){
-                                            $("#gpsModal").modal({backdrop: 'static', keyboard: false});
-                                            $("#gpsModal").modal("show");                                
-                                            $("#address").html("We have calculated your address to be:<br><span id='returnedAddress'>"+address+"</span><br>Is this correct?");
-                                            $("#accept").css("display","block");
-                                            $("#reject").css("display","block");
-                                            clearInterval(clearCode);
-                                        }
-                                    }
-                                },300);
-                            }
-                        }
+                    var name = databaseObj.users[userObj.uid].name;
+                    var email = databaseObj.users[userObj.uid].email;
+                    var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
+                    if(databaseObj.users[userObj.uid].address !=undefined){
+                        $("#userInfo").html("<ul><li id='Menu'>You are on the <a href='#' id='pageTitle'>Get Help Page</a>. <a href='helper_page.html' id='goHelp'>Click here to go to Go Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
+                    } else {
+                        $("#userInfo").html("<ul><li id='Menu'>You are on the <a id='pageTitle'>Get Help Page</a>. <a href='help_page.html' id='goHelp'>Click here to go to Go Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     }
+                    if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&processed==false){
+                        bigSettingPrompt()//dealing with two asynchronous and separately fired functions and want this to run only when all of this information is available (database and address each being generated from two different functions) and for it to run only once - so I check that all data has been set and then I put in a boolean processed to allow me to control how many times this runs
+                    }
+
                 } else {
                     userLoggedIn=false;//used below to state user is not logged in and to prompt user with a modal
                 }
             });
         });
+
+        var processed=false;
+        function bigSettingPrompt(){
+            processed=true;
+            if(databaseObj.users[userObj.uid].cameFromOtherPage == false){//will run when the user came from the other page because cameFromOtherPage will be false - address just set by user on the other page, so asking for address again is not necessary
+                if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){                          
+                    if(address!=undefined){//want to continually run this query to see when address is set - when this becomes false, when address is set, then we want to quit this interval and show the modal that asks about current address
+                        if(acceptPushed==false&&submitPushed==false){
+                            if(modalShown==false){
+                                $("#gpsModal").modal({backdrop: 'static', keyboard: false});
+                                $("#gpsModal").modal("show");                                
+                                $("#address").html("We have calculated your address to be:<br><span id='returnedAddress'>"+address+"</span><br>Is this correct?");
+                                $("#accept").css("display","block");
+                                $("#reject").css("display","block");
+                                modalShown = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         var acceptPushed = false,submitPushed = false;
         var lat,long,address,success,geocoder;
@@ -387,6 +394,9 @@
                     if(status==="OK"){
                         if(results[0]){
                             address = results[0].formatted_address;//formatted address with street address
+                            if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&processed==false){
+                                bigSettingPrompt()
+                            }                            
                         }
                     }
               })
