@@ -287,7 +287,23 @@
 
                 <div class="modal-footer text-center">
 
-                    <button class = "btn btn-primary" type="button" data-dismiss="modal" aria-hidden="true" id ="Proceed">Continue to Site</button>
+                    <button class = "btn btn-primary btn-block" type="button" data-dismiss="modal" aria-hidden="true" id ="Proceed">Continue to Site</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="gpsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body text-center">
+
+                <div class="modal-footer">
+
+                    <button class = "btn btn-primary btn-block" type="button" data-dismiss="modal" aria-hidden="true" id ="Proceed">Continue to Site</button>
 
                 </div>
 
@@ -583,10 +599,10 @@
         }
 
         $(document).on("click",".contact",function(){
-            $("#confirm").css("display","block");
-            $("#confirm").empty();
-            $("#confirm").append("<div class='text-center'><p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block'>Continue</button></div>");
+            $("#confirmModal").modal("show");
+            $("#confirmModal").html("<div class='text-center'><p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button></div>");
         })
+
 
         $("#disclaimer>a").on("click",function(){
             dB.ref("/users/" + userObj.uid + "/cameFromOtherPage").set(true);
