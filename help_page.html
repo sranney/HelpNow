@@ -315,7 +315,7 @@
         var myRefToDisconnect;
 
         var userObj;//will be user object with all kinds of datas
-        var databaseObj;
+        var databaseObj,modalShown=false;
         //get instance of real-time database
         dB.ref().on("value",function(snapshot){
             databaseObj = snapshot.toJSON();
