@@ -592,7 +592,7 @@
 
         $(document).on("click",".contact",function(){
             $("#confirmModal").modal("show");
-            $(".confirmMessage").append("<div class='text-center' style='width:100px;height:100px'><p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button></div>");
+            $(".confirmMessage").append("<div class='text-center'><p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button></div>");
         })
 
 
