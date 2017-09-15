@@ -507,6 +507,7 @@
 
         $(document).on("click",".contact",function(){
             $("#confirm").css("display","block");
+            $("#confirm").empty();
             $("#confirm").append("<div class='text-center'><p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block'>Continue</button></div>");
         })
 
