@@ -599,13 +599,25 @@
             $(".confirmMessage").append("<div class='text-center'><p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button></div>");
         })
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //go to other pages
 
+        //go to Get Help page
         $("#disclaimer>a").on("click",function(){
-            dB.ref("/users/" + userObj.uid + "/cameFromOtherPage").set(true);
-            var win = window.open("help_page.html","_self");
-            win.focus();           
+           gotoGetHelp();
         })
 
+        $("a#getHelp").on("click",function(){
+           gotoGetHelp();
+        })
+
+        function gotoGetHelp(){
+            dB.ref("/users/" + userObj.uid + "/cameFromOtherPage").set(true);
+            var win = window.open("help_page.html","_self");
+            win.focus();
+        }
+
+        //sign out and go to home page
         $(document).on("click","#signOut",function(){
             firebase.auth().signOut().then(function() {
                 var win = window.open("index.html","_self");

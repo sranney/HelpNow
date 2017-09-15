@@ -246,7 +246,7 @@
             background-color:#003600;
         }
 
-        #Menu>#pageTitle:hover,#Menu>#getHelp:hover{
+        #Menu>#pageTitle:hover,#Menu>#goHelp:hover{
             font-size:19px;
         }        
 
@@ -516,12 +516,23 @@
           }
         })
 
-        //go to go help page
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //go to other pages
+        
+        //go to Go Help page
         $("#pendingRequest>a").on("click",function(){
+            gotoGoHelp();
+        })
+
+        $("a#goHelp").on("click",function(){
+            gotoGoHelp();
+        })
+
+        function gotoGoHelp(){
             dB.ref("/users/" + userObj.uid + "/cameFromOtherPage").set(true);
             var win = window.open("helper_page.html","_self");
-            win.focus();           
-        })
+            win.focus(); 
+        }
 
         function withdraw(){
 
