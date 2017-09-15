@@ -261,7 +261,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
-                <div class="modal-body text-center">
+                <div class="modal-body text-center" id="gps-body">
         
                     <div id="address"></div><!--will display message with calculated address-->
                     
@@ -297,8 +297,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
-                <div class="modal-body text-center">
-                    <div id="confirm"></div>
+                <div class="modal-body text-center" id="confirm">
+
                 </div>
 
             </div>
@@ -408,7 +408,7 @@
             $("#reject").css("display","none");
             $("#reject").css("display","none");
             $("#reject").css("display","none");
-            $(".modal-body").append("Thank you. Click button to continue.");
+            $(".modal-body#gps-body").append("Thank you. Click button to continue.");
             $("#Proceed").css("display","block");
             loc_GoogMaps = new google.maps.LatLng(lat, long);
             moveToLocation();
@@ -439,7 +439,7 @@
             $("#reject").css("display","none");
             $("#correctAddress").css("display","none");
             $("#submit").css("display","none");
-            $(".modal-body").append("Thank you. Click button to continue.");
+            $(".modal-body#gps-modal").append("Thank you. Click button to continue.");
             $("#Proceed").css("display","block");
 
             var correctAddress = $("#correctAddress").val();
