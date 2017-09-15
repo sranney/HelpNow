@@ -189,26 +189,43 @@
 
         #signOut{
             text-decoration:underline;
-            font-size:12px;
+            font-size:14px;
         }
 
         #signOut:hover{
             text-decoration:underline;
-            font-size:12px;
+            font-size:16px;
             color:#77BDD9;
             font-weight:bold;
         }
 
-        #Menu>#pageTitle{
+        #Menu>#pageTitle,#Menu>#getHelp{
             background-color:#003600;
             border-radius:3px;
             border:3px solid white;
+            color:white;
+            padding:3px;
+            font-size:16px;
         }
 
         #Menu>#getHelp{
-            background-color:#003600;
-            border-radius:3px;
-            border:3px solid white;
+            background-color:#991E37;
+        }
+
+        #Menu>#pageTitle:hover,#Menu>#getHelp:hover{
+            animation-name:swellEmphasize;
+            animation-duration:1s;
+        }
+
+        @keyframes swellEmphasize{
+            0%{
+                font-size:16px;
+                color:white;
+            }
+            100%{
+                font-size:19px;
+                color:white;
+            }
         }
 
     </style>
