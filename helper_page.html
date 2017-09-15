@@ -170,7 +170,17 @@
         }
 
         #markerInfo{
+            margin-top:3px;
+            margin-bottom:3px;
             display:inline-block;
+            background-color:#403F3D;
+            border:3px solid white;
+            padding:5px;
+            transition:all 1s ease-in-out;
+        }
+
+        #markerInfo:hover{
+            transform:scale(1.1);
         }
 
         #markerInfo>div{
@@ -238,9 +248,11 @@
         
     </div>
 
-    <div id="markerInfo">
-        <div class="text-center"><img src="http://maps.google.com/mapfiles/ms/icons/green-dot.png"><p>current location:</p></div>
-        <div class="text-center"><img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png"><p>open help requests:</p></div>
+    <div id="markerLegend" class="text-center">
+        <div id="markerInfo">
+            <div class="text-center"><img src="http://maps.google.com/mapfiles/ms/icons/green-dot.png"><p>current location:</p></div>
+            <div class="text-center"><img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png"><p>open help requests:</p></div>
+        </div>
     </div>
 
     <p id="disclaimer">Disclaimer: Please note that, if you have an open request, your request has been filtered out from your view. Only people that can help you will see your request. If you have an outstanding request, and would like to manage it, <a href="help_page.html">click here to go to GET HELP page</a></p>
