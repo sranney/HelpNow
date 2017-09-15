@@ -187,6 +187,30 @@
             color:white;
         }
 
+        #signOut{
+            text-decoration:underline;
+            font-size:12px;
+        }
+
+        #signOut:hover{
+            text-decoration:underline;
+            font-size:12px;
+            color:#77BDD9;
+            font-weight:bold;
+        }
+
+        #Menu>#pageTitle{
+            background-color:#003600;
+            border-radius:3px;
+            border:3px solid white;
+        }
+
+        #Menu>#getHelp{
+            background-color:#003600;
+            border-radius:3px;
+            border:3px solid white;
+        }
+
     </style>
 
 <body>
@@ -294,9 +318,9 @@
                     var email = databaseObj.users[userObj.uid].email;
                     var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
                     if(databaseObj.users[userObj.uid].address !=undefined){
-                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
+                        $("#userInfo").html("<ul><li id='Menu'>You are on the <a href='#' id='pageTitle'>Go Help Page</a>. <a href='help_page.html' id='getHelp'>Click here to go to Get Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     } else {
-                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
+                        $("#userInfo").html("<ul><li id='Menu'>You are on the <a id='pageTitle'>Go Help Page</a>. <a href='help_page.html' id='getHelp'>Click here to go to Get Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     }
 
                     if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&processed==false){
