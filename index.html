@@ -584,6 +584,7 @@
 	  		var name = $("#firstName-su").val() + " " + $("#lastName-su").val();
 	  		var phoneNumber = $("#phoneNumber-su").val();
 	  		var errorCode="";
+	  		$("#errorMsg").empty();
 		  	Auth.createUserWithEmailAndPassword(email, password).then(function(user){
 		  		$("#logInComplete").css("display","block");
 				$("#signUpInButtons").css("display","none");
@@ -600,10 +601,10 @@
 				  errorCode = error.code;
 				  var errorMessage = error.message;
 				  if(errorMessage == "The email address is already in use by another account."){
-				  	$("#errorMsg").empty();
+				  	
 				  	$("#errorMsg").append("<p>" + errorMessage + " If this is your account, please click the sign in button to sign in.</p>")
 				  } else {
-				  	$("#errorMsg").empty();
+
 				  	$("#errorMsg").append("<p>" + errorMessage + " Please try again.</p>")
 				  }
 			});
@@ -611,10 +612,11 @@
 
 		//button click listener for sign in form
 		$("#submit-si").on("click",function(){
+			$("#errorMsg").empty();
 			if($("#email-si").val() !== "" && $("#password-si").val() !== ""){
 				submitForm_si();
 			} else {
-				$("#errorMsg").empty();
+				
 				$("#errorMsg").append("<p>Not all fields are filled out correctly. Please fill all forms.</p>");
 			}
 		})
