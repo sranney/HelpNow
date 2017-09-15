@@ -490,7 +490,7 @@
         })
 
         //go to go help page
-        $("#goHelp>button").on("click",function(){
+        $("#pendingRequest>a").on("click",function(){
             dB.ref("/users/" + userObj.uid + "/cameFromOtherPage").set(true);
             var win = window.open("helper_page.html","_self");
             win.focus();           
