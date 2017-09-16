@@ -3,11 +3,12 @@
 <head>
 	<link rel="shortcut icon" type="image/x-icon" href="helpnow_favicon.ico"/>
 	<title>Help Now</title>
+	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/LeaVerou/awesomplete/gh-pages/awesomplete.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://use.fontawesome.com/2a8a6780db.js"></script>
-
+	<script src="rita.js"></script>
 	
 	<style type="text/css">
 		
@@ -293,7 +294,7 @@
 						<p class="instructions">Please fill out all fields</p>
 						<input id = "firstName-su" type = "text" placeholder="First Name" class="text-center"><!--put a user symbol here-->
 						<input id = "lastName-su" type = "text" placeholder="Last Name" class="text-center"><!--put a user symbol here-->
-						<input id = "email-su" type = "text" placeholder="Email" class="text-center"><!--put an envelope here-->
+						<input id = "email-su" type = "email" placeholder="Email" class="text-center"><!--put an envelope here-->
 						<input id = "phoneNumber-su" type = "text" placeholder="Phone" class="text-center"><!--put a phone icon here-->
 						<input id = "password-su" type = "password" placeholder="Password" class="text-center"><!--put a lock here-->
 						<button type="button" id = "submit-su" class="btn btn-primary">Sign Up</button>
@@ -301,7 +302,7 @@
 
 					<form id="sign-in-form" class="text-center">
 						<p class="instructions">Please provide your registered email and password</p>
-						<input id = "email-si" type = "text" placeholder="Email" class="text-center"><!--put an envelope here-->
+						<input id = "email-si" type = "email" placeholder="Email" class="text-center"><!--put an envelope here-->
 						<input id = "password-si" type = "password" placeholder="Password" class="text-center"><!--put a lock here-->
 						<button type="button" id = "submit-si" class="btn btn-primary">Sign In</button>
 					</form>
@@ -316,6 +317,7 @@
 
 
 	<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+	<script type="text/javascript" src="https://cdn.rawgit.com/LeaVerou/awesomplete/gh-pages/awesomplete.min.js"></script>
 	<script type="text/javascript">
 		
 
@@ -645,6 +647,8 @@
 			phoneNumbVal($(this).val(),"#phoneNumber-su");
 		})
 
+		//FORM VALIDATION
+
 		//phone number validation
 		phoneNumbVal = function(numb_forValidation,id){
 			var e = event || window.event;  // get event object
@@ -671,6 +675,8 @@
 			}
 		}
 
+
+
 		//after signing in or up, user is prompted with the logincomplete button to proceed to next page
 		$("#logInComplete").on("click",function(){
 			dB.ref("/users/" + userObj.uid + "/cameFromOtherPage").set(false);
@@ -681,7 +687,13 @@
         	win.focus();
 		})
 
-
+		new Awesomplete('input[type="email"]', {
+			list: ["aol.com", "att.net", "comcast.net", "facebook.com", "gmail.com", "gmx.com", "googlemail.com", "google.com", "hotmail.com", "hotmail.co.uk", "mac.com", "me.com", "mail.com", "msn.com", "live.com", "sbcglobal.net", "verizon.net", "yahoo.com", "yahoo.co.uk"],
+			data: function (text, input) {
+				return input.slice(0, input.indexOf("@")) + "@" + text;
+			},
+			filter: Awesomplete.FILTER_STARTSWITH
+		});		
 
 	</script>
 	

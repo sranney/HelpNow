@@ -1,0 +1,58 @@
+<html>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="rita.js"></script>
+  <input id="content" width=200 height=200>
+  <button id="contentBtn">CLick Me</button>
+  <div id="analysis" width=200 height=200></div>
+    <script>
+
+	    $("#contentBtn").on("click",function(){	
+
+	    	var s=$("#content").val();
+			console.log(s);
+			var words=RiTa.tokenize(s);
+
+	      	var r = new RiString(s);
+	      	console.log(r);
+	      	var POS = r.pos();
+	      	console.log(POS);
+	      	var nouns=[];
+
+	      	for (var i=0; i < POS.length; i++){
+
+	      		if(POS[i]=="nn"||POS[i]=="nns"){
+	      			if(nouns.indexOf(words[i])==-1){
+	      				nouns.push(words[i]);
+	      			}
+	      		}
+	      	}
+
+	      	$("#analysis").append(nouns);
+
+	    	var s="It was a dark and stormy night.";
+			console.log(s);
+			console.log(RiTa.getPosTags(s));
+			var words=RiTa.tokenize(s);
+
+	      	var r = new RiString(s);
+	      	console.log(r);
+	      	var POS = r.pos();
+	      	console.log(POS);
+	      	var nouns=[];
+
+	      	for (var i=0; i < POS.length; i++){
+
+	      		if(POS[i]=="nn"||POS[i]=="nns"){
+	      			if(nouns.indexOf(words[i])==-1){
+	      				nouns.push(words[i]);
+	      			}
+	      		}
+	      	}
+
+	      	$("#analysis").append(nouns);
+
+
+		})
+
+  </script>
+<html>

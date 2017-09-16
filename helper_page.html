@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
     <link rel="shortcut icon" type="image/x-icon" href="helpnow_favicon.ico"/>
     <title>HelpNow - Get Help</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -119,7 +120,7 @@
             font-size:20px;
         }
 
-        .confirmMessage>div{
+        .confirmMessage{
             border-radius:15px;
             color:#454545;
             background-color:#E5E5DB;
@@ -128,7 +129,7 @@
             font-weight:bold;
         }
 
-        .confirmMessage>div>p{
+        .confirmMessage>p{
             display:inline;
             margin:10px;
         }
@@ -301,7 +302,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body" id="confirmModalBody">
-                    <div class="confirmMessage"></div>
+                    <div class="confirmMessage text-center"></div>
                 </div>
             </div>
         </div>
@@ -401,7 +402,7 @@
             }
         }
 
-        var lat,long,address,success,geocoder;
+        var lat,long,address,streetAddress,city,state,zip,country,success,geocoder;
         var loc_GoogMaps,acceptPushed = false,submitPushed = false;
         $("#accept").on("click",function(){//accept the geolocation calculated by browser
             acceptPushed=true;
@@ -494,6 +495,10 @@
                 geocoder.geocode({"location":geopos},function(results,status){
                     if(status==="OK"){
                         if(results[0]){
+                            streetAddress=results[0].address_components[0].long_name + " " + results[0].address_components[1].short_name;
+                            city=results[0].address_components[3].long_name;
+                            state=results[0].address_components[5].short_name;
+                            zip=results[0].address_components[7].short_name);
                             address = results[0].formatted_address;//formatted address with street address
                             if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&processed==false){
                                 bigSettingPrompt()
@@ -596,7 +601,7 @@
 
         $(document).on("click",".contact",function(){
             $("#confirmModal").modal("show");
-            $(".confirmMessage").append("<div class='text-center'><p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button></div>");
+            $(".confirmMessage").append("<p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button>");
         })
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
