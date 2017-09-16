@@ -310,6 +310,16 @@
         </div>
     </div>
 
+    <div id="helperModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body" id="confirmModalBody">
+                    <div class="confirmMessage text-center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES-->
 
 
@@ -360,12 +370,8 @@
                         $("#userInfo").html("<ul><li id='Menu'>You are on the <a id='pageTitle'>Go Help Page</a>. <a href='help_page.html' id='getHelp'>Click here to go to Get Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     }
 
-                    if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&mapprocessed==false){
-                        bigSettingPrompt();//dealing with two asynchronous and separately fired functions and want this to run only when all of this information is available (database and address each being generated from two different functions) and for it to run only once - so I check that all data has been set and then I put in a boolean processed to allow me to control how many times this runs
-                    }
-
-                    if(databaseObj!=null && databaseObj!=undefined && address!=undefined && requestprocessed==false){
-                        checkRequests(); //perform logic to determine what to do when request is made
+                    if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&mapProcessed==false){
+                        mapProcessor();//dealing with two asynchronous and separately fired functions and want this to run only when all of this information is available (database and address each being generated from two different functions) and for it to run only once - so I check that all data has been set and then I put in a boolean processed to allow me to control how many times this runs
                     }
 
                 } else {
@@ -374,9 +380,9 @@
             });
         });
 
-        var mapprocessed=false;
-        function bigSettingPrompt(){
-            mapprocessed=true;
+        var mapProcessed=false;
+        function mapProcessor(){
+            mapProcessed=true;
             if(databaseObj.users[userObj.uid].cameFromOtherPage == false){//will run when the user came from the other page because cameFromOtherPage will be false - address just set by user on the other page, so asking for address again is not necessary
                 if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){                          
                     if(address!=undefined){//want to continually run this query to see when address is set - when this becomes false, when address is set, then we want to quit this interval and show the modal that asks about current address
@@ -408,11 +414,9 @@
             }
         }
 
-        var requestprocessed;
+        var requestprocessed=false;
 
-        function checkRequests(){
-
-        }
+        //series of functions to check different nodes of users
 
         var lat,long,address,streetAddress,city,state,zip,country,success,geocoder;
         var loc_GoogMaps,acceptPushed = false,submitPushed = false;
@@ -508,8 +512,8 @@
                     if(status==="OK"){
                         if(results[0]){
                             address = results[0].formatted_address;//formatted address with street address
-                            if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&mapprocessed==false){
-                                bigSettingPrompt()
+                            if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&mapProcessed==false){
+                                mapProcessor()
                             }                            
                         }
                     }
@@ -532,7 +536,7 @@
         var markers=[];//array to push markers into
         var mapSet = false;
 
-        function moveToLocation(){
+        function moveToLocation(){//sets location to show user's current location and sets green helper marker with an infowindow that opens when clicked. also stores marker in markers array
             mapSet = true;
             // using global variable:
             map.panTo(loc_GoogMaps);
@@ -551,11 +555,11 @@
             });
             markers.push(marker);
             //helpRequest markers
-            addRequestMarkersWithinRadius();
+            addRequestMarkersWithinRadius();//now set help request markers
         }
 
 
-        function addRequestMarkersWithinRadius(){
+        function addRequestMarkersWithinRadius(){//help request markers
             var bounds = new google.maps.LatLngBounds();
 
             var listeners=[];//for content to be added to markers
@@ -584,7 +588,7 @@
                             bounds.extend(markers[j].getPosition());
                         }
 
-                        content = "<div><p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact'>Help!</button></div>";
+                        content = "<div><p id='request'>"+databaseObj.users[helpuid].helpRequest+"</p><p id='help_name'>"+databaseObj.users[helpuid].name + "</p><p id='help_address'>" + databaseObj.users[helpuid].address + "</p><button class='contact' uid="+helpuid+">Help!</button></div>";
 
                         attachListener(marker,content);
                     }
@@ -597,7 +601,7 @@
                 
         }
 
-        function attachListener(marker,content){
+        function attachListener(marker,content){//for setting info window data to each help marker
             var infowindow = new google.maps.InfoWindow({
                 content:content
             });
@@ -607,7 +611,9 @@
             });
         }
 
+        var storeUID; //store UID of requester
         $(document).on("click",".contact",function(){
+            storeUID = $(this).attr("uid");
             $("#confirmModal").modal("show");
             $(".confirmMessage").html("<p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button>");
         })
@@ -641,7 +647,9 @@
         })
 
 
-        //ADD FUNCTIONALITY FOR CLOSING REQUESTS
+        $(document).on("click","#confirmBtn",function(){
+            //put code here for entering into help
+        })
 
     </script>
     <script async defer
