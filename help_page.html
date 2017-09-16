@@ -7,7 +7,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/2a8a6780db.js"></script>
     <script src="rita.js"></script>
-    
+
     <style type="text/css">
         body{
             background-color:#032642;
@@ -498,7 +498,8 @@
             var DrpBtn4 = $("<button class='collapsed btn btn-block' id = 'status' href='#' onclick='status();'><i class='fa fa-info-circle'></i><i class='fa fa-fw'></i>Check Status of Request</button>");
             $("#pendingRequest").append(DrpBtn4);
             $("#requestSubmit").prop("disabled",true);
-            dB.ref("/helpRequests/"+userObj.uid).set("open");
+            dB.ref("/helpRequests/"+userObj.uid+"/help/status").set("inProgress");
+            dB.ref("/helpRequests/"+userObj.uid+"/help/beingHelped").set(false);
             dB.ref("/users/"+userObj.uid+"/helpRequest/").set($("#requestInput").val());
             $("#requestInput").val("");
         })

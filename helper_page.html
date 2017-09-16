@@ -358,8 +358,12 @@
                         $("#userInfo").html("<ul><li id='Menu'>You are on the <a id='pageTitle'>Go Help Page</a>. <a href='help_page.html' id='getHelp'>Click here to go to Get Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     }
 
-                    if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&processed==false){
-                        bigSettingPrompt()//dealing with two asynchronous and separately fired functions and want this to run only when all of this information is available (database and address each being generated from two different functions) and for it to run only once - so I check that all data has been set and then I put in a boolean processed to allow me to control how many times this runs
+                    if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&mapprocessed==false){
+                        bigSettingPrompt();//dealing with two asynchronous and separately fired functions and want this to run only when all of this information is available (database and address each being generated from two different functions) and for it to run only once - so I check that all data has been set and then I put in a boolean processed to allow me to control how many times this runs
+                    }
+
+                    if(databaseObj!=null && databaseObj!=undefined && address!=undefined && requestprocessed==false){
+                        checkRequests(); //perform logic to determine what to do when request is made
                     }
 
                 } else {
@@ -368,9 +372,9 @@
             });
         });
 
-        var processed=false;
+        var mapprocessed=false;
         function bigSettingPrompt(){
-            processed=true;
+            mapprocessed=true;
             if(databaseObj.users[userObj.uid].cameFromOtherPage == false){//will run when the user came from the other page because cameFromOtherPage will be false - address just set by user on the other page, so asking for address again is not necessary
                 if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){                          
                     if(address!=undefined){//want to continually run this query to see when address is set - when this becomes false, when address is set, then we want to quit this interval and show the modal that asks about current address
@@ -401,6 +405,8 @@
                 }
             }
         }
+
+        request
 
         var lat,long,address,streetAddress,city,state,zip,country,success,geocoder;
         var loc_GoogMaps,acceptPushed = false,submitPushed = false;
@@ -495,12 +501,8 @@
                 geocoder.geocode({"location":geopos},function(results,status){
                     if(status==="OK"){
                         if(results[0]){
-                            streetAddress=results[0].address_components[0].long_name + " " + results[0].address_components[1].short_name;
-                            city=results[0].address_components[3].long_name;
-                            state=results[0].address_components[5].short_name;
-                            zip=results[0].address_components[7].short_name;
                             address = results[0].formatted_address;//formatted address with street address
-                            if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&processed==false){
+                            if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&mapprocessed==false){
                                 bigSettingPrompt()
                             }                            
                         }
@@ -601,7 +603,7 @@
 
         $(document).on("click",".contact",function(){
             $("#confirmModal").modal("show");
-            $(".confirmMessage").append("<p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button>");
+            $(".confirmMessage").html("<p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button>");
         })
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
