@@ -214,6 +214,10 @@
             font-weight:bold;
         }
 
+        #Menu,#otherPage{
+            list-style:none;
+        }
+
         #Menu>#pageTitle,#Menu>#getHelp{
             background-color:#003600;
             border-radius:3px;
@@ -353,7 +357,7 @@
                     var email = databaseObj.users[userObj.uid].email;
                     var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
                     if(databaseObj.users[userObj.uid].address !=undefined){
-                        $("#userInfo").html("<ul><li id='Menu'>You are on the <a href='#' id='pageTitle'>Go Help Page</a>. <a href='help_page.html' id='getHelp'>Click here to go to Get Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
+                        $("#userInfo").html("<ul><li id='Menu'>You are on <a href='#' id='pageTitle'>Go Help Page</a></li><li id='otherPage'><a href='help_page.html' id='getHelp'>Click here to go to Get Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     } else {
                         $("#userInfo").html("<ul><li id='Menu'>You are on the <a id='pageTitle'>Go Help Page</a>. <a href='help_page.html' id='getHelp'>Click here to go to Get Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     }
@@ -409,7 +413,7 @@
         var requestprocessed;
 
         function checkRequests(){
-            
+
         }
 
         var lat,long,address,streetAddress,city,state,zip,country,success,geocoder;
