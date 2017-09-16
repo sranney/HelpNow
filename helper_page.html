@@ -498,7 +498,7 @@
                             streetAddress=results[0].address_components[0].long_name + " " + results[0].address_components[1].short_name;
                             city=results[0].address_components[3].long_name;
                             state=results[0].address_components[5].short_name;
-                            zip=results[0].address_components[7].short_name);
+                            zip=results[0].address_components[7].short_name;
                             address = results[0].formatted_address;//formatted address with street address
                             if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&processed==false){
                                 bigSettingPrompt()
