@@ -526,7 +526,11 @@
             dB.ref("/users/"+userObj.uid+"/helpedBy/helperUID").on("value",function(snapshot){
                 if(snapshot.val()!=null && helperOpsRan==false){//i.e., there is a UID set here and thus a user has volunteered to help
                     helperOpsRan=true;
-                    $("#pendingRequest").append("<div id='helper'>"+databaseObj.users[snapshot.val()].name+" has offered to help you. Here is their contact information:<p>" + databaseObj.users[snapshot.val()].phoneNumber + "</p><p>" + databaseObj.users[snapshot.val()].email + "</p><p>Alternatively, you can choose to chat with them with our chat app. Click here to go to our chat page.</p></div>");
+                    var helperName = databaseObj.users[snapshot.val()].name;
+                    var firstName = helperName.substr(0,helperName.indexOf(" ")-1);
+                    var helperPhone = databaseObj.users[snapshot.val()].phoneNumber;
+                    var helperEmail = databaseObj.users[snapshot.val()].email;
+                    $("#pendingRequest").append("<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with" + firstName + " with our chat app. Click here to go to our chat page.</p></div>");
                     $("#withdraw").prop("disabled",true);
                     $("#complete").prop("disabled",false);
                 }
