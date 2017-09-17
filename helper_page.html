@@ -650,12 +650,15 @@
 
         $(document).on("click","#confirmBtn",function(){
             dB.ref("/helpRequests/"+requesterUID).set("beingHelped");
-            dB.ref("/users/"+requesterUID+"/helpedBy/helperUID").set(userObj.uid);
-            dB.ref("/users/"+requesterUID+"/helpedBy/helperUID").set(userObj.uid);
-            dB.ref("/users/"+requesterUID+"/helpedBy/helperStatus").set("live");
-            dB.ref("/users/"+userObj.uid+"/serving/requesterUID").set(requesterUID);
-            dB.ref("/users/"+userObj.uid+"/serving/status").set("live");
-            dB.ref("/users/"+userObj.uid+"/serving/description").set(databaseObj.users.requesterUID.helpRequest);
+            dB.ref("/users/"+requesterUID+"/helpedBy").set({
+                helperUID:userObj.uid,
+                helperStatus:"live",
+                requesterUID:requesterUID
+            });
+            dB.ref("/users/"+userObj.uid+"/serving").set({
+                status:"live",
+                description:databaseObj.users.requesterUID.helpRequest
+            });
             initMap();
             moveToLocation();
         })
