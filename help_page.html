@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+<!--put small icon on modal top right and a dropdown with your account info in the modal on the top left--> 
+
 <html>
     <link rel="shortcut icon" type="image/x-icon" href="helpnow_favicon.ico"/>
     <title>Help Now - Get Help</title>
@@ -23,7 +26,6 @@
         ul{
             float:left;
             color:white;
-            z-index:100000000;
         }
         ul>li{
             color:white;
@@ -32,7 +34,6 @@
         img{
             height:100px;
             float:right;
-            z-index:100000000;
         }
 
         #correctAddress,#submit,#accept,#reject,#instruct{
@@ -250,10 +251,6 @@
 
         #Menu>#pageTitle:hover,#Menu>#goHelp:hover{
             font-size:19px;
-        }
-
-        #requestModal>.modal-backdrop{
-            z-index:10000;
         }
 
         #requestModal>.modal-dialog{
@@ -607,7 +604,7 @@
             $("#reject").css("display","none");
             $("#correctAddress").css("display","none");
             $("#submit").css("display","none");
-            $(".modal-body").append("Thank you. Click button to continue.");
+            $("#gpsModal > div > div > div.modal-body.text-center").append("Thank you. Click button to continue.");
             $("#Proceed").css("display","block");
 
         })

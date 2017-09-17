@@ -20,6 +20,7 @@
             padding:10px;
             margin-top:10px;
             margin-bottom:10px;
+            display:flex;
         }
         ul{
             float:left;
@@ -31,8 +32,45 @@
 
         img{
             height:100px;
-            float:right;
+            margin-right:15px;
         }
+
+        #signOut{
+            text-decoration:underline;
+            font-size:14px;
+        }
+
+        #signOut:hover{
+            text-decoration:underline;
+            font-size:16px;
+            color:#77BDD9;
+            font-weight:bold;
+        }
+        
+        #Menu{
+            margin:auto;
+        }
+
+        #Menu>#pageTitle,#Menu>#getHelp{
+            background-color:#003600;
+            border-radius:3px;
+            border:3px solid white;
+            color:white;
+            padding:3px;
+            font-size:16px;
+            transition:font-size 1s ease;
+            margin:auto;
+        }
+
+        #Menu>#getHelp{
+            background-color:#991E37;
+        }
+
+        #Menu>#pageTitle:hover,#Menu>#getHelp:hover{
+            font-size:19px;
+        }
+
+/*************************************GPS MODAL***********************************************/
 
         #correctAddress,#submit,#accept,#reject,#instruct{
             display:none;
@@ -73,11 +111,6 @@
             font-weight:bold;
         }
 
-        /*********************************Map stuff*******************************************/
-        #map{
-            height:400px;
-        }
-
         input{
             font-size:20px;
         }
@@ -100,6 +133,11 @@
                 font-size:30px;
               }
         } 
+
+        /*********************************Map stuff*******************************************/
+        #map{
+            height:400px;
+        }
 
         #Proceed{
             display:none;
@@ -146,35 +184,7 @@
             color:#E5E5DB
         }
 
-        #getHelp>button{
-            margin-top:10px;
-            margin-bottom:10px;
-            width:50%;
-            font-size:25px;
-            background-color:#991E37;
-            color:white;
-            border:4px solid white;
-        }
-
-        #disclaimer{
-            font-style:italic;
-            font-size:16px;
-            color:white;
-        }
-
-        #disclaimer>a{
-            color:white;
-        }
-
-        #disclaimer>a:hover{
-            font-size:18px;
-            font-weight:bold;
-            background-color:#991E37;
-            border:3px solid white;
-            border-radius:5px;
-            padding:3px;
-        }
-
+/*************************MARKER LEGEND**********************/
         #markerInfo{
             margin-top:3px;
             margin-bottom:3px;
@@ -203,41 +213,25 @@
             color:white;
         }
 
-        #signOut{
-            text-decoration:underline;
-            font-size:14px;
-        }
-
-        #signOut:hover{
-            text-decoration:underline;
+/*********************DISCLAIMER NOTE AT BOTTOM OF SHEET***************/
+        #disclaimer{
+            font-style:italic;
             font-size:16px;
-            color:#77BDD9;
-            font-weight:bold;
-        }
-
-        #Menu,#otherPage{
-            list-style:none;
-        }
-
-        #Menu>#pageTitle,#Menu>#otherPage>#getHelp{
-            background-color:#003600;
-            border-radius:3px;
-            border:3px solid white;
             color:white;
-            padding:3px;
-            font-size:16px;
-            transition:font-size 1s ease;
         }
 
-        #Menu>#otherPage>#getHelp{
+        #disclaimer>a{
+            color:white;
+        }
+
+        #disclaimer>a:hover{
+            font-size:18px;
+            font-weight:bold;
             background-color:#991E37;
+            border:3px solid white;
+            border-radius:5px;
+            padding:3px;
         }
-
-        #Menu>#pageTitle:hover,#Menu>#otherPage>#getHelp:hover{
-            font-size:19px;
-        }
-
-
 
     </style>
 
@@ -247,6 +241,11 @@
         
         <div id = "userInfo"></div>
     
+        <div id="Menu" class="text-center">
+            <p id='pageTitle'>You are on Go Help Page</p>
+            <p id='getHelp'>Click here to go to Get Help Page</p>
+        </div>
+
         <img src="HelpNow Logo.png">
 
     </div>
@@ -257,8 +256,8 @@
 
     <div id="markerLegend" class="text-center">
         <div id="markerInfo">
-            <div class="text-center"><img src="http://maps.google.com/mapfiles/ms/icons/green-dot.png"><p>current location:</p></div>
-            <div class="text-center"><img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png"><p>open help requests:</p></div>
+            <div class="text-center"><p>current location:</p><img src="http://maps.google.com/mapfiles/ms/icons/green-dot.png"></div>
+            <div class="text-center"><p>open help requests:</p><img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png"></div>
         </div>
     </div>
 
@@ -320,9 +319,6 @@
         </div>
     </div>
 
-    <!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES--><!--SPACE FOR PREVIOUS TEXT MESSAGES-->
-
-
     <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
     <script type="text/javascript">
 
@@ -365,9 +361,9 @@
                     var email = databaseObj.users[userObj.uid].email;
                     var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
                     if(databaseObj.users[userObj.uid].address !=undefined){
-                        $("#userInfo").html("<ul><li id='Menu'>You are on <a href='#' id='pageTitle'>Go Help Page</a></li><li id='otherPage'><a href='#' id='getHelp'>Click here to go to Get Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
+                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     } else {
-                        $("#userInfo").html("<ul><li id='Menu'>You are on the <a id='pageTitle'>Go Help Page</a>. <a href='#' id='getHelp'>Click here to go to Get Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
+                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     }
 
                     if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&mapProcessed==false){
@@ -627,7 +623,7 @@
            gotoGetHelp();
         })
 
-        $("li#otherPage").on("click",function(){
+        $("p#getHelp").on("click",function(){
            gotoGetHelp();
         })
 
