@@ -650,12 +650,12 @@
             dB.ref("/helpRequests/"+requesterUID).set("beingHelped");
             dB.ref("/users/"+requesterUID+"/helpedBy").set({
                 helperUID:userObj.uid,
-                helperStatus:"live",
-                requesterUID:requesterUID
+                helperStatus:"live"
             });
             dB.ref("/users/"+userObj.uid+"/serving").set({
                 status:"live",
-                description:databaseObj.users[requesterUID].helpRequest
+                description:databaseObj.users[requesterUID].helpRequest,
+                requesterUID:requesterUID
             });
             initMap();
             moveToLocation();

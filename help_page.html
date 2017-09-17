@@ -296,7 +296,8 @@
             text-align:left;
             color:white;
             border-radius:15px;
-            background-color:#39505D;
+            background-color:#003600;
+            border: 5px solid white;
             padding:20px;
             margin:20px;
         }
@@ -304,6 +305,10 @@
         #Rmodal{
             background-color:#032642;
             border-radius:;
+        }
+
+        #userInfo_Rmodal > ul{
+            text-align:left;
         }
 
     </style>
@@ -672,16 +677,16 @@
         })
 
         //for actions button animation
-        $(document).on("click","#actions",function(){
-            if($(".collapsed").hasClass("animation-show")){
+        $(document).on("click","#actions",function(){//adding animations for clicking actions button on requestModal
+            if($(".collapsed").hasClass("animation-show")){//if animation-show class is present, then action buttons are shown. we want to collapse them so we swap animation-show for animation-hide, change font awesome icon and after animation complete, make display for action buttons "none"
             $(".collapsed").removeClass("animation-show").addClass("animation-hide");
             $("#actions").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
             setTimeout(function(){$(".collapsed").css("display","none")},100);
-          } else if($(".collapsed").hasClass("animation-hide")){
+          } else if($(".collapsed").hasClass("animation-hide")){//if animation-hide class is present, then action buttons are collapsed. we want to show them so we swap animation-hide for animation-show, change font awesome icon and make display for action buttons "block" so that animation can be seen
             $("#actions").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
             $(".collapsed").removeClass("animation-hide").addClass("animation-show");
             $(".collapsed").css("display","block");
-          } else {
+          } else {//animation-show and animation-hide are classes specifically for animation, so they are not part of the action buttons at first. this way the buttons can stay collapsed. so if neither class is present, this means that the buttons are collapsed and need to be shown. so if the action menu button is clicked, we want to add the animation class animation-show to the collapse action buttons to show the buttons, swap the font awesome icon and make the display be block so that the animation can be seen
             $(".collapsed").addClass("animation-show");
             $("#actions").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
             $(".collapsed").css("display","block");
