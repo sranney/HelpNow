@@ -520,7 +520,7 @@
         //////////////////////ADD ACTIONS FOR BUTTONS IN THE REQUEST MODAL
         /////////////////////////WITHDRAW BUTTON - WITHDRAW REQUEST FOR HELP - CAN ONLY BE DONE WHEN SOMEONE HAS NOT ACCEPTED REQUEST
         $(document).on("click","#withdraw",function(){
-            dB.ref("/helpRequests/"+userObj.uid").remove();//new request opened
+            dB.ref("/helpRequests/"+userObj.uid).remove();//new request opened
             dB.ref("/users/"+userObj.uid+"/helpRequest").remove();
             $('#requestModal').modal('hide');
         })
