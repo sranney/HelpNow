@@ -399,6 +399,7 @@
 
         var gpsProcessed=false;
         function gpsProcessor(){
+            console.log(address);
             gpsProcessed=true;
             if(databaseObj.users[userObj.uid].cameFromOtherPage == false){//will run when the user came from the other page because cameFromOtherPage will be false - address just set by user on the other page, so asking for address again is not necessary
                 if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){                          
