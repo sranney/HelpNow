@@ -235,6 +235,19 @@
             padding:3px;
         }
 
+        #requestModal>.modal-dialog{
+            width:90%;
+        }
+
+        #requestModal>.modal-dialog>.modal-content{
+            width:100%;
+            margin:5% auto;
+        }
+
+        ul{
+            list-style:none;
+        }
+
     </style>
 
 <body>
@@ -402,6 +415,37 @@
                 }
             });
         });
+
+        //////////////////////MODAL CSS - CHANGE COLOR OF BACKGROUND DEPENDING ON WHICH MODAL IS SHOWN
+
+        //I want different colored backdrops for the modals depending on the modal
+        $("#requestModal").on("show.bs.modal", function() {
+            setTimeout(function(){        
+                $(".modal-backdrop").css("background", "#003600");//change color of modal-backdrop
+                $(".modal-backdrop").css("opacity","1");
+            },10);
+        });
+
+        // Triggers as soon as 'requestModal' is closed
+        $('#requestModal').on('hidden.bs.modal', function() {
+          $('.modal-backdrop').css("background", "");//change color of modal-backdrop
+            $(".modal-backdrop").css("opacity","0");
+        });
+
+        // Triggers as soon as 'gpsModal' Opens
+        $('#gpsModal').on('show.bs.modal', function() {
+            setTimeout(function(){
+                $('.modal-backdrop').css("background", "#404040");//change color of modal-backdrop
+                $(".modal-backdrop").css("opacity",".7");
+            },10);
+        });
+
+        // Triggers as soon as 'gpsModal' is closed
+        $('#gpsModal').on('hidden.bs.modal', function() {
+          $('.modal-backdrop').css("background", "");//change color of modal-backdrop
+          $(".modal-backdrop").css("opacity","0");
+        });
+
 
         var gpsProcessed=false;
         function gpsProcessor(){
