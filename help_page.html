@@ -493,13 +493,13 @@
             $("#submit").css("display","block");
             $("#instruct").css("display","block");
         })
-        var statusOpRan=false;
+        var statusOpsRan=false,helperOpsRan=false;
         function requestFunctions(){
             //order of things matter here. knowing that 
             dB.ref("/helpRequests/"+userObj.uid+"/help/status").on("value",function(snapshot){
                 console.log(snapshot.val());
-                if(snapshot.val()=="open"&&statusOpRan==false){//adds an actions button that will serve as operations for the user to manage their request            
-                    statusOpRan = true;
+                if(snapshot.val()=="open"&&statusOpsRan==false){//adds an actions button that will serve as operations for the user to manage their request            
+                    statusOpsRan = true;
                     $("#pendingRequest").empty();
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(menuBtn);
@@ -512,9 +512,17 @@
                     $("#complete").prop( "disabled", true );
                 }
             })
+            
             dB.ref("/users/"+userObj.uid+"/helpRequest").on("value",function(snapshot){
                 $("#actions").html("Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i>");
-            })                        
+            })
+
+            dB.ref("/users/"+userObj.uid+"/helpedBy/helperUID").on("value",function(snapshot){
+                if(snapshot.val()!=null && helperOpsRan==false){//i.e., there is a UID set here and thus a user has volunteered to help
+                    $("#pendingRequest").append("<div id='helper'>Someone has volunteered to help</div>");
+                }
+            })
+
         }
 
         //////////////////////ADD ACTIONS FOR BUTTONS IN THE REQUEST MODAL
@@ -523,6 +531,7 @@
             dB.ref("/helpRequests/"+userObj.uid).remove();//new request opened
             dB.ref("/users/"+userObj.uid+"/helpRequest").remove();
             $('#requestModal').modal('hide');
+            setTimeout(function(){statusOpRan = false},1000);
         })
 
         /////////////////////////COMPLETE BUTTON - MARK REQUEST AS COMPLETE
