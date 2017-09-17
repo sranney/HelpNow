@@ -502,22 +502,34 @@
                     $("#pendingRequest").empty();
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(menuBtn);
-                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='withdraw' href='#' onclick='withdraw();'><i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>Withdraw Request</button>");
+                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='withdraw'><i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>Withdraw Request</button>");
                     $("#pendingRequest").append(DrpBtn1);
-                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete' href='#' onclick='complete();'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
+                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
                     $("#pendingRequest").append(DrpBtn2);
-                    var DrpBtn3 = $("<button class='collapsed btn btn-block' id = 'thanks' href='#' onclick='thanks();'><i class='fa fa-handshake-o'></i><i class='fa fa-fw'></i>Mark Complete and Send Thank You</button>");
-                    $("#pendingRequest").append(DrpBtn3);
-                    var DrpBtn4 = $("<button class='collapsed btn btn-block' id = 'status' href='#' onclick='status();'><i class='fa fa-info-circle'></i><i class='fa fa-fw'></i>Check Status of Request</button>");
-                    $("#pendingRequest").append(DrpBtn4);
                     $("#requestModal").modal({backdrop: 'static', keyboard: false});
                     $("#requestModal").modal("show");
+                    $("#complete").prop( "disabled", true );
                 }
             })
             dB.ref("/users/"+userObj.uid+"/helpRequest").on("value",function(snapshot){
                 $("#actions").html("Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i>");
             })                        
         }
+
+        //////////////////////ADD ACTIONS FOR BUTTONS IN THE REQUEST MODAL
+        /////////////////////////WITHDRAW BUTTON - WITHDRAW REQUEST FOR HELP - CAN ONLY BE DONE WHEN SOMEONE HAS NOT ACCEPTED REQUEST
+        $(document).on("click","#withdraw",function(){
+            dB.ref("/helpRequests/"+userObj.uid").remove();//new request opened
+            dB.ref("/users/"+userObj.uid+"/helpRequest").remove();
+            $('#requestModal').modal('hide');
+        })
+
+        /////////////////////////COMPLETE BUTTON - MARK REQUEST AS COMPLETE
+        $(document).on("click","#complete",function(){
+
+        })
+
+        //////////////////////MODAL CSS - CHANGE COLOR OF BACKGROUND DEPENDING ON WHICH MODAL IS SHOWN
 
         //I want different colored backdrops for the modals depending on the modal
         $("#requestModal").on("show.bs.modal", function() {
@@ -547,6 +559,7 @@
           $(".modal-backdrop").css("opacity","0");
         });
 
+        ////////////////////////SUBMIT ADDRESS CORRECTION BUTTON
         $("#submit").on("click",function(){
             submitPushed=true;
             var correctAddress = $("#correctAddress").val();
@@ -582,6 +595,10 @@
                 $("#errorMsg").html("Please enter a request to submit");
             }
 
+        })
+
+        $(document).on("click",".collapsed",functions(){
+            if($(this).hasClass("animation-show"))
         })
 
         //for actions button animation
