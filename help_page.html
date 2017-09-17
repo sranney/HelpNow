@@ -512,8 +512,10 @@
 
         //I want different colored backdrops for the modals depending on the modal
         $("#requestModal").on("show.bs.modal", function() {
-            $(".modal-backdrop").css("background", "#991E37");
-            $(".modal-backdrop").css("opacity",".9");
+            setTimeout(function(){        
+                $(".modal-backdrop").css("background", "#991E37");
+                $(".modal-backdrop").css("opacity",".9");
+            },10);
         });
 
         // Triggers as soon as 'modal1' is closed
@@ -524,8 +526,10 @@
 
         // Triggers as soon as 'modal2' Opens
         $('#gpsModal').on('show.bs.modal', function() {
-            $('.modal-backdrop').css("background", "#404040");
-            $(".modal-backdrop").css("opacity",".4");
+            setTimeout(function(){
+                $('.modal-backdrop').css("background", "#404040");
+                $(".modal-backdrop").css("opacity",".4");
+            },10);
         });
 
         // Triggers as soon as 'modal2' is closed
