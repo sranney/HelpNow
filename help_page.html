@@ -268,6 +268,13 @@
             color:red;
         }
 
+        #helper{
+            text-align:left;
+            color:white;
+            border-radius:15px;
+            background-color:#39505D;
+        }
+
     </style>
 
 <body>
@@ -497,7 +504,7 @@
             //order of things matter here. knowing that 
             dB.ref("/helpRequests/"+userObj.uid).on("value",function(snapshot){
                 console.log(snapshot.val());
-                if(snapshot.val()=="open"&&statusOpsRan==false){//adds an actions button that will serve as operations for the user to manage their request            
+                if(snapshot.val()!=null && statusOpsRan==false){//adds an actions button that will serve as operations for the user to manage their request            
                     statusOpsRan = true;
                     $("#pendingRequest").empty();
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
