@@ -23,6 +23,7 @@
         ul{
             float:left;
             color:white;
+            z-index:100000000;
         }
         ul>li{
             color:white;
@@ -31,6 +32,7 @@
         img{
             height:100px;
             float:right;
+            z-index:100000000;
         }
 
         #correctAddress,#submit,#accept,#reject,#instruct{
@@ -273,6 +275,8 @@
             color:white;
             border-radius:15px;
             background-color:#39505D;
+            padding:20px;
+            margin:20px;
         }
 
     </style>
@@ -526,7 +530,7 @@
             dB.ref("/users/"+userObj.uid+"/helpedBy/helperUID").on("value",function(snapshot){
                 if(snapshot.val()!=null && helperOpsRan==false){//i.e., there is a UID set here and thus a user has volunteered to help
                     helperOpsRan=true;
-                    $("#pendingRequest").append("<div id='helper'>"+databaseObj.users[snapshot.val()].name+" has offered to help you. Here is their contact information:<p>" + databaseObj.users[snapshot.val()].phoneNumber + "</p><p>" + databaseObj.users[snapshot.val()].email + "</p><p>Alternatively, you can choose to chat with them with our chat app. Click here to go to the chat page.</p></div>");
+                    $("#pendingRequest").append("<div id='helper'>"+databaseObj.users[snapshot.val()].name+" has offered to help you. Here is their contact information:<p>" + databaseObj.users[snapshot.val()].phoneNumber + "</p><p>" + databaseObj.users[snapshot.val()].email + "</p><p>Alternatively, you can choose to chat with them with our chat app. Click here to go to our chat page.</p></div>");
                     $("#withdraw").prop("disabled",true);
                     $("#complete").prop("disabled",false);
                 }
