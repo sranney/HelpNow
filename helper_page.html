@@ -529,12 +529,12 @@
             })
             
             dB.ref("/users/"+userObj.uid+"/helpRequest").on("value",function(snapshot){
-                $("#actions").html("Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i>");
+                /*$("#actions").html("Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i>");*/
             })
 
             dB.ref("/users/"+userObj.uid+"/helpedBy/helperUID").on("value",function(snapshot){
                 if(snapshot.val()!=null && helperOpsRan==false){//i.e., there is a UID set here and thus a user has volunteered to help
-                    helperUID=snapshot.val();
+/*                    helperUID=snapshot.val();
                     helperOpsRan=true;
                     var helperName = databaseObj.users[snapshot.val()].name;
                     var firstName = helperName.substr(0,helperName.indexOf(" "));
@@ -543,17 +543,17 @@
                     helperAlert="<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with " + firstName + " through our chat app. Click here to go to our chat page.</p></div>"
                     $("#pendingRequest").append(helperAlert);
                     $("#withdraw").prop("disabled",true);
-                    $("#complete").prop("disabled",false);
+                    $("#complete").prop("disabled",false);*/
                 }
             })
 
             dB.ref("/users/"+userObj.uid+"/helpedBy/helperStatus").on("value",function(snapshot){
                 if(snapshot.val()=="complete" && helperStatusOpsRan==false){
-                    helperStatusOpsRan=true;
+/*                    helperStatusOpsRan=true;
                     var helperName = databaseObj.users[helperUID].name;
                     var firstName = helperName.substr(0,helperName.indexOf(" "));
                     helperAlert = "<p>Hey, "+firstName+" has marked this request as complete, and has been removed from this request. Mark this request as complete to submit another request.</p>" + helperAlert;
-                    $("#helper").html(helperAlert);
+                    $("#helper").html(helperAlert);*/
                 }
             })
 
@@ -695,7 +695,7 @@
         var requesterUID,statusOfRequest; //store UID of requester
         $(document).on("click",".contact",function(){
             requesterUID = $(this).attr("uid");
-            statusofRequest = databaseObj.helpRequests[requesterUID].val();
+            statusofRequest = databaseObj.helpRequests[requesterUID];
             if(statusofRequest=="open"){        
                 $("#confirmModal").modal("show");
                 $(".confirmMessage").html("<p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button>");
