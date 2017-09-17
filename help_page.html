@@ -481,10 +481,23 @@
             $("#instruct").css("display","block");
         })
 
-        
         function requestFunctions(){
             dB.ref("/helpRequests/"+userObj.uid+"/help/status").on("value",function(snapshot){
-                if(snapshot.val()=="open"){
+                if(snapshot.val()=="open"){//adds an actions button that will serve as operations for the user to manage their request            
+                    var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + $("#requestInput").val() + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
+                    $("#pendingRequest").append(menuBtn);
+                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='withdraw' href='#' onclick='withdraw();'><i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>Withdraw Request</button>");
+                    $("#pendingRequest").append(DrpBtn1);
+                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete' href='#' onclick='complete();'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
+                    $("#pendingRequest").append(DrpBtn2);
+                    var DrpBtn3 = $("<button class='collapsed btn btn-block' id = 'thanks' href='#' onclick='thanks();'><i class='fa fa-handshake-o'></i><i class='fa fa-fw'></i>Mark Complete and Send Thank You</button>");
+                    $("#pendingRequest").append(DrpBtn3);
+                    var DrpBtn4 = $("<button class='collapsed btn btn-block' id = 'status' href='#' onclick='status();'><i class='fa fa-info-circle'></i><i class='fa fa-fw'></i>Check Status of Request</button>");
+                    $("#pendingRequest").append(DrpBtn4);
+                    $("#requestSubmit").prop("disabled",true);
+                    dB.ref("/helpRequests/"+userObj.uid+"/help/status").set("open");//new request opened
+                    dB.ref("/users/"+userObj.uid+"/helpRequest/").set($("#requestInput").val());
+                    $("#requestInput").val("");            
                     $("#requestModal").modal("show");
                 }
             })            
@@ -515,22 +528,8 @@
 
         })
 
-        $("#requestSubmit").on("click",function(){//submits request and adds an actions button that will serve as operations for the user to manage their request            
+        $("#requestSubmit").on("click",function(){//submits request and 
             
-            var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + $("#requestInput").val() + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
-            $("#pendingRequest").append(menuBtn);
-            var DrpBtn1 = $("<button class='collapsed btn btn-block' id='withdraw' href='#' onclick='withdraw();'><i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>Withdraw Request</button>");
-            $("#pendingRequest").append(DrpBtn1);
-            var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete' href='#' onclick='complete();'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
-            $("#pendingRequest").append(DrpBtn2);
-            var DrpBtn3 = $("<button class='collapsed btn btn-block' id = 'thanks' href='#' onclick='thanks();'><i class='fa fa-handshake-o'></i><i class='fa fa-fw'></i>Mark Complete and Send Thank You</button>");
-            $("#pendingRequest").append(DrpBtn3);
-            var DrpBtn4 = $("<button class='collapsed btn btn-block' id = 'status' href='#' onclick='status();'><i class='fa fa-info-circle'></i><i class='fa fa-fw'></i>Check Status of Request</button>");
-            $("#pendingRequest").append(DrpBtn4);
-            $("#requestSubmit").prop("disabled",true);
-            dB.ref("/helpRequests/"+userObj.uid+"/help/status").set("open");//new request opened
-            dB.ref("/users/"+userObj.uid+"/helpRequest/").set($("#requestInput").val());
-            $("#requestInput").val("");
         })
 
         //for actions button animation
