@@ -249,7 +249,9 @@
 
         #Menu>#pageTitle:hover,#Menu>#goHelp:hover{
             font-size:19px;
-        }        
+        }
+
+        #requestModal 
 
     </style>
 
@@ -367,11 +369,7 @@
                     var name = databaseObj.users[userObj.uid].name;
                     var email = databaseObj.users[userObj.uid].email;
                     var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
-                    dB.ref("/helpRequests/"+userObj.uid+"/help/status").on("value",function(snapshot){
-                        if(snapshot.val()=="open"){
-                            $("#requestModal").modal("show");
-                        }
-                    })
+                    requestFunctions();
                     if(databaseObj.users[userObj.uid].address !=undefined){
                         $("#userInfo").html("<ul><li id='Menu'>You are on the <a href='#' id='pageTitle'>Get Help Page</a>. <a href='helper_page.html' id='goHelp'>Click here to go to Go Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     } else {
@@ -484,6 +482,14 @@
         })
 
         
+        function requestFunctions(){
+            dB.ref("/helpRequests/"+userObj.uid+"/help/status").on("value",function(snapshot){
+                if(snapshot.val()=="open"){
+                    $("#requestModal").modal("show");
+                }
+            })            
+        }
+
         $("#submit").on("click",function(){
             submitPushed=true;
             var correctAddress = $("#correctAddress").val();
