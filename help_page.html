@@ -215,7 +215,6 @@
         }
 
         #pendingRequest{
-            color:white;
             font-size:20px;
         }
 
@@ -519,7 +518,10 @@
 
             dB.ref("/users/"+userObj.uid+"/helpedBy/helperUID").on("value",function(snapshot){
                 if(snapshot.val()!=null && helperOpsRan==false){//i.e., there is a UID set here and thus a user has volunteered to help
+                    helperOpsRan=true;
                     $("#pendingRequest").append("<div id='helper'>Someone has volunteered to help</div>");
+                    $("#withdraw").prop("disabled",true);
+                    $("#complete").prop("disabled",true);
                 }
             })
 
