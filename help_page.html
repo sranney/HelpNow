@@ -497,6 +497,7 @@
         function requestFunctions(){
             //order of things matter here. knowing that 
             dB.ref("/helpRequests/"+userObj.uid+"/help/status").on("value",function(snapshot){
+                console.log(snapshot.val());
                 if(snapshot.val()=="open"&&statusOpRan==false){//adds an actions button that will serve as operations for the user to manage their request            
                     statusOpRan = true;
                     $("#pendingRequest").empty();
@@ -597,21 +598,20 @@
 
         })
 
-        $(document).on("click",".collapsed",functions(){
-            if($(this).hasClass("animation-show"))
-        })
-
         //for actions button animation
         $(document).on("click","#actions",function(){
             if($(".collapsed").hasClass("animation-show")){
             $(".collapsed").removeClass("animation-show").addClass("animation-hide");
             $("#actions").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+            setTimeout(function(){$(".collapsed").css("display","none")},100);
           } else if($(".collapsed").hasClass("animation-hide")){
             $("#actions").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
             $(".collapsed").removeClass("animation-hide").addClass("animation-show");
+            $(".collapsed").css("display","block");
           } else {
             $(".collapsed").addClass("animation-show");
             $("#actions").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+            $(".collapsed").css("display","block");
           }
         })
 

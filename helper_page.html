@@ -611,9 +611,9 @@
             });
         }
 
-        var storeUID; //store UID of requester
+        var requesterUID; //store UID of requester
         $(document).on("click",".contact",function(){
-            storeUID = $(this).attr("uid");
+            requesterUID = $(this).attr("uid");
             $("#confirmModal").modal("show");
             $(".confirmMessage").html("<p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button>");
         })
@@ -648,7 +648,11 @@
 
 
         $(document).on("click","#confirmBtn",function(){
-            //put code here for entering into help
+            dB.ref("/users/"+requesterUID+"/helpedBy/helperUID").set(userObj.uid);
+            dB.ref("/users/"+requesterUID+"/helpedBy/helperStatus").set("live");
+            dB.ref("/users/"+userObj.uid+"/serving/requesterUID").set(requesterUID);
+            dB.ref("/users/"+userObj.uid+"/serving/status").set("live");
+            dB.ref("/users/"+userObj.uid+"/serving/description").set(databaseObj.users.requesterUID.helpRequest);
         })
 
     </script>
