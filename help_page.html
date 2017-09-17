@@ -400,9 +400,7 @@
 
                     </div>
 
-                     <div id="pendingRequest">
-                        Click button to manage pending request. <a href="#">Click here to go help someone in need.</a>
-                    </div>
+                     <div id="pendingRequest"></div>
 
                 </div>
             </div>
@@ -536,6 +534,7 @@
             navigator.geolocation.getCurrentPosition(success, error, options);
         }
 
+        /////////////////////////ACCEPT CALCULATED ADDRESS BUTTON
         $("#accept").on("click",function(){
             acceptPushed=true;
             if(databaseObj.users[userObj.uid].address!=address){
@@ -551,6 +550,7 @@
             $("#Proceed").css("display","block");
         })
 
+        /////////////////////////REJECT CALCULATED ADDRESS BUTTON
         $("#reject").on("click",function(){
             $("#address").css("display","none");
             $("#accept").css("display","none");
@@ -562,8 +562,36 @@
             $("#submit").css("display","block");
             $("#instruct").css("display","block");
         })
-        var statusOpsRan=false,helperOpsRan=false;
-        function requestFunctions(){
+
+        ////////////////////////SUBMIT ADDRESS CORRECTION BUTTON
+        $("#submit").on("click",function(){
+            submitPushed=true;
+            var correctAddress = $("#correctAddress").val();
+                        
+            geocoder = new google.maps.Geocoder;
+            geocoder.geocode({"address":correctAddress},function(results,status){
+                if(status==="OK"){
+                    lat=results[0].geometry.location.lat();
+                    long=results[0].geometry.location.lng();
+                    dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
+                    dB.ref("/users/"+userObj.uid+"/address").set(correctAddress);
+                }
+            })
+
+            $("#instruct").css("display","none");
+            $("#address").css("display","none");
+            $("#accept").css("display","none");
+            $("#reject").css("display","none");
+            $("#correctAddress").css("display","none");
+            $("#submit").css("display","none");
+            $("#gpsModal > div > div > div.modal-body.text-center").append("Thank you. Click button to continue.");
+            $("#Proceed").css("display","block");
+
+        })
+
+        var statusOpsRan=false,helperOpsRan=false,helperStatusOpsRan=false,helperAlert,helperUID;
+        
+        function requestFunctions(){//checking actions of other user
             //order of things matter here. knowing that 
             dB.ref("/helpRequests/"+userObj.uid).on("value",function(snapshot){
                 console.log(snapshot.val());
@@ -589,14 +617,26 @@
 
             dB.ref("/users/"+userObj.uid+"/helpedBy/helperUID").on("value",function(snapshot){
                 if(snapshot.val()!=null && helperOpsRan==false){//i.e., there is a UID set here and thus a user has volunteered to help
+                    helperUID=snapshot.val();
                     helperOpsRan=true;
                     var helperName = databaseObj.users[snapshot.val()].name;
                     var firstName = helperName.substr(0,helperName.indexOf(" "));
                     var helperPhone = databaseObj.users[snapshot.val()].phoneNumber;
                     var helperEmail = databaseObj.users[snapshot.val()].email;
-                    $("#pendingRequest").append("<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with " + firstName + " through our chat app. Click here to go to our chat page.</p></div>");
+                    helperAlert="<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with " + firstName + " through our chat app. Click here to go to our chat page.</p></div>"
+                    $("#pendingRequest").html(helperAlert);
                     $("#withdraw").prop("disabled",true);
                     $("#complete").prop("disabled",false);
+                }
+            })
+
+            dB.ref("/users/"+userObj.uid+"/helpedBy/helperStatus").on("value",function(snapshot){
+                if(snapshot.val()=="complete" && helperStatusOpsRan==false){
+                    helperStatusOpsRan=true;
+                    var helperName = databaseObj.users[helperUID].name;
+                    var firstName = helperName.substr(0,helperName.indexOf(" "));
+                    helperAlert = "<p>Hey, "+firstName+" has marked this request as complete, and has been removed from this request. Mark this request as complete to submit another request.</p>" + helperAlert;
+                    $("#pendingRequest").html(helperAlert);
                 }
             })
 
@@ -608,18 +648,34 @@
             dB.ref("/helpRequests/"+userObj.uid).remove();//new request opened
             dB.ref("/users/"+userObj.uid+"/helpRequest").remove();
             /*$('#requestModal').modal('hide');*/
-            setTimeout(function(){statusOpRan = false},1000);
+            $('#requestModal').fadeOut(1000);
+            setTimeout(function(){
+                statusOpsRan=false;
+                helperOpsRan=false;
+                helperStatusOpsRan=false;
+            },1000);
         })
 
         /////////////////////////COMPLETE BUTTON - MARK REQUEST AS COMPLETE
         $(document).on("click","#complete",function(){
             dB.ref("/helpRequests/"+userObj.uid).remove();//new request opened
-            dB.ref("/users/"+userObj.uid+"/helpRequest").remove();
-            var helperUID = databaseObj.users[userObj.uid].helpedBy.helperUID;
-            dB.ref("/users/"+helperUID+"/serving/status").set("complete");
+            dB.ref("/users/"+userObj.uid+"/helpRequest").remove();//remove helprequest
+            dB.ref("/users/"+userObj.uid+"/helpedBy").remove();//remove helper info from node
+
+            if(databaseObj.users[helperUID].serving!=null){
+                if(databaseObj.users[helperUID].serving.requesterUID==userObj.uid){
+                    dB.ref("/users/"+helperUID+"/serving/requesterStatus").set("complete");//notify helper that you have marked the request as complete
+                }
+            }
+            
+
             /*$('#requestModal').modal("hide");*/
             $('#requestModal').fadeOut(1000);
-            setTimeout(function(){statusOpRan = false},1000);
+            setTimeout(function(){
+                statusOpsRan=false;
+                helperOpsRan=false;
+                helperStatusOpsRan=false;
+            },1000);
         })
 
         //////////////////////MODAL CSS - CHANGE COLOR OF BACKGROUND DEPENDING ON WHICH MODAL IS SHOWN
@@ -651,32 +707,6 @@
           $('.modal-backdrop').css("background", "");
           $(".modal-backdrop").css("opacity","0");
         });
-
-        ////////////////////////SUBMIT ADDRESS CORRECTION BUTTON
-        $("#submit").on("click",function(){
-            submitPushed=true;
-            var correctAddress = $("#correctAddress").val();
-                        
-            geocoder = new google.maps.Geocoder;
-            geocoder.geocode({"address":correctAddress},function(results,status){
-                if(status==="OK"){
-                    lat=results[0].geometry.location.lat();
-                    long=results[0].geometry.location.lng();
-                    dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
-                    dB.ref("/users/"+userObj.uid+"/address").set(correctAddress);
-                }
-            })
-
-            $("#instruct").css("display","none");
-            $("#address").css("display","none");
-            $("#accept").css("display","none");
-            $("#reject").css("display","none");
-            $("#correctAddress").css("display","none");
-            $("#submit").css("display","none");
-            $("#gpsModal > div > div > div.modal-body.text-center").append("Thank you. Click button to continue.");
-            $("#Proceed").css("display","block");
-
-        })
 
         $("#requestSubmit").on("click",function(){//submits request and 
             
@@ -726,7 +756,7 @@
         }
 
         //sign out and go to home page
-        $(document).on("click","#signOut",function(){
+        $(document).on("click","#signOut,#RsignOut",function(){
             firebase.auth().signOut().then(function() {
                 var win = window.open("index.html","_self");
                 win.focus();     
@@ -734,9 +764,6 @@
                 console.error('Sign Out Error', error);
             });
         })
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////ADD FUNCTIONALITY FOR CLOSING REQUEST/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     </script>
     <script async defer

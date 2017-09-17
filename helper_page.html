@@ -321,6 +321,30 @@
         </div>
     </div>
 
+    <div id="requestModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div id = "Rmodal" class="modal-body text-center">
+
+                    <div id="jumbotron_Rmodal" class="jumbotron">
+                        
+                        <div id = "userInfo_Rmodal"></div>
+                        <div id="Menu" class="text-center">
+                            <p id='pageTitle'>You are on Go Help Page</p>
+                            <p id='goHelp'>Click here to go to Get Help Page</p>
+                        </div>                    
+                        <img id="logo_Rmodal" src="HelpNow Logo.png">
+
+                    </div>
+
+                     <div id="pendingRequest"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
     <script type="text/javascript">
 
@@ -473,10 +497,68 @@
                 }
 
             })
-            var newDateObj = moment(new Date()).add(30, 'm');
-            dB.ref("/users/"+userObj.uid+"/loc_Expire").set(newDateObj._d.getTime());
 
         })
+
+        var statusOpsRan=false,helperOpsRan=false,helperStatusOpsRan=false,helperAlert,helperUID;
+        
+        function requestFunctions(){//checking actions of other user
+            //order of things matter here. knowing that 
+            dB.ref("/users/"+userObj.uid+"/serving").on("value",function(snapshot){
+                console.log(snapshot.val());
+                if(snapshot.val()!=null && statusOpsRan==false){//adds an actions button that will serve as operations for the user to manage their request            
+                    statusOpsRan = true;
+                    $("div#userInfo_Rmodal").html(accountInfo.replace("signOut","RsignOut"));
+                    $("#pendingRequest").empty();
+                    var requester = snapshot.val();
+                    var requesterUID = requester.requesterUID;
+                    var requesterName = databaseObj.users[requesterUID].name;
+                    var request = databaseObj.users[requesterUID].helpRequest;
+                    var offerMsg = $("<p> You have offered to help " + requesterName + " with " + request + "</p>");
+                    $("#pendingRequest").append(offerMsg);
+                    var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
+                    $("#pendingRequest").append(menuBtn);
+                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='withdraw'><i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>Withdraw Request</button>");
+                    $("#pendingRequest").append(DrpBtn1);
+                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
+                    $("#pendingRequest").append(DrpBtn2);
+                    $("#requestModal").modal({backdrop: 'static', keyboard: false});
+                    $("#requestModal").modal("show");
+                    $("#complete").prop( "disabled", true );
+                }
+            })
+            
+            dB.ref("/users/"+userObj.uid+"/helpRequest").on("value",function(snapshot){
+                $("#actions").html("Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i>");
+            })
+
+            dB.ref("/users/"+userObj.uid+"/helpedBy/helperUID").on("value",function(snapshot){
+                if(snapshot.val()!=null && helperOpsRan==false){//i.e., there is a UID set here and thus a user has volunteered to help
+                    helperUID=snapshot.val();
+                    helperOpsRan=true;
+                    var helperName = databaseObj.users[snapshot.val()].name;
+                    var firstName = helperName.substr(0,helperName.indexOf(" "));
+                    var helperPhone = databaseObj.users[snapshot.val()].phoneNumber;
+                    var helperEmail = databaseObj.users[snapshot.val()].email;
+                    helperAlert="<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with " + firstName + " through our chat app. Click here to go to our chat page.</p></div>"
+                    $("#pendingRequest").html(helperAlert);
+                    $("#withdraw").prop("disabled",true);
+                    $("#complete").prop("disabled",false);
+                }
+            })
+
+            dB.ref("/users/"+userObj.uid+"/helpedBy/helperStatus").on("value",function(snapshot){
+                if(snapshot.val()=="complete" && helperStatusOpsRan==false){
+                    helperStatusOpsRan=true;
+                    var helperName = databaseObj.users[helperUID].name;
+                    var firstName = helperName.substr(0,helperName.indexOf(" "));
+                    helperAlert = "<p>Hey, "+firstName+" has marked this request as complete, and has been removed from this request. Mark this request as complete to submit another request.</p>" + helperAlert;
+                    $("#pendingRequest").html(helperAlert);
+                }
+            })
+
+        }
+
 
         var map;
         function initMap(){
@@ -610,11 +692,19 @@
             });
         }
 
-        var requesterUID; //store UID of requester
+        var requesterUID,statusOfRequest; //store UID of requester
         $(document).on("click",".contact",function(){
             requesterUID = $(this).attr("uid");
-            $("#confirmModal").modal("show");
-            $(".confirmMessage").html("<p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button>");
+            statusofRequest = databaseObj.helpRequests[requesterUID].val();
+            if(statusofRequest=="open"){        
+                $("#confirmModal").modal("show");
+                $(".confirmMessage").html("<p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button>");
+            } else {
+                $("#confirmModal").modal("show");
+                $(".confirmMessage").html("<p id='confirm-message'>Someone else has recently accepted this request. The map is being updated now. Click outside this box to find another person in need of help.</p>");
+                initMap();
+                moveToLocation();
+            }
         })
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -653,7 +743,7 @@
                 helperStatus:"live"
             });
             dB.ref("/users/"+userObj.uid+"/serving").set({
-                status:"live",
+                requesterStatus:"live",
                 description:databaseObj.users[requesterUID].helpRequest,
                 requesterUID:requesterUID
             });
