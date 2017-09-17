@@ -323,13 +323,6 @@
                     </div>
 
                 </div>
-
-                <div class="modal-footer text-center">
-
-                    <button class = "btn btn-primary" type="button" data-dismiss="modal" aria-hidden="true" id ="Proceed">Continue to Site</button>
-
-                </div>
-
             </div>
         </div>
     </div>
@@ -501,6 +494,7 @@
                     var DrpBtn3 = $("<button class='collapsed btn btn-block' id = 'thanks' href='#' onclick='thanks();'><i class='fa fa-handshake-o'></i><i class='fa fa-fw'></i>Mark Complete and Send Thank You</button>");
                     $("#pendingRequest").append(DrpBtn3);
                     var DrpBtn4 = $("<button class='collapsed btn btn-block' id = 'status' href='#' onclick='status();'><i class='fa fa-info-circle'></i><i class='fa fa-fw'></i>Check Status of Request</button>");
+                    $("#pendingRequest").empty();
                     $("#pendingRequest").append(DrpBtn4);
                     $("#requestSubmit").prop("disabled",true);
                     dB.ref("/helpRequests/"+userObj.uid+"/help/status").set("open");//new request opened
@@ -510,6 +504,30 @@
                 }
             })            
         }
+
+        $('#requestModal').on('show.bs.modal', function() {
+          setTimeout(function() {
+            $('.modal-backdrop').css('background', 'red');
+          }, 10);
+        });
+
+        // Triggers as soon as 'modal1' is closed
+        $('#requestModal').on('hidden.bs.modal', function() {
+          $('.modal-backdrop').css('background', '');
+        });
+
+
+        // Triggers as soon as 'modal2' Opens
+        $('#gpsModal').on('show.bs.modal', function() {
+          setTimeout(function() {
+            $('.modal-backdrop').css('background', 'blue');
+          }, 10);
+        });
+
+        // Triggers as soon as 'modal2' is closed
+        $('#gpsModal').on('hidden.bs.modal', function() {
+          $('.modal-backdrop').css('background', '');
+        });
 
         $("#submit").on("click",function(){
             submitPushed=true;
