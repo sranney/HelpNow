@@ -262,7 +262,7 @@
         </div>
     </div>
 
-    <p id="disclaimer">Disclaimer: Please note that, if you have an open request, your request has been filtered out from your view. Only people that can help you will see your request. If you have an outstanding request, and would like to manage it, <a href="help_page.html">click here to go to GET HELP page</a></p>
+    <p id="disclaimer">Disclaimer: Please note that, if you have an open request, your request has been filtered out from your view. Only people that can help you will see your request. If you have an outstanding request, and would like to manage it, <a href="#">click here to go to GET HELP page</a></p>
 
     <div id="gpsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -365,9 +365,9 @@
                     var email = databaseObj.users[userObj.uid].email;
                     var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
                     if(databaseObj.users[userObj.uid].address !=undefined){
-                        $("#userInfo").html("<ul><li id='Menu'>You are on <a href='#' id='pageTitle'>Go Help Page</a></li><li id='otherPage'><a href='help_page.html' id='getHelp'>Click here to go to Get Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
+                        $("#userInfo").html("<ul><li id='Menu'>You are on <a href='#' id='pageTitle'>Go Help Page</a></li><li id='otherPage'><a href='#' id='getHelp'>Click here to go to Get Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     } else {
-                        $("#userInfo").html("<ul><li id='Menu'>You are on the <a id='pageTitle'>Go Help Page</a>. <a href='help_page.html' id='getHelp'>Click here to go to Get Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
+                        $("#userInfo").html("<ul><li id='Menu'>You are on the <a id='pageTitle'>Go Help Page</a>. <a href='#' id='getHelp'>Click here to go to Get Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     }
 
                     if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&mapProcessed==false){
