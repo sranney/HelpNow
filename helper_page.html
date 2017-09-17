@@ -657,7 +657,7 @@
             });
             dB.ref("/users/"+userObj.uid+"/serving").set({
                 status:"live",
-                description:databaseObj.users.requesterUID.helpRequest
+                description:databaseObj.users[requesterUID].helpRequest
             });
             initMap();
             moveToLocation();
