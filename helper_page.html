@@ -549,7 +549,7 @@
             var infowindow = new google.maps.InfoWindow({
               content: "You are here"
             });
-            marker.addListener('click', function() {
+            helperMarker.addListener('click', function() {
               infowindow.open(map, helperMarker);
             });
             //helpRequest markers
