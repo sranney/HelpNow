@@ -333,8 +333,16 @@
             <div class="modal-content">
 
                 <div class="modal-body text-center">
-        
-                    <div id="pendingRequest">
+
+                    <div class="jumbotron">
+                        
+                        <div id = "userInfo"></div>
+                    
+                        <img src="HelpNow Logo.png">
+
+                    </div>
+
+                     <div id="pendingRequest">
                         Click button to manage pending request. <a href="#">Click here to go help someone in need.</a>
                     </div>
 
@@ -342,10 +350,6 @@
             </div>
         </div>
     </div>
-    
-
-    <!--ADD chat text modal-->
-    <!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal--><!--ADD chat text modal-->
 
     <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
     <script type="text/javascript">
@@ -527,10 +531,10 @@
                 if(snapshot.val()!=null && helperOpsRan==false){//i.e., there is a UID set here and thus a user has volunteered to help
                     helperOpsRan=true;
                     var helperName = databaseObj.users[snapshot.val()].name;
-                    var firstName = helperName.substr(0,helperName.indexOf(" ")-1);
+                    var firstName = helperName.substr(0,helperName.indexOf(" "));
                     var helperPhone = databaseObj.users[snapshot.val()].phoneNumber;
                     var helperEmail = databaseObj.users[snapshot.val()].email;
-                    $("#pendingRequest").append("<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with" + firstName + " with our chat app. Click here to go to our chat page.</p></div>");
+                    $("#pendingRequest").append("<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with " + firstName + " with our chat app. Click here to go to our chat page.</p></div>");
                     $("#withdraw").prop("disabled",true);
                     $("#complete").prop("disabled",false);
                 }
