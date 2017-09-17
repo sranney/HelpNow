@@ -387,13 +387,14 @@
                     var email = databaseObj.users[userObj.uid].email;
                     var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
                     if(databaseObj.users[userObj.uid].address !=undefined){
-                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
-                    } else {
-                        $("#userInfo").html("<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
+                        accountInfo = "<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>";//provides welcome greeting
+                    } else {//don't include address yet, this will be included when the user provides address
+                        accountInfo = "<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>";//provides welcome greeting
                     }
+                    requestFunctions();
 
-                    if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&mapProcessed==false){
-                        mapProcessor();//dealing with two asynchronous and separately fired functions and want this to run only when all of this information is available (database and address each being generated from two different functions) and for it to run only once - so I check that all data has been set and then I put in a boolean processed to allow me to control how many times this runs
+                    if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&gpsProcessed==false&&databaseObj.users[userObj.uid].serving==undefined){
+                        gpsProcessor();//dealing with two asynchronous and separately fired functions and want this to run only when all of this information is available (database and address each being generated from two different functions) and for it to run only once - so I check that all data has been set and then I put in a boolean processed to allow me to control how many times this runs
                     }
 
                 } else {
@@ -402,9 +403,9 @@
             });
         });
 
-        var mapProcessed=false;
-        function mapProcessor(){
-            mapProcessed=true;
+        var gpsProcessed=false;
+        function gpsProcessor(){
+            gpsProcessed=true;
             if(databaseObj.users[userObj.uid].cameFromOtherPage == false){//will run when the user came from the other page because cameFromOtherPage will be false - address just set by user on the other page, so asking for address again is not necessary
                 if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){                          
                     if(address!=undefined){//want to continually run this query to see when address is set - when this becomes false, when address is set, then we want to quit this interval and show the modal that asks about current address
@@ -592,8 +593,8 @@
                     if(status==="OK"){
                         if(results[0]){
                             address = results[0].formatted_address;//formatted address with street address
-                            if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&mapProcessed==false){
-                                mapProcessor()
+                            if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&gpsProcessed==false&& databaseObj.users[userObj.uid].serving==undefined){
+                                gpsProcessor()
                             }                            
                         }
                     }
