@@ -219,7 +219,7 @@
             list-style:none;
         }
 
-        #Menu>#pageTitle,#Menu>#getHelp{
+        #Menu>#pageTitle,#Menu>#otherPage>#getHelp{
             background-color:#003600;
             border-radius:3px;
             border:3px solid white;
@@ -229,11 +229,11 @@
             transition:font-size 1s ease;
         }
 
-        #Menu>#getHelp{
+        #Menu>#otherPage>#getHelp{
             background-color:#991E37;
         }
 
-        #Menu>#pageTitle:hover,#Menu>#getHelp:hover{
+        #Menu>#pageTitle:hover,#Menu>#otherPage>#getHelp:hover{
             font-size:19px;
         }
 
@@ -627,7 +627,7 @@
            gotoGetHelp();
         })
 
-        $("a#getHelp").on("click",function(){
+        $("li#otherPage").on("click",function(){
            gotoGetHelp();
         })
 
