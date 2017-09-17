@@ -256,8 +256,12 @@
             opacity:.9 !important;
         }
 
-        #requestModal>.modal-dialog>.modal-content{
+        #requestModal>.modal-dialog{
             width:90%;
+        }
+
+        #requestModal>.modal-dialog>.modal-content{
+            width:100%;
             margin:20% auto;
         }
 
@@ -566,9 +570,9 @@
         $("#requestSubmit").on("click",function(){//submits request and 
             
             if($("#requestInput").val().length>0){
-                $("#requestInput").val("");
                 dB.ref("/helpRequests/"+userObj.uid+"/help/status").set("open");//new request opened
-                dB.ref("/users/"+userObj.uid+"/helpRequest/").set($("#requestInput").val());            
+                dB.ref("/users/"+userObj.uid+"/helpRequest/").set($("#requestInput").val()); 
+                $("#requestInput").val("");          
             } else {
                 $("#errorMsg").html("Please enter a request to submit");
             }
