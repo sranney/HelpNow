@@ -541,7 +541,7 @@
                     var helperPhone = databaseObj.users[snapshot.val()].phoneNumber;
                     var helperEmail = databaseObj.users[snapshot.val()].email;
                     helperAlert="<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with " + firstName + " through our chat app. Click here to go to our chat page.</p></div>"
-                    $("#pendingRequest").html(helperAlert);
+                    $("#pendingRequest").append(helperAlert);
                     $("#withdraw").prop("disabled",true);
                     $("#complete").prop("disabled",false);
                 }
@@ -553,7 +553,7 @@
                     var helperName = databaseObj.users[helperUID].name;
                     var firstName = helperName.substr(0,helperName.indexOf(" "));
                     helperAlert = "<p>Hey, "+firstName+" has marked this request as complete, and has been removed from this request. Mark this request as complete to submit another request.</p>" + helperAlert;
-                    $("#pendingRequest").html(helperAlert);
+                    $("#helper").html(helperAlert);
                 }
             })
 
