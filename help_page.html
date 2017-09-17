@@ -430,12 +430,12 @@
                     var name = databaseObj.users[userObj.uid].name;
                     var email = databaseObj.users[userObj.uid].email;
                     var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
-                    requestFunctions();
                     if(databaseObj.users[userObj.uid].address !=undefined){
                         accountInfo = "<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>";//provides welcome greeting
                     } else {//don't include address yet, this will be included when the user provides address
                         accountInfo = "<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>";//provides welcome greeting
                     }
+                    requestFunctions();
                     $("#userInfo").html(accountInfo);
                     if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&gpsProcessed==false&&databaseObj.users[userObj.uid].helpRequest==undefined&&databaseObj.helpRequests[userObj.uid]==undefined){
                         gpsProcessor()//dealing with two asynchronous and separately fired functions and want this to run only when all of this information is available (database and address each being generated from two different functions) and for it to run only once - so I check that all data has been set and then I put in a boolean processed to allow me to control how many times this runs. we also want to make sure that this doesn't run when there is a helprequest active for the user. another modal will pop up and we only want that modal to show. we check for this by checking the databaseObj node specific to the user's helpRequest to see if it is null
