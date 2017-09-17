@@ -262,7 +262,7 @@
 
         #requestModal>.modal-dialog>.modal-content{
             width:100%;
-            margin:20% auto;
+            margin:10% auto;
         }
 
         #errorMsg{
@@ -493,9 +493,11 @@
         })
 
         function requestFunctions(){
+            var statusOpRan=false;
             //order of things matter here. knowing that 
             dB.ref("/helpRequests/"+userObj.uid+"/help/status").on("value",function(snapshot){
-                if(snapshot.val()=="open"){//adds an actions button that will serve as operations for the user to manage their request            
+                if(snapshot.val()=="open"&&statusOpRan==false){//adds an actions button that will serve as operations for the user to manage their request            
+                    statusOpRan = true;
                     $("#pendingRequest").empty();
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(menuBtn);
@@ -511,7 +513,10 @@
 
                     $("#requestModal").modal("show");
                 }
-            })            
+            })
+            dB.ref("/users/"+userObj.uid+"/helpRequest").on("value",function(snapshot){
+                $("#actions").html("Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i>");
+            })                        
         }
 
         //I want different colored backdrops for the modals depending on the modal
@@ -571,7 +576,7 @@
             
             if($("#requestInput").val().length>0){
                 dB.ref("/helpRequests/"+userObj.uid+"/help/status").set("open");//new request opened
-                dB.ref("/users/"+userObj.uid+"/helpRequest/").set($("#requestInput").val()); 
+                dB.ref("/users/"+userObj.uid+"/helpRequest").set($("#requestInput").val()); 
                 $("#requestInput").val("");          
             } else {
                 $("#errorMsg").html("Please enter a request to submit");
