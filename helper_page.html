@@ -269,6 +269,7 @@
           font-size:0px;
           text-align:center;
           border-radius:15px;
+          border:3px solid white;
         }
 
         .animation-show{
@@ -317,6 +318,18 @@
             display:none;
             border:0px solid white;
           }
+        }
+
+        #navigation,#complete{
+            color:white;
+        }
+
+        #navigation{
+            background-color:#402E24;
+        }
+
+        #complete{
+            background-color:#086268;
         }
 
     </style>
@@ -416,7 +429,7 @@
                         <div id = "userInfo_Rmodal"></div>
                         <div id="Menu" class="text-center">
                             <p id='pageTitle'>You are on Go Help Page</p>
-                            <p id='goHelp'>Click here to go to Get Help Page</p>
+                            <p id='getHelp'>Click here to go to Get Help Page</p>
                         </div>                    
                         <img id="logo_Rmodal" src="HelpNow Logo.png">
 
@@ -630,11 +643,11 @@
                     var requesterUID = requester.requesterUID;
                     var requesterName = databaseObj.users[requesterUID].name;
                     var request = databaseObj.users[requesterUID].helpRequest;
-                    var offerMsg = $("<p> You have offered to help " + requesterName + " with \"" + request + ".\"</p>");
+                    var offerMsg = $("<p id='offerMsg'> You have offered to help " + requesterName + " with \"" + request + ".\"</p>");
                     $("#pendingRequest").append(offerMsg);
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + request + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(menuBtn);
-                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='withdraw'><i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>Withdraw Request</button>");
+                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</button>");
                     $("#pendingRequest").append(DrpBtn1);
                     var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
                     $("#pendingRequest").append(DrpBtn2);
