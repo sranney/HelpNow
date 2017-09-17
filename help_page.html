@@ -495,7 +495,7 @@
         var statusOpsRan=false,helperOpsRan=false;
         function requestFunctions(){
             //order of things matter here. knowing that 
-            dB.ref("/helpRequests/"+userObj.uid+"/help/status").on("value",function(snapshot){
+            dB.ref("/helpRequests/"+userObj.uid).on("value",function(snapshot){
                 console.log(snapshot.val());
                 if(snapshot.val()=="open"&&statusOpsRan==false){//adds an actions button that will serve as operations for the user to manage their request            
                     statusOpsRan = true;
@@ -521,7 +521,7 @@
                     helperOpsRan=true;
                     $("#pendingRequest").append("<div id='helper'>Someone has volunteered to help</div>");
                     $("#withdraw").prop("disabled",true);
-                    $("#complete").prop("disabled",true);
+                    $("#complete").prop("disabled",false);
                 }
             })
 
@@ -538,7 +538,12 @@
 
         /////////////////////////COMPLETE BUTTON - MARK REQUEST AS COMPLETE
         $(document).on("click","#complete",function(){
-
+            dB.ref("/helpRequests/"+userObj.uid).remove();//new request opened
+            dB.ref("/users/"+userObj.uid+"/helpRequest").remove();
+            var helperUID = databaseObj.users[userObj.uid].helpedBy.helperUID;
+            dB.ref("/users/"+helperUID+"/serving/status").set("complete");
+            $('#requestModal').modal("hide");
+            setTimeout(function(){statusOpRan = false},1000);
         })
 
         //////////////////////MODAL CSS - CHANGE COLOR OF BACKGROUND DEPENDING ON WHICH MODAL IS SHOWN
@@ -600,7 +605,7 @@
         $("#requestSubmit").on("click",function(){//submits request and 
             
             if($("#requestInput").val().length>0){
-                dB.ref("/helpRequests/"+userObj.uid+"/help/status").set("open");//new request opened
+                dB.ref("/helpRequests/"+userObj.uid).set("open");//new request opened
                 dB.ref("/users/"+userObj.uid+"/helpRequest").set($("#requestInput").val()); 
                 $("#requestInput").val("");          
             } else {
