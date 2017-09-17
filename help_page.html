@@ -22,6 +22,7 @@
             padding:10px;
             margin-top:10px;
             margin-bottom:10px;
+            display:flex;
         }
         ul{
             float:left;
@@ -33,7 +34,32 @@
 
         img{
             height:100px;
-            float:right;
+            margin-right:15px;
+        }
+
+        #Menu{
+            margin:auto;
+        }
+
+        #Menu>#pageTitle,#Menu>#goHelp{
+            background-color:#991E37;
+            border-radius:3px;
+            border:3px solid white;
+            color:white;
+            padding:3px;
+            font-size:16px;
+            width:max-content;
+            transition:font-size 1s ease;
+            margin:auto;
+        }
+
+        #Menu>#goHelp{
+            background-color:#003600;
+            margin-top:5px;
+        }
+
+        #Menu>#pageTitle:hover,#Menu>#getHelp:hover{
+            font-size:19px;
         }
 
         #correctAddress,#submit,#accept,#reject,#instruct{
@@ -277,6 +303,7 @@
 
         #Rmodal{
             background-color:#032642;
+            border-radius:;
         }
 
     </style>
@@ -286,7 +313,12 @@
     <div class="jumbotron">
         
         <div id = "userInfo"></div>
-    
+
+        <div id="Menu" class="text-center">
+            <p id='pageTitle'>You are on Get Help Page</p>
+            <p id='goHelp'>Click here to go to Go Help Page</p>
+        </div>
+
         <img src="HelpNow Logo.png">
 
     </div>
@@ -341,7 +373,10 @@
                     <div id="jumbotron_Rmodal" class="jumbotron">
                         
                         <div id = "userInfo_Rmodal"></div>
-                    
+                        <div id="Menu" class="text-center">
+                            <p id='pageTitle'>You are on Get Help Page</p>
+                            <p id='goHelp'>Click here to go to Go Help Page</p>
+                        </div>                    
                         <img id="logo_Rmodal" src="HelpNow Logo.png">
 
                     </div>
@@ -378,6 +413,7 @@
         var userLoggedIn=false;
         var myRefToDisconnect;
 
+        var accountInfo;//to be pushed to userInfo section
         var userObj;//will be user object with all kinds of datas
         var databaseObj,modalShown=false;
         //get instance of real-time database
@@ -396,11 +432,11 @@
                     var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
                     requestFunctions();
                     if(databaseObj.users[userObj.uid].address !=undefined){
-                        $("#userInfo").html("<ul><li id='Menu'>You are on the <a href='#' id='pageTitle'>Get Help Page</a>. <a href='#' id='goHelp'>Click here to go to Go Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
-                    } else {
-                        $("#userInfo").html("<ul><li id='Menu'>You are on the <a id='pageTitle'>Get Help Page</a>. <a href='help_page.html' id='goHelp'>Click here to go to Go Help Page</a></li><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
+                        accountInfo = "<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
+                    } else {//don't include address yet, this will be included when the user provides address
+                        accountInfo = "<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>");//provides welcome greeting
                     }
-
+                    $("#userInfo").html(accountInfo);
                     if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&gpsProcessed==false&&databaseObj.users[userObj.uid].helpRequest==undefined&&databaseObj.helpRequests[userObj.uid]==undefined){
                         gpsProcessor()//dealing with two asynchronous and separately fired functions and want this to run only when all of this information is available (database and address each being generated from two different functions) and for it to run only once - so I check that all data has been set and then I put in a boolean processed to allow me to control how many times this runs. we also want to make sure that this doesn't run when there is a helprequest active for the user. another modal will pop up and we only want that modal to show. we check for this by checking the databaseObj node specific to the user's helpRequest to see if it is null
                     }
@@ -514,6 +550,7 @@
                 console.log(snapshot.val());
                 if(snapshot.val()!=null && statusOpsRan==false){//adds an actions button that will serve as operations for the user to manage their request            
                     statusOpsRan = true;
+                    $("#jumbotron_Rmodal>#userInfo_Rmodal").html(accountInfo);
                     $("#pendingRequest").empty();
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(menuBtn);
@@ -538,7 +575,7 @@
                     var firstName = helperName.substr(0,helperName.indexOf(" "));
                     var helperPhone = databaseObj.users[snapshot.val()].phoneNumber;
                     var helperEmail = databaseObj.users[snapshot.val()].email;
-                    $("#pendingRequest").append("<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with " + firstName + " with our chat app. Click here to go to our chat page.</p></div>");
+                    $("#pendingRequest").append("<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with " + firstName + " through our chat app. Click here to go to our chat page.</p></div>");
                     $("#withdraw").prop("disabled",true);
                     $("#complete").prop("disabled",false);
                 }
@@ -551,7 +588,7 @@
         $(document).on("click","#withdraw",function(){
             dB.ref("/helpRequests/"+userObj.uid).remove();//new request opened
             dB.ref("/users/"+userObj.uid+"/helpRequest").remove();
-            $('#requestModal').modal('hide');
+            /*$('#requestModal').modal('hide');*/
             setTimeout(function(){statusOpRan = false},1000);
         })
 
@@ -561,7 +598,8 @@
             dB.ref("/users/"+userObj.uid+"/helpRequest").remove();
             var helperUID = databaseObj.users[userObj.uid].helpedBy.helperUID;
             dB.ref("/users/"+helperUID+"/serving/status").set("complete");
-            $('#requestModal').modal("hide");
+            /*$('#requestModal').modal("hide");*/
+            $('#requestModal').fadeOut(1000);
             setTimeout(function(){statusOpRan = false},1000);
         })
 
@@ -658,7 +696,7 @@
             gotoGoHelp();
         })
 
-        $("a#goHelp").on("click",function(){
+        $("p#goHelp").on("click",function(){
             gotoGoHelp();
         })
 
