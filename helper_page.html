@@ -752,8 +752,7 @@
                     $("#pendingRequest").append(navPanel);
                     $("#requestModal").modal({backdrop: 'static', keyboard: false});
                     $("#requestModal").modal("show");
-/*                    startLoc = databaseObj.users[userObj.uid].address;
-                    endLoc = databaseObj.users[requesterUID].address;
+/*                    
                     setTimeout(initNavMap(startLoc,userObj.uid,endLoc,requesterUID),10000);
 */                }
             })
@@ -775,7 +774,9 @@
         }
 
         $(document).on("click","#showMap",function(){
-            initNavMap();
+            startLoc = databaseObj.users[userObj.uid].address;
+            endLoc = databaseObj.users[requesterUID].address;
+            initNavMap(startLoc,userObj.uid,endLoc,requesterUID);
         });
 
         //for actions button animation
