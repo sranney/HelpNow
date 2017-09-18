@@ -355,7 +355,7 @@
 				    	myRefToDisconnect = dB.ref("/users/" + userObj.uid +"/iconnect")
 				    	myRefToDisconnect.set(true);
 				    	myRefToDisconnect.onDisconnect().set("disconnected");			    	
-			    		$("#Welcome").html("Welcome back, " + databaseObj.users[userObj.uid].name);//provides welcome greeting
+			    		$("#Welcome").html("Welcome back, " + databaseObj.users[userObj.uid].name + "<p id='signOut'>(Not " + databaseObj.users[userObj.uid].name + "? Click here to sign out.)</p>");//provides welcome greeting
 			    	}
 			  	} else {
 			    	userLoggedIn=false;//used below to state user is not logged in and to prompt user with a modal
@@ -693,7 +693,16 @@
 				return input.slice(0, input.indexOf("@")) + "@" + text;
 			},
 			filter: Awesomplete.FILTER_STARTSWITH
-		});		
+		});
+
+        $(document).on("click","#signOut",function(){
+            firebase.auth().signOut().then(function() {
+                var win = window.open("index.html","_self");
+                win.focus();     
+            }, function(error) {
+                console.error('Sign Out Error', error);
+            });
+        })
 
 	</script>
 	
