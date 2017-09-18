@@ -348,53 +348,13 @@
         }
         
         #navDiv{
-            display:none;
+            display:block;
             width:100%;
-            height:0%;
+            height:300px;
         }
 
-        .map-animation-show{
-          animation-duration:.1s;
-          animation-name:mapExpand;
-          animation-fill-mode:forwards;
-        }
-        
-        @keyframes mapExpand{
-          0%{
-            opacity:0;
-            height:0%;
-            display:none;
-            border:0px solid white;
-          }
-          100%{
-            opacity:1;
-            height:450px;
-            display:block;
-            padding:10px;
-            border:3px solid white;
-          }
-        }
-        
-        .map-animation-hide{
-          animation-duration:.1s;
-          animation-name:mapCollapse;
-          animation-fill-mode:forwards;
-        }
-        
-        @keyframes mapCollapse{
-          0%{
-            opacity:1;
-            height:450px;
-            display:block;
-            padding:10px;
-            border:2px solid white;
-          }
-          100%{
-            opacity:0;
-            height:0%;
-            display:none;
-            border:0px solid white;
-          }
+        #routeTable{
+
         }
 
         .contact-animation-show{
@@ -769,17 +729,16 @@
                     $("#pendingRequest").append(offerMsg);
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + request + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(menuBtn);
-                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
+                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='contact'><i class='fa fa-phone'></i><i class='fa fa-fw'></i>Contact " + requesterName.substr(0,requesterName.indexOf(" ")) + "<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn1);
-                    /*var mapDiv = $("<div id='navDiv'><div id='mapDiv'></div><div id='routeTable' style='width:40%'></div></div>");*/
-                    var mapDiv = $("<div id='navDiv'></div>");
-                    $("#pendingRequest").append(mapDiv);
-                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='contact'><i class='fa fa-phone'></i><i class='fa fa-fw'></i>Contact " + requesterName.substr(0,requesterName.indexOf(" ")) + "<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
-                    $("#pendingRequest").append(DrpBtn2);
                     var contactDiv = $("<div id='contactDiv'>Here's " + requesterName.substr(0,requesterName.indexOf(" ")) + "'s email and phone number: <p>Email: " + requesterEmail + "</p><p> Phone: " + requesterPhone + "</p><p>Alternatively, you can chat with " + requesterName.substr(0,requesterName.indexOf(" ")) + " using our chat app. Click here to access our chat app.</div>");
                     $("#pendingRequest").append(contactDiv);
-                    var DrpBtn3 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
-                    $("#pendingRequest").append(DrpBtn3);
+                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
+                    $("#pendingRequest").append(DrpBtn2);
+                    var navPanel = $("<button class='panel panel-default' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</button>");
+                    var mapDiv = $("<div id='navDiv'></div>");
+                    $(navPanel).append(mapDiv);
+                    $("#pendingRequest").append(navPanel);
                     $("#requestModal").modal({backdrop: 'static', keyboard: false});
                     $("#requestModal").modal("show");
                     startLoc = databaseObj.users[userObj.uid].address;
