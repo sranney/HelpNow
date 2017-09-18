@@ -531,6 +531,11 @@
     </div>
 
     <p id="disclaimer">Disclaimer: Please note that, if you have an open request, your request has been filtered out from your view. Only people that can help you will see your request. If you have an outstanding request, and would like to manage it, <a href="#">click here to go to GET HELP page</a></p>
+    
+    <div id="weatherDiv" class="text-center">
+        <p>Make sure that you are fully prepared to help out today. Here's the weather for your area.</p>
+        <p id="todayWeather"></p>
+    </div>
 
     <div id="gpsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -751,7 +756,8 @@
             if(databaseObj.users[userObj.uid].address!=address){
                 dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
                 dB.ref("/users/"+userObj.uid+"/address").set(address);
-            }            
+            }
+            ajaxWeather_latlng(lat,long);
         })
 
         $("#reject").on("click",function(){
@@ -789,6 +795,7 @@
                     dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
                     dB.ref("/users/"+userObj.uid+"/address").set(correctAddress);
                     moveToLocation();
+                    ajaxWeather_latlng(lat,long);
                 }
 
             })
@@ -927,8 +934,9 @@
                 }
             }
             
-            $('#requestModal').fadeOut(1000).modal("hide");
+            $('#requestModal').fadeOut(1000);
             setTimeout(function(){
+                $('#requestModal').modal("hide");
                 statusOpsRan=false;
                 helperOpsRan=false;
                 requesterStatusOpsRan=false;
@@ -1230,6 +1238,14 @@
             moveToLocation();
             addRequestMarkersWithinRadius();
         },20000)
+
+        function ajaxWeather_latlng(lat,long){
+            $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+long+"&cnt=10&appid=037ae0f267a4d5e7fb06436b5baf1089", function(json, textStatus) {
+                var temperature = Math.round((((json.main.temp / 2) - 273.15) * 1.8) + 32);
+                var weatherCond = json.weather[0].description;
+                $("#todayWeather").html(temperature + "°F and " + weatherCond);
+            });
+        }
 
     </script>
     <script async defer
