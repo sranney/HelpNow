@@ -743,6 +743,7 @@
                     var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
                     $("#pendingRequest").append(DrpBtn2);
                     var navPanel = $("<div class='panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</div>");
+                    var showMap = $("<button class='btn btn-default' id='showMap'>Show Map of Route</buttons>");
                     var mapDiv = $("<div id='navDiv'></div>");
                     var routeDiv = $("<div id='routeDiv'></div>");
                     $(navPanel).append(mapDiv);
@@ -750,10 +751,10 @@
                     $("#pendingRequest").append(navPanel);
                     $("#requestModal").modal({backdrop: 'static', keyboard: false});
                     $("#requestModal").modal("show");
-                    startLoc = databaseObj.users[userObj.uid].address;
+/*                    startLoc = databaseObj.users[userObj.uid].address;
                     endLoc = databaseObj.users[requesterUID].address;
                     setTimeout(initNavMap(startLoc,userObj.uid,endLoc,requesterUID),10000);
-                }
+*/                }
             })
 
             dB.ref("/users/"+userObj.uid+"/serving/requesterStatus").on("value",function(snapshot){
@@ -771,6 +772,10 @@
             })
 
         }
+
+        $(document).on("click","#showMap",function(){
+            initNavMap();
+        });
 
         //for actions button animation
         $(document).on("click","#actions",function(){//adding animations for clicking actions button on requestModal
