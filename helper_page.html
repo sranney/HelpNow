@@ -838,7 +838,7 @@
             var center_lat = databaseObj.users[userObj.uid].coords.lat;
             var center_lng = databaseObj.users[userObj.uid].coords.long;
             var center = {lat:center_lat,lng:center_lng};
-            navMap=new google.maps.Map(document.getElementById('navDiv'),{
+            navMap=new google.maps.Map(document.getElementById('mapDiv'),{
                 zoom:15,
                 center:center,
                 fullscreenControl:true
