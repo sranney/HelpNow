@@ -417,6 +417,10 @@
         #Rmodal>.modal-body{
             overflow: auto;
         }
+
+        #pendingRequest{
+            color:white;
+        }
     
     </style>
 
@@ -724,7 +728,7 @@
                     var requester = snapshot.val();
                     requesterUID = requester.requesterUID;
                     var requesterName = databaseObj.users[requesterUID].name;
-                    var request = databaseObj.users[requesterUID].helpRequest;
+                    var request = databaseObj.users[userObj.uid].serving.description;
                     var requesterPhone = databaseObj.users[requesterUID].phoneNumber;
                     var requesterEmail = databaseObj.users[requesterUID].email;
                     $("div#userInfo_Rmodal").html(accountInfo.replace("signOut","RsignOut"));
