@@ -743,13 +743,15 @@
                     $("#pendingRequest").append(DrpBtn2);
                     var navPanel = $("<button class='panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</button>");
                     var mapDiv = $("<div id='navDiv'></div>");
+                    var routeDiv = $("<div id='routeDiv'></div>");
                     $(navPanel).append(mapDiv);
+                    $(navPanel).append(routeDiv);
                     $("#pendingRequest").append(navPanel);
                     $("#requestModal").modal({backdrop: 'static', keyboard: false});
                     $("#requestModal").modal("show");
                     startLoc = databaseObj.users[userObj.uid].address;
                     endLoc = databaseObj.users[requesterUID].address;
-                    setTimeout(initNavMap(startLoc,userObj.uid,endLoc,requesterUID),2000);
+                    setTimeout(initNavMap(startLoc,userObj.uid,endLoc,requesterUID),3000);
                 }
             })
 
@@ -846,7 +848,7 @@
                 if(status=="OK"){
                     console.log(response);
                     directionsDisplay.setDirections(response);
-                    /*createTable(response.routes[0].legs[0]);*/
+                    createTable(response.routes[0].legs[0]);
                 } else {
                     window.alert("Directions request failed due to " + status);
                 }
@@ -870,7 +872,7 @@
         }
 
         function createTable(directionsArray){
-            $("#routeTable").append("<p>Start Address: " + directionsArray.start_address + "</p><p>End Address: " + directionsArray.end_address + "</p><p>Distance: " + directionsArray.distance.text + "</p><p>Duration: " + directionsArray.duration.text + "</p>Driving Directions below:");
+            $("#routeDiv").append("<p>Start Address: " + directionsArray.start_address + "</p><p>End Address: " + directionsArray.end_address + "</p><p>Distance: " + directionsArray.distance.text + "</p><p>Duration: " + directionsArray.duration.text + "</p>Driving Directions below:");
             var bigTableText;
             bigTableText = "<table style='width:100%'><tr><th>Instructions</th><th>Duration</th><th>Distance</th></tr>"
             for (var i=0; i<directionsArray.steps; i++){
@@ -880,6 +882,7 @@
                 bigTableText+="<tr><td>"+instructions+"</td><td>"+duration+"</td><td>"+distance+"</td></tr>";
             }
             bigTableText+="</table>";
+            $("#routeDiv").append(bigTableText);
         }
 
         var map;
