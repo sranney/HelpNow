@@ -320,17 +320,134 @@
           }
         }
 
-        #navigation,#complete{
+        #navigation,#complete,#contact{
             color:white;
         }
 
-        #navigation{
+        #contact{
             background-color:#402E24;
         }
 
         #complete{
             background-color:#086268;
         }
+
+        #navigation{
+            background-color:#B8491F;
+        }
+
+        #mapDiv,#contactDiv{
+            background-color:#505853;
+            color:white;
+            width:100%;
+            display:none;
+            height:0px;
+            opacity:0;
+            font-size:0px;
+        }
+
+        .map-animation-show{
+          animation-duration:.1s;
+          animation-name:mapExpand;
+          animation-fill-mode:forwards;
+        }
+        
+        @keyframes mapExpand{
+          0%{
+            opacity:0;
+            height:0%;
+            font-size:0px;
+            display:none;
+            border:0px solid white;
+          }
+          100%{
+            opacity:1;
+            height:100%;
+            font-size:30px;
+            display:block;
+            padding:10px;
+            border:3px solid white;
+          }
+        }
+        
+        .map-animation-hide{
+          animation-duration:.1s;
+          animation-name:mapCollapse;
+          animation-fill-mode:forwards;
+        }
+        
+        @keyframes mapCollapse{
+          0%{
+            opacity:1;
+            height:100%;
+            font-size:30px;
+            display:block;
+            padding:10px;
+            border:2px solid white;
+          }
+          100%{
+            opacity:0;
+            height:0%;
+            font-size:0px;
+            display:none;
+            border:0px solid white;
+          }
+        }
+
+        .contact-animation-show{
+          animation-duration:.1s;
+          animation-name:contactExpand;
+          animation-fill-mode:forwards;
+        }
+        
+        @keyframes contactExpand{
+          0%{
+            opacity:0;
+            height:0%;
+            font-size:0px;
+            display:none;
+            border:0px solid white;
+          }
+          100%{
+            opacity:1;
+            height:100%;
+            font-size:30px;
+            display:block;
+            padding:10px;
+            border:3px solid white;
+          }
+        }
+        
+        .contact-animation-hide{
+          animation-duration:.1s;
+          animation-name:contactCollapse;
+          animation-fill-mode:forwards;
+        }
+        
+        @keyframes contactCollapse{
+          0%{
+            opacity:1;
+            height:100%;
+            font-size:30px;
+            display:block;
+            padding:10px;
+            border:2px solid white;
+          }
+          100%{
+            opacity:0;
+            height:0%;
+            font-size:0px;
+            display:none;
+            border:0px solid white;
+          }
+        }
+
+        #offerMsg{
+            color:white;
+            font-size:20px;
+        }
+
+
 
     </style>
 
@@ -470,7 +587,7 @@
         var databaseObj,modalShown = false;
         //get instance of real-time database
         dB.ref().on("value",function(snapshot){
-            databaseObj = snapshot.toJSON();
+            databaseObj = snapshot.toJSON();//setting databaseObj to the entire firebase onvalue change snapshot gives me the current firebase with every change that occurs to the firebase
             //firebase function to check whether user is logged into site
             Auth.onAuthStateChanged(function(user) {
                 if (user) {
@@ -565,10 +682,6 @@
             }
         }
 
-        var requestprocessed=false;
-
-        //series of functions to check different nodes of users
-
         var lat,long,address,streetAddress,city,state,zip,country,success,geocoder;
         var loc_GoogMaps,acceptPushed = false,submitPushed = false;
         $("#accept").on("click",function(){//accept the geolocation calculated by browser
@@ -629,6 +742,8 @@
 
         })
 
+        //series of functions to check different nodes of users
+
         var statusOpsRan=false,helperOpsRan=false,helperStatusOpsRan=false,helperAlert,helperUID;
         
         function requestFunctions(){//checking actions of other user
@@ -640,17 +755,23 @@
                     $("div#userInfo_Rmodal").html(accountInfo.replace("signOut","RsignOut"));
                     $("#pendingRequest").empty();
                     var requester = snapshot.val();
-                    var requesterUID = requester.requesterUID;
+                    requesterUID = requester.requesterUID;
                     var requesterName = databaseObj.users[requesterUID].name;
                     var request = databaseObj.users[requesterUID].helpRequest;
                     var offerMsg = $("<p id='offerMsg'> You have offered to help " + requesterName + " with \"" + request + ".\"</p>");
                     $("#pendingRequest").append(offerMsg);
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + request + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(menuBtn);
-                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</button>");
+                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn1);
-                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
+                    var mapDiv = $("<div id='mapDiv'>Here's a map with directions</div>");
+                    $("#pendingRequest").append(mapDiv);
+                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='contact'><i class='fa fa-phone'></i><i class='fa fa-fw'></i>Contact " + requesterName.substr(0,requesterName.indexOf(" ")) + "<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn2);
+                    var contactDiv = $("<div id='contactDiv'>Here's some contact info</div>");
+                    $("#pendingRequest").append(contactDiv);
+                    var DrpBtn3 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
+                    $("#pendingRequest").append(DrpBtn3);
                     $("#requestModal").modal({backdrop: 'static', keyboard: false});
                     $("#requestModal").modal("show");
                     $("#complete").prop( "disabled", true );
@@ -704,6 +825,60 @@
             $(".collapsed").css("display","block");
           }
         })
+
+        $(document).on("click","#navigation",function(){//adding animations for clicking actions button on requestModal
+            if($("#mapDiv").hasClass("map-animation-show")){//if animation-show class is present, then action buttons are shown. we want to collapse them so we swap animation-show for animation-hide, change font awesome icon and after animation complete, make display for action buttons "none"
+            $("#mapDiv").removeClass("map-animation-show").addClass("map-animation-hide");
+            $("#navigation").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+            setTimeout(function(){$("#mapDiv").css("display","none")},100);
+          } else if($("#mapDiv").hasClass("map-animation-hide")){//if animation-hide class is present, then action buttons are collapsed. we want to show them so we swap animation-hide for animation-show, change font awesome icon and make display for action buttons "block" so that animation can be seen
+            $("#navigation").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+            $("#mapDiv").removeClass("map-animation-hide").addClass("map-animation-show");
+            $("#mapDiv").css("display","block");
+          } else {//animation-show and animation-hide are classes specifically for animation, so they are not part of the action buttons at first. this way the buttons can stay collapsed. so if neither class is present, this means that the buttons are collapsed and need to be shown. so if the action menu button is clicked, we want to add the animation class animation-show to the collapse action buttons to show the buttons, swap the font awesome icon and make the display be block so that the animation can be seen
+            $("#mapDiv").addClass("map-animation-show");
+            $("#navigation").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+            $("#mapDiv").css("display","block");
+          }
+        })
+
+
+        $(document).on("click","#contact",function(){//adding animations for clicking actions button on requestModal
+            if($("#contactDiv").hasClass("contact-animation-show")){//if animation-show class is present, then action buttons are shown. we want to collapse them so we swap animation-show for animation-hide, change font awesome icon and after animation complete, make display for action buttons "none"
+            $("#contactDiv").removeClass("contact-animation-show").addClass("contact-animation-hide");
+            $("#contact").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+            setTimeout(function(){$("#contactDiv").css("display","none")},100);
+          } else if($("#contactDiv").hasClass("contact-animation-hide")){//if animation-hide class is present, then action buttons are collapsed. we want to show them so we swap animation-hide for animation-show, change font awesome icon and make display for action buttons "block" so that animation can be seen
+            $("#contact").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+            $("#contactDiv").removeClass("contact-animation-hide").addClass("contact-animation-show");
+            $("#contactDiv").css("display","block");
+          } else {//animation-show and animation-hide are classes specifically for animation, so they are not part of the action buttons at first. this way the buttons can stay collapsed. so if neither class is present, this means that the buttons are collapsed and need to be shown. so if the action menu button is clicked, we want to add the animation class animation-show to the collapse action buttons to show the buttons, swap the font awesome icon and make the display be block so that the animation can be seen
+            $("#contactDiv").addClass("contact-animation-show");
+            $("#contact").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+            $("#contactDiv").css("display","block");
+          }
+        })
+
+        $(document).on("click","#complete",function(){
+            dB.ref("/users/"+userObj.uid+"/serving").remove();//remove helper info from node
+
+            if(databaseObj.users[requesterUID].helpedBy!=null){
+                if(databaseObj.users[requesterUID].helpedBy.requesterUID==userObj.uid){
+                    dB.ref("/users/"+requesterUID+"/serving/requesterStatus").set("complete");//notify helper that you have marked the request as complete
+                }
+            }
+            
+
+            /*$('#requestModal').modal("hide");*/
+            $('#requestModal').fadeOut(1000);
+            setTimeout(function(){
+                statusOpsRan=false;
+                helperOpsRan=false;
+                helperStatusOpsRan=false;
+            },1000);
+        })
+
+
         var map;
         function initMap(){
             var center={lat:32.7767,lng:-96.7970};
@@ -840,12 +1015,13 @@
         $(document).on("click",".contact",function(){
             requesterUID = $(this).attr("uid");
             statusofRequest = databaseObj.helpRequests[requesterUID];
+            var name = databaseObj.users[requesterUID].
             if(statusofRequest=="open"){        
                 $("#confirmModal").modal("show");
                 $(".confirmMessage").html("<p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button>");
             } else {
                 $("#confirmModal").modal("show");
-                $(".confirmMessage").html("<p id='confirm-message'>Someone else has recently accepted this request. The map is being updated now. Click outside this box to find another person in need of help.</p>");
+                $(".confirmMessage").html("<p id='confirm-message'>Either someone else has recently accepted "+requesterName.substr(0,requesterName.indexOf(" "))+"'s request or "+requesterName.substr(0,requesterName.indexOf(" "))+" has withdrawn his request for help. The map is being updated now. Click outside this box to find another person in need of help.</p>");
                 initMap();
                 moveToLocation();
             }
