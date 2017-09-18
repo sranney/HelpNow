@@ -886,8 +886,7 @@
             $("#actions").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
             $("#contactDiv").css("display","none");
             $("#contactDiv").removeClass("contact-animation-show").addClass("contact-animation-hide");
-            $("#mapDiv").css("display","none");
-            $("#routeDiv").css("display","none");
+            $("#navDiv").css("display","none");
             setTimeout(function(){$(".collapsed").css("display","none")},100);
           } else if($(".collapsed").hasClass("animation-hide")){//if animation-hide class is present, then action buttons are collapsed. we want to show them so we swap animation-hide for animation-show, change font awesome icon and make display for action buttons "block" so that animation can be seen
             $("#actions").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
