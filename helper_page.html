@@ -742,19 +742,17 @@
                     $("#pendingRequest").append(contactDiv);
                     var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
                     $("#pendingRequest").append(DrpBtn2);
-                    var navPanel = $("<div class='panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</div>");
-                    var showMap = $("<button class='btn btn-default' id='showMap'>Show Map of Route</buttons>");
-                    $(navPanel).append(showMap);
-                    var mapDiv = $("<div id='navDiv'></div>");
+                    var showMap = $("<button class='btn btn-default' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</buttons>");
+                    $("#pendingRequest").append(showMap);
+                    var navDiv = $("<div id='navDiv'></div>");
+                    var mapDiv = $("<div id='mapDiv'></div>");
                     var routeDiv = $("<div id='routeDiv'></div>");
-                    $(navPanel).append(mapDiv);
-                    $(navPanel).append(routeDiv);
-                    $("#pendingRequest").append(navPanel);
+                    $(navDiv).append(mapDiv);
+                    $(navDiv).append(routeDiv);
+                    $("#pendingRequest").append(navDiv);
                     $("#requestModal").modal({backdrop: 'static', keyboard: false});
                     $("#requestModal").modal("show");
-/*                    
-                    setTimeout(initNavMap(startLoc,userObj.uid,endLoc,requesterUID),10000);
-*/                }
+                }
             })
 
             dB.ref("/users/"+userObj.uid+"/serving/requesterStatus").on("value",function(snapshot){
@@ -773,13 +771,14 @@
 
         }
 
-        $(document).on("click","#showMap",function(){
-            $("#navDiv").css("height","300px");
+        $(document).on("click","#navigation",function(){
+            $("#navDiv").css("display","block");
+            $("#mapDiv").css("height","300px");
             setTimeout(function(){
                 startLoc = databaseObj.users[userObj.uid].address;
                 endLoc = databaseObj.users[requesterUID].address;
                 initNavMap(startLoc,userObj.uid,endLoc,requesterUID);
-            });
+            },500);
         });
 
         //for actions button animation
@@ -883,8 +882,9 @@
         }
 
         function createTable(directionsArray){
-        
-            $("#routeDiv").append("<p>Start Address: " + directionsArray.start_address + "</p><p>End Address: " + directionsArray.end_address + "</p><p>Distance: " + directionsArray.distance.text + "</p><p>Duration: " + directionsArray.duration.text + "</p>Driving Directions below:");
+            var requesterName = databaseObj.users[requesterUID].name;
+            var firstName = requesterName.substr(0,requesterName.indexOf(" "));
+            $("#routeDiv").append("<p>Start Address (Point A - Where you are): " + directionsArray.start_address + "</p><p>End Address (Point B - Where "+firstName+" is): " + directionsArray.end_address + "</p><p>Distance from Point A to Point B: " + directionsArray.distance.text + "</p><p>Duration: " + directionsArray.duration.text + "</p>Driving Directions below:");
             var bigTableText;
             bigTableText = "<table style='width:100%'><tr><th>Instructions</th><th>Duration</th><th>Distance</th></tr>"
             for (var i=0; i<directionsArray.steps.length; i++){
