@@ -339,7 +339,7 @@
         }
 
         #contactDiv{
-            background-color:#505853;
+            background-color:#402E24;
             color:white;
             width:100%;
             display:none;
@@ -737,16 +737,16 @@
                     $("#pendingRequest").append(DrpBtn1);
                     var contactDiv = $("<div id='contactDiv'>Here's " + requesterName.substr(0,requesterName.indexOf(" ")) + "'s email and phone number: <p>Email: " + requesterEmail + "</p><p> Phone: " + requesterPhone + "</p><p>Alternatively, you can chat with " + requesterName.substr(0,requesterName.indexOf(" ")) + " using our chat app. Click here to access our chat app.</div>");
                     $("#pendingRequest").append(contactDiv);
-                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
+                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='navigation' state='hidden'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</button>");
                     $("#pendingRequest").append(DrpBtn2);
-                    var showMap = $("<button class='btn btn-default' id='navigation' state='hidden'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</buttons>");
-                    $("#pendingRequest").append(showMap);
                     var navDiv = $("<div id='navDiv'></div>");
                     var mapDiv = $("<div id='mapDiv'></div>");
                     var routeDiv = $("<div id='routeDiv'></div>");
                     $(navDiv).append(mapDiv);
                     $(navDiv).append(routeDiv);
                     $("#pendingRequest").append(navDiv);
+                    var DrpBtn3 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
+                    $("#pendingRequest").append(DrpBtn3);
                     $("#requestModal").modal({backdrop: 'static', keyboard: false});
                     $("#requestModal").modal("show");
                 }
@@ -779,12 +779,14 @@
                     initNavMap(startLoc,userObj.uid,endLoc,requesterUID);
                 },500);
                 $(this).attr("state","shown");
+            
             } else if($(this).attr("state")=="shown"){
             
                 $("#mapDiv").empty();
                 $("#routeDiv").empty();
                 $("#navDiv").css("display","none");
                 $(this).attr("state","hidden");
+
             }
         });
 
