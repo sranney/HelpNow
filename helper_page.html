@@ -412,8 +412,9 @@
             font-size:20px;
         }
 
-        #routeTable>p,#routeTable{
+        #routeDiv>p,#routeDiv{
             font-size:15px;
+            text-align:left;
         }
 
         #Rmodal>.modal-body{
@@ -876,9 +877,9 @@
             var bigTableText;
             bigTableText = "<table style='width:100%'><tr><th>Instructions</th><th>Duration</th><th>Distance</th></tr>"
             for (var i=0; i<directionsArray.steps; i++){
-                var instructions=directionArray.steps[i].instructions;
-                var duration=directionArray.steps[i].duration.text;
-                var distance=directionArray.steps[i].distance.text;
+                var instructions=directionsArray.steps[i].instructions;
+                var duration=directionsArray.steps[i].duration.text;
+                var distance=directionsArray.steps[i].distance.text;
                 bigTableText=bigTableText+ "<tr><td>"+instructions+"</td><td>"+duration+"</td><td>"+distance+"</td></tr>";
             }
             bigTableText+="</table>";
