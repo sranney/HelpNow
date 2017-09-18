@@ -1015,7 +1015,7 @@
         $(document).on("click",".contact",function(){
             requesterUID = $(this).attr("uid");
             statusofRequest = databaseObj.helpRequests[requesterUID];
-            var name = databaseObj.users[requesterUID].
+            var name = databaseObj.users[requesterUID].name;
             if(statusofRequest=="open"){        
                 $("#confirmModal").modal("show");
                 $(".confirmMessage").html("<p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button>");
