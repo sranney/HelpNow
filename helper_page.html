@@ -744,6 +744,7 @@
                     $("#pendingRequest").append(DrpBtn2);
                     var navPanel = $("<div class='panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</div>");
                     var showMap = $("<button class='btn btn-default' id='showMap'>Show Map of Route</buttons>");
+                    $(navPanel).append(showMap);
                     var mapDiv = $("<div id='navDiv'></div>");
                     var routeDiv = $("<div id='routeDiv'></div>");
                     $(navPanel).append(mapDiv);
