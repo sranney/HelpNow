@@ -921,7 +921,7 @@
             $("#routeTable").append("<p>Start Address: " + directionsArray.start_address + "</p><p>End Address: " + directionsArray.end_address + "</p><p>Distance: " + directionsArray.distance.text + "</p><p>Duration: " + directionsArray.duration.text + "</p>Driving Directions below:");
             var bigTableText;
             bigTableText = "<table style='width:100%'><tr><th>Instructions</th><th>Duration</th><th>Distance</th></tr>"
-            for (var i=0; i<directionArray.steps; i++){
+            for (var i=0; i<directionsArray.steps; i++){
                 var instructions=directionArray.steps[i].instructions;
                 var duration=directionArray.steps[i].duration.text;
                 var distance=directionArray.steps[i].distance.text;
