@@ -630,7 +630,7 @@
 	  			$("#signUpInButtons").css("display","none");
 				$("#sign-in-form").css("display","none");
 				$(".modal-body>button").css("display","none");
-				$(".modal-body").append("<p>Thank you, " +  + ", please click the button below to continue to site.</p><br><p>Please note that on the next page, you will be asked to allow our website to access your location. This helps us be able to match you with people that are more readily available to help.</p>");
+				$(".modal-body").append("<p>Thank you, " + databaseObj.users[user.uid].name + ", please click the button below to continue to site.</p><br><p>Please note that on the next page, you will be asked to allow our website to access your location. This helps us be able to match you with people that are more readily available to help.</p>");
 				$("#logInComplete").css("display","block");
 	  		}).catch(function(error) {//for error handling
 			  // Handle Errors here.
