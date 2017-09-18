@@ -728,7 +728,11 @@
                     var requester = snapshot.val();
                     requesterUID = requester.requesterUID;
                     var requesterName = databaseObj.users[requesterUID].name;
-                    var request = databaseObj.users[userObj.uid].serving.description;
+                    if(databaseObj.users[requesterUID].helpRequest==undefined){
+                        var request = databaseObj.users[userObj.uid].serving.description;
+                    } else {
+                        var request = databaseObj.users[requesterUID].helpRequest;
+                    }
                     var requesterPhone = databaseObj.users[requesterUID].phoneNumber;
                     var requesterEmail = databaseObj.users[requesterUID].email;
                     $("div#userInfo_Rmodal").html(accountInfo.replace("signOut","RsignOut"));
