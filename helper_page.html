@@ -1106,6 +1106,14 @@
             moveToLocation();
         })
 
+        ///////////////////////////////////////////////////////////////////want to refresh the main map on this page every minute to update help request markers
+        setInterval(function(){
+            $("#map").empty();
+            initMap();
+            moveToLocation();
+            addRequestMarkersWithinRadius();
+        },60000)
+
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJRXIv3oHTTTjcAfMJuM-kILQXbkYJNCk&libraries=geometry&callback=initMap">
