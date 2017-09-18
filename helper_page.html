@@ -744,20 +744,22 @@
 
         //series of functions to check different nodes of users
 
-        var statusOpsRan=false,helperOpsRan=false,helperStatusOpsRan=false,helperAlert,helperUID;
+        var helperOpsRan=false,requesterStatusOpsRan=false,requesterAlert;
         
         function requestFunctions(){//checking actions of other user
             //order of things matter here. knowing that 
             dB.ref("/users/"+userObj.uid+"/serving").on("value",function(snapshot){
                 console.log(snapshot.val());
-                if(snapshot.val()!=null && statusOpsRan==false){//adds an actions button that will serve as operations for the user to manage their request            
-                    statusOpsRan = true;
-                    $("div#userInfo_Rmodal").html(accountInfo.replace("signOut","RsignOut"));
-                    $("#pendingRequest").empty();
+                if(snapshot.val()!=null && helperOpsRan==false){//adds an actions button that will serve as operations for the user to manage their request            
+                    helperOpsRan = true;
                     var requester = snapshot.val();
                     requesterUID = requester.requesterUID;
                     var requesterName = databaseObj.users[requesterUID].name;
                     var request = databaseObj.users[requesterUID].helpRequest;
+                    var requesterPhone = databaseObj.users[requesterUID].phoneNumber;
+                    var requesterEmail = databaseObj.users[requesterUID].email;
+                    $("div#userInfo_Rmodal").html(accountInfo.replace("signOut","RsignOut"));
+                    $("#pendingRequest").empty();
                     var offerMsg = $("<p id='offerMsg'> You have offered to help " + requesterName + " with \"" + request + ".\"</p>");
                     $("#pendingRequest").append(offerMsg);
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + request + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
@@ -768,7 +770,7 @@
                     $("#pendingRequest").append(mapDiv);
                     var DrpBtn2 = $("<button class='collapsed btn btn-block' id='contact'><i class='fa fa-phone'></i><i class='fa fa-fw'></i>Contact " + requesterName.substr(0,requesterName.indexOf(" ")) + "<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn2);
-                    var contactDiv = $("<div id='contactDiv'>Here's some contact info</div>");
+                    var contactDiv = $("<div id='contactDiv'>Here's " + requesterName.substr(0,requesterName.indexOf(" ")) + "email and phone number: <p>Email: " + requesterEmail + "</p><p> Phone: " + requesterPhone + "</p><p>Alternatively, you can chat with " + requesterName.substr(0,requesterName.indexOf(" ")) + " using our chat app. Click here to access our chat app.</div>");
                     $("#pendingRequest").append(contactDiv);
                     var DrpBtn3 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
                     $("#pendingRequest").append(DrpBtn3);
@@ -777,33 +779,14 @@
                     $("#complete").prop( "disabled", true );
                 }
             })
-            
-            dB.ref("/users/"+userObj.uid+"/helpRequest").on("value",function(snapshot){
-                /*$("#actions").html("Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i>");*/
-            })
 
-            dB.ref("/users/"+userObj.uid+"/helpedBy/helperUID").on("value",function(snapshot){
-                if(snapshot.val()!=null && helperOpsRan==false){//i.e., there is a UID set here and thus a user has volunteered to help
-/*                    helperUID=snapshot.val();
-                    helperOpsRan=true;
-                    var helperName = databaseObj.users[snapshot.val()].name;
-                    var firstName = helperName.substr(0,helperName.indexOf(" "));
-                    var helperPhone = databaseObj.users[snapshot.val()].phoneNumber;
-                    var helperEmail = databaseObj.users[snapshot.val()].email;
-                    helperAlert="<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with " + firstName + " through our chat app. Click here to go to our chat page.</p></div>"
-                    $("#pendingRequest").append(helperAlert);
-                    $("#withdraw").prop("disabled",true);
-                    $("#complete").prop("disabled",false);*/
-                }
-            })
-
-            dB.ref("/users/"+userObj.uid+"/helpedBy/helperStatus").on("value",function(snapshot){
-                if(snapshot.val()=="complete" && helperStatusOpsRan==false){
-/*                    helperStatusOpsRan=true;
-                    var helperName = databaseObj.users[helperUID].name;
-                    var firstName = helperName.substr(0,helperName.indexOf(" "));
-                    helperAlert = "<p>Hey, "+firstName+" has marked this request as complete, and has been removed from this request. Mark this request as complete to submit another request.</p>" + helperAlert;
-                    $("#helper").html(helperAlert);*/
+            dB.ref("/users/"+userObj.uid+"/serving/requesterStatus").on("value",function(snapshot){
+                if(snapshot.val()=="complete" && requesterStatusOpsRan==false){
+                    requesterStatusOpsRan=true;
+                    var requesterName = databaseObj.users[requesterUID].name;
+                    var firstName = requesterName.substr(0,requesterName.indexOf(" "));
+                    requesterAlert = "<p>Hey, "+firstName+" has marked this request as complete, and has been removed from this request. Mark this request as complete to submit another request.</p>";
+                    $("#helper").prepend(requesterAlert);
                 }
             })
 
@@ -814,6 +797,8 @@
             if($(".collapsed").hasClass("animation-show")){//if animation-show class is present, then action buttons are shown. we want to collapse them so we swap animation-show for animation-hide, change font awesome icon and after animation complete, make display for action buttons "none"
             $(".collapsed").removeClass("animation-show").addClass("animation-hide");
             $("#actions").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+            $("#mapDiv").css("display","none");
+            $("#contactDiv").css("display","none");
             setTimeout(function(){$(".collapsed").css("display","none")},100);
           } else if($(".collapsed").hasClass("animation-hide")){//if animation-hide class is present, then action buttons are collapsed. we want to show them so we swap animation-hide for animation-show, change font awesome icon and make display for action buttons "block" so that animation can be seen
             $("#actions").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
