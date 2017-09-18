@@ -758,7 +758,7 @@
                     var requesterName = databaseObj.users[requesterUID].name;
                     var firstName = requesterName.substr(0,requesterName.indexOf(" "));
                     requesterAlert = "<p>Hey, "+firstName+" has marked this request as complete, and has closed this request. Mark this request as complete to submit another request.</p>";
-                    $("#helper").prepend(requesterAlert);
+                    $("#pendingRequest").prepend(requesterAlert);
                     $("#navigation").prop( "disabled", true );
                     $("#navDiv").css("display","none");
                     $("#contact").prop( "disabled", true );
