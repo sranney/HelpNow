@@ -769,7 +769,7 @@
         }
 
         $(document).on("click","#navigation",function(){
-            if($(this).attr("state","hidden")){
+            if($(this).attr("state")=="hidden"){
 
                 $("#navDiv").css("display","block");
                 $("#mapDiv").css("height","300px");
@@ -778,13 +778,13 @@
                     endLoc = databaseObj.users[requesterUID].address;
                     initNavMap(startLoc,userObj.uid,endLoc,requesterUID);
                 },500);
-
-            } else if($(this).attr("state","shown")){
+                $(this).attr("state","shown");
+            } else if($(this).attr("state")=="hidden"){
             
                 $("#mapDiv").empty();
                 $("#routeDiv").empty();
                 $("#navDiv").css("display","none");
-            
+                $(this).attr("state","hidden");
             }
         });
 
