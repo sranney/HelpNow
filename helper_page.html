@@ -975,7 +975,7 @@
                 var startloc_lng=databaseObj.users[userObj.uid].coords.long;
                 var startloc_latlng=new google.maps.LatLng(startloc_lat, startloc_lng);
                 var endloc_lat=databaseObj.users[requesterUID].coords.lat;
-                var endloc_lng=databaseObj.users[requesterUID].coords.lat;
+                var endloc_lng=databaseObj.users[requesterUID].coords.long;
                 var endloc_latlng=new google.maps.LatLng(endloc_lat, endloc_lng);
 
                 var bounds = new google.maps.LatLngBounds();
