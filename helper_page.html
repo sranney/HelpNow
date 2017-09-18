@@ -350,7 +350,7 @@
         }
         
         #navDiv{
-            display:none;
+            display:block;
             width:100%;
             color:white;
             background-color:#333333;
@@ -739,7 +739,7 @@
                     $("#pendingRequest").append(contactDiv);
                     var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
                     $("#pendingRequest").append(DrpBtn2);
-                    var showMap = $("<button class='btn btn-default hidden' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</buttons>");
+                    var showMap = $("<button class='btn btn-default' id='navigation' state='hidden'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</buttons>");
                     $("#pendingRequest").append(showMap);
                     var navDiv = $("<div id='navDiv'></div>");
                     var mapDiv = $("<div id='mapDiv'></div>");
