@@ -749,7 +749,7 @@
                     $("#requestModal").modal("show");
                     startLoc = databaseObj.users[userObj.uid].address;
                     endLoc = databaseObj.users[requesterUID].address;
-                    initNavMap(startLoc,userObj.uid,endLoc,requesterUID);
+                    setTimeout(initNavMap(startLoc,userObj.uid,endLoc,requesterUID),2000);
                 }
             })
 
