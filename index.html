@@ -197,6 +197,12 @@
 			width:100%;
 			margin:3px 0px;
 		}
+	
+		input[role="combobox"]{
+			padding:4px;
+			width:100%;
+			margin:3px 0px;
+		}
 
 		form#sign-up-form>p,form#sign-in-form>p{
 			margin:14px auto;
@@ -223,6 +229,7 @@
             text-decoration:underline;
             font-size:14px;
             width:max-content;
+            margin:0 auto;
         }
 
         #signOut:hover{
@@ -236,6 +243,30 @@
 			.navButtons{
 				display:block;
 			}
+		}
+
+		@media (max-width: 600px) {
+
+			img{
+				height:160px;
+			}
+			#Slogan{
+				font-size:28px;
+			}
+			#Welcome{
+				font-size:24px;
+			}			
+			#helper>p,#help>p{
+				font-size:70px;
+			}
+			#helper>p#detail,#help>p#detail{
+				font-size:25px;
+			}
+
+			form#sign-up-form>p, form#sign-in-form>p{
+				font-size:18px;
+			}
+
 		}
 
 		@media (max-width: 550px) {

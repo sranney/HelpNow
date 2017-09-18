@@ -9,6 +9,9 @@
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
     <style type="text/css">
+        #Menu-mini{
+            display:none;
+        }
         body{
             background-color:#032642;
         }
@@ -73,6 +76,30 @@
             font-size:19px;
         }
 
+        #Menu-mini{
+            margin:auto;
+        }
+
+        #Menu-mini>#pageTitle,#Menu-mini>#getHelp{
+            background-color:#003600;
+            border-radius:3px;
+            border:3px solid white;
+            color:white;
+            padding:3px;
+            font-size:16px;
+            width:max-content;
+            transition:font-size 1s ease;
+            margin:auto;
+        }
+
+        #Menu-mini>#getHelp{
+            background-color:#991E37;
+            margin-top:5px;
+        }
+
+        #Menu-mini>#pageTitle:hover,#Menu-mini>#getHelp:hover{
+            font-size:19px;
+        }
 /*************************************GPS MODAL***********************************************/
 
         #correctAddress,#submit,#accept,#reject,#instruct{
@@ -421,10 +448,36 @@
         #pendingRequest{
             color:white;
         }
+
+        @media (max-width:850px){
+            .jumbotron{
+                display:block;
+            }
+            .jumbotron>img{
+                heigth:70px;
+                float:right;
+            }
+            p#pageTitle,p#goHelp{
+                display:none;
+            }
+            
+
+            #Menu{
+                display:none;
+            }
+            #Menu-mini{
+                display:inline;
+            }
+        }
     
     </style>
 
 <body>
+
+    <div id="Menu-mini" class="text-center">
+        <p id='pageTitle'>You are on Go Help Page</p>
+        <p id='getHelp'>Click here to go to Get Help Page</p>
+    </div>    
 
     <div class="jumbotron">
         
