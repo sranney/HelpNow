@@ -766,17 +766,19 @@
                     $("#pendingRequest").append(menuBtn);
                     var DrpBtn1 = $("<button class='collapsed btn btn-block' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn1);
-                    var mapDiv = $("<div id='mapDiv'>Here's a map with directions</div>");
+                    var mapDiv = $("<div id='mapDiv'></div>");
                     $("#pendingRequest").append(mapDiv);
                     var DrpBtn2 = $("<button class='collapsed btn btn-block' id='contact'><i class='fa fa-phone'></i><i class='fa fa-fw'></i>Contact " + requesterName.substr(0,requesterName.indexOf(" ")) + "<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn2);
-                    var contactDiv = $("<div id='contactDiv'>Here's " + requesterName.substr(0,requesterName.indexOf(" ")) + "email and phone number: <p>Email: " + requesterEmail + "</p><p> Phone: " + requesterPhone + "</p><p>Alternatively, you can chat with " + requesterName.substr(0,requesterName.indexOf(" ")) + " using our chat app. Click here to access our chat app.</div>");
+                    var contactDiv = $("<div id='contactDiv'>Here's " + requesterName.substr(0,requesterName.indexOf(" ")) + "'s email and phone number: <p>Email: " + requesterEmail + "</p><p> Phone: " + requesterPhone + "</p><p>Alternatively, you can chat with " + requesterName.substr(0,requesterName.indexOf(" ")) + " using our chat app. Click here to access our chat app.</div>");
                     $("#pendingRequest").append(contactDiv);
                     var DrpBtn3 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
                     $("#pendingRequest").append(DrpBtn3);
                     $("#requestModal").modal({backdrop: 'static', keyboard: false});
                     $("#requestModal").modal("show");
-                    $("#complete").prop( "disabled", true );
+                    startLoc = databaseObj.users[userObj.uid].address;
+                    endLoc = databaseObj.users[requesterUID].address;
+                    initNavMap(startLoc,userObj.uid,endLoc,requesterUID);
                 }
             })
 
@@ -785,8 +787,12 @@
                     requesterStatusOpsRan=true;
                     var requesterName = databaseObj.users[requesterUID].name;
                     var firstName = requesterName.substr(0,requesterName.indexOf(" "));
-                    requesterAlert = "<p>Hey, "+firstName+" has marked this request as complete, and has been removed from this request. Mark this request as complete to submit another request.</p>";
+                    requesterAlert = "<p>Hey, "+firstName+" has marked this request as complete, and has closed this request. Mark this request as complete to submit another request.</p>";
                     $("#helper").prepend(requesterAlert);
+                    $("#navigation").prop( "disabled", true );
+                    $("#mapDiv").css("display","none");
+                    $("#contact").prop( "disabled", true );
+                    $("#contactDiv").css("display","none");
                 }
             })
 
@@ -844,7 +850,7 @@
           }
         })
 
-        $(document).on("click","#complete",function(){
+        $(document).on("click","#complete",function(){//when helper pushes complete button
             dB.ref("/users/"+userObj.uid+"/serving").remove();//remove helper info from node
 
             if(databaseObj.users[requesterUID].helpedBy!=null){
@@ -864,12 +870,41 @@
         })
 
 
+        var navMap; 
+
+        function initNavMap(startLoc,helperUID,endLoc,requesterUID){
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer;
+            var center_lat = databaseObj.users[helperUID].coords.lat;
+            var center_lng = databaseObj.users[helperUID].coords.long;
+            var center = {lat:center_lat,lng:center_lng};
+            navMap=new google.maps.Map(document.getElementById('mapDiv'),{
+                zoom:15,
+                center:center,
+                fullscreenControl:true
+            });
+            directionsDisplay.setMap(map);
+
+            directionsService.route({
+                origin: startLoc,
+                destination: endLoc,
+                travelMode: "DRIVING"
+            }, function(response,status){
+                if(status=="OK"){
+                    directionsDisplay.setDirections(response);
+                } else {
+                    window.alert("Directions request failed due to " + status);
+                }
+            });
+        }
+
         var map;
         function initMap(){
             var center={lat:32.7767,lng:-96.7970};
             map = new google.maps.Map(document.getElementById('map'),{
                 zoom:15,
-                center:center
+                center:center,
+                fullscreenControl:true
             });
 
         //////////////////////////////html5 geolocation api mixed with Goog Maps API Geocoding///////////////////////////////
@@ -1040,6 +1075,15 @@
             });
         })
 
+        //sign out and go to home page
+        $(document).on("click","#RsignOut",function(){
+            firebase.auth().signOut().then(function() {
+                var win = window.open("index.html","_self");
+                win.focus();     
+            }, function(error) {
+                console.error('Sign Out Error', error);
+            });
+        })
 
         $(document).on("click","#confirmBtn",function(){
             dB.ref("/helpRequests/"+requesterUID).set("beingHelped");
