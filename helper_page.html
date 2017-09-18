@@ -452,7 +452,9 @@
             font-size:20px;
         }
 
-
+        #routeTable>p,#routeTable{
+            font-size:15px;
+        }
 
     </style>
 
@@ -771,7 +773,7 @@
                     $("#pendingRequest").append(menuBtn);
                     var DrpBtn1 = $("<button class='collapsed btn btn-block' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn1);
-                    var mapDiv = $("<div id='navDiv'><div id='mapDiv'></div><table id='routeTable'></table></div>");
+                    var mapDiv = $("<div id='navDiv'><div id='mapDiv'></div><div id='routeTable' style='width:40%'></div></div>");
                     $("#pendingRequest").append(mapDiv);
                     var DrpBtn2 = $("<button class='collapsed btn btn-block' id='contact'><i class='fa fa-phone'></i><i class='fa fa-fw'></i>Contact " + requesterName.substr(0,requesterName.indexOf(" ")) + "<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn2);
