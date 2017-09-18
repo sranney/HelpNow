@@ -825,7 +825,7 @@
                     $("#pendingRequest").append(DrpBtn1);
                     var contactDiv = $("<div id='contactDiv'>Here's " + requesterName.substr(0,requesterName.indexOf(" ")) + "'s email and phone number: <p>Email: " + requesterEmail + "</p><p> Phone: " + requesterPhone + "</p><p>Alternatively, you can chat with " + requesterName.substr(0,requesterName.indexOf(" ")) + " using our chat app. Click here to access our chat app.</div>");
                     $("#pendingRequest").append(contactDiv);
-                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='navigation' state='hidden'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</button>");
+                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='navigation' state='hidden'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn2);
                     var navDiv = $("<div id='navDiv'></div>");
                     var mapDiv = $("<div id='mapDiv'></div>");
@@ -868,14 +868,14 @@
                     initNavMap(startLoc,userObj.uid,endLoc,requesterUID);
                 },500);
                 $(this).attr("state","shown");
-            
+                $("#navigation").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
             } else if($(this).attr("state")=="shown"){
             
                 $("#mapDiv").empty();
                 $("#routeDiv").empty();
                 $("#navDiv").css("display","none");
                 $(this).attr("state","hidden");
-
+                $("#navigation").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
             }
         });
 
@@ -886,7 +886,9 @@
             $("#actions").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
             $("#contactDiv").css("display","none");
             $("#contactDiv").removeClass("contact-animation-show").addClass("contact-animation-hide");
+            $("#contact").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
             $("#navDiv").css("display","none");
+            $("#navigation").attr("state","hidden");
             setTimeout(function(){$(".collapsed").css("display","none")},100);
           } else if($(".collapsed").hasClass("animation-hide")){//if animation-hide class is present, then action buttons are collapsed. we want to show them so we swap animation-hide for animation-show, change font awesome icon and make display for action buttons "block" so that animation can be seen
             $("#actions").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
@@ -1204,7 +1206,7 @@
             initMap();
             moveToLocation();
             addRequestMarkersWithinRadius();
-        },60000)
+        },20000)
 
     </script>
     <script async defer
