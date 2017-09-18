@@ -348,14 +348,10 @@
         }
         
         #navDiv{
-            width:100px;
-            height:100px;
+            display:none;
+            width:50%;
+            height:0%;
         }
-
-        #mapDiv{
-            width:100%;
-            height:100%;
-        }   
 
         .map-animation-show{
           animation-duration:.1s;
@@ -367,14 +363,12 @@
           0%{
             opacity:0;
             height:0%;
-            font-size:0px;
             display:none;
             border:0px solid white;
           }
           100%{
             opacity:1;
-            height:100%;
-            font-size:30px;
+            height:25%px;
             display:block;
             padding:10px;
             border:3px solid white;
@@ -390,8 +384,7 @@
         @keyframes mapCollapse{
           0%{
             opacity:1;
-            height:100%;
-            font-size:30px;
+            height:150px;
             display:block;
             padding:10px;
             border:2px solid white;
@@ -399,7 +392,6 @@
           100%{
             opacity:0;
             height:0%;
-            font-size:0px;
             display:none;
             border:0px solid white;
           }
