@@ -349,7 +349,6 @@
 
         #mapDiv{
             width:50%;
-            height:60px;
         }   
 
         .map-animation-show{
@@ -772,7 +771,7 @@
                     $("#pendingRequest").append(menuBtn);
                     var DrpBtn1 = $("<button class='collapsed btn btn-block' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn1);
-                    var mapDiv = $("<div id='navDiv'><div id='mapDiv'></div><table></table></div>");
+                    var mapDiv = $("<div id='navDiv'><div id='mapDiv'></div><table id='routeTable'></table></div>");
                     $("#pendingRequest").append(mapDiv);
                     var DrpBtn2 = $("<button class='collapsed btn btn-block' id='contact'><i class='fa fa-phone'></i><i class='fa fa-fw'></i>Contact " + requesterName.substr(0,requesterName.indexOf(" ")) + "<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn2);
@@ -865,7 +864,6 @@
                 }
             }
             
-
             /*$('#requestModal').modal("hide");*/
             $('#requestModal').fadeOut(1000);
             setTimeout(function(){
@@ -899,10 +897,37 @@
                 if(status=="OK"){
                     console.log(response);
                     directionsDisplay.setDirections(response);
+                    createTable(response.routes[0].legs[0]);
                 } else {
                     window.alert("Directions request failed due to " + status);
                 }
             });
+
+            google.maps.event.addListener( navMap, 'bounds_changed', onBoundsChanged );
+
+        }
+
+        function onBoundsChanged(){
+            if ( $(navMap.getDiv()).children().eq(0).height() == window.innerHeight &&
+                 $(navMap.getDiv()).children().eq(0).width()  == window.innerWidth ) {
+                $("#requestModal").modal("hide");
+            }
+            else {
+                $("#requestModal").modal("show");
+            }
+        }
+
+        function createTable(directionsArray){
+            $("#routeTable").append("<p>Start Address: " + directionsArray.start_address + "</p><p>End Address: " + directionsArray.end_address + "</p><p>Distance: " + directionsArray.distance.text + "</p><p>Duration: " + directionsArray.duration.text + "</p>Driving Directions below:");
+            var bigTableText;
+            bigTableText = "<table style='width:100%'><tr><th>Instructions</th><th>Duration</th><th>Distance</th></tr>"
+            for (var i=0; i<directionArray.steps; i++){
+                var instructions=directionArray.steps[i].instructions;
+                var duration=directionArray.steps[i].duration.text;
+                var distance=directionArray.steps[i].distance.text;
+                bigTableText+="<tr><td>"++"</td><td>"+instructions+"</td><td>"+duration+"</td><td>"+distance+"</td></tr>";
+            }
+            bigTableText+="</table>";
         }
 
         var map;
