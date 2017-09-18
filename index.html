@@ -222,6 +222,7 @@
 		#signOut{
             text-decoration:underline;
             font-size:14px;
+            width:max-content;
         }
 
         #signOut:hover{
@@ -231,11 +232,105 @@
             font-weight:bold;
         }
 
-		@media (max-width:760){
-			#helper,#help,.navButtons{
+		@media only screen and (max-width: 768px){
+			.navButtons{
 				display:block;
 			}
 		}
+
+		@media (max-width: 550px) {
+
+			img{
+				height:140px;
+			}
+			#Slogan{
+				font-size:25px;
+			}
+			#Welcome{
+				font-size:20px;
+			}			
+			#helper>p,#help>p{
+				font-size:70px;
+			}
+			#helper>p#detail,#help>p#detail{
+				font-size:25px;
+			}
+
+			form#sign-up-form>p, form#sign-in-form>p{
+				font-size:18px;
+			}
+
+		}
+
+		@media (max-width: 500px) {
+
+			img{
+				height:140px;
+			}
+			#Slogan{
+				font-size:18px;
+			}
+			#Welcome{
+				font-size:15px;
+			}
+
+			#signOut{
+	            font-size:10px;
+	        }
+
+	        #signOut:hover{
+	            font-size:12px;
+	        }
+
+			#helper>p,#help>p{
+				font-size:60px;
+			}
+			#facebook-su,#google-su,#form-su,#facebook-si,#google-si,#form-si{
+				font-size:17px;
+			}
+			#helper>p#detail,#help>p#detail{
+				font-size:18px;
+			}
+
+			form#sign-up-form>p, form#sign-in-form>p{
+				font-size:18px;
+			}
+
+		}
+
+		@media (max-width: 385px) {
+
+			img{
+				height:100px;
+			}
+			#Slogan{
+				font-size:15px;
+			}
+			#Welcome{
+				font-size:13px;
+			}
+			#signOut{
+	            font-size:10px;
+	        }
+	        #signOut:hover{
+	            font-size:12px;
+	        }
+			#helper>p,#help>p{
+				font-size:40px;
+			}
+			#facebook-su,#google-su,#form-su,#facebook-si,#google-si,#form-si{
+				font-size:15px;
+			}
+			#helper>p#detail,#help>p#detail{
+				font-size:14px;
+			}
+
+			form#sign-up-form>p, form#sign-in-form>p{
+				font-size:15px;
+			}
+
+		}
+
 
 	</style>
 
