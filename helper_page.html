@@ -333,8 +333,9 @@
         }
 
         #navigation{
-            background-color:#B8491F;
+            background-color:#333333;
             width:100%;
+            font-size:30px;
         }
 
         #contactDiv{
@@ -769,8 +770,6 @@
             if($(".collapsed").hasClass("animation-show")){//if animation-show class is present, then action buttons are shown. we want to collapse them so we swap animation-show for animation-hide, change font awesome icon and after animation complete, make display for action buttons "none"
             $(".collapsed").removeClass("animation-show").addClass("animation-hide");
             $("#actions").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
-            $("#navDiv").css("display","none");
-            $("#navDiv").removeClass("map-animation-show").addClass("map-animation-hide");
             $("#contactDiv").css("display","none");
             $("#contactDiv").removeClass("contact-animation-show").addClass("contact-animation-hide");
             setTimeout(function(){$(".collapsed").css("display","none")},100);
