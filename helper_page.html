@@ -830,12 +830,11 @@
 
             if(databaseObj.users[requesterUID].helpedBy!=null){
                 if(databaseObj.users[requesterUID].helpedBy.requesterUID==userObj.uid){
-                    dB.ref("/users/"+requesterUID+"/serving/requesterStatus").set("complete");//notify helper that you have marked the request as complete
+                    dB.ref("/users/"+requesterUID+"/helpedBy/helperStatus").set("complete");//notify helper that you have marked the request as complete
                 }
             }
             
-            /*$('#requestModal').modal("hide");*/
-            $('#requestModal').fadeOut(1000);
+            $('#requestModal').fadeOut(1000).modal("hide");
             setTimeout(function(){
                 statusOpsRan=false;
                 helperOpsRan=false;
