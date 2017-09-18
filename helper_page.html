@@ -334,6 +334,7 @@
 
         #navigation{
             background-color:#B8491F;
+            width:100%;
         }
 
         #contactDiv{
@@ -783,23 +784,6 @@
             $(".collapsed").css("display","block");
           }
         })
-
-        $(document).on("click","#navigation",function(){//adding animations for clicking actions button on requestModal
-            if($("#navDiv").hasClass("map-animation-show")){//if animation-show class is present, then content is  shown. we want to collapse the content so we swap animation-show for animation-hide, change font awesome icon and after animation complete, make display for content "none"
-            $("#navDiv").removeClass("map-animation-show").addClass("map-animation-hide");
-            $("#navigation").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
-            setTimeout(function(){$("#navDiv").css("display","none")},100);
-          } else if($("#navDiv").hasClass("map-animation-hide")){//if animation-hide class is present, then action buttons are collapsed. we want to show them so we swap animation-hide for animation-show, change font awesome icon and make display for action buttons "block" so that animation can be seen
-            $("#navigation").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
-            $("#navDiv").removeClass("map-animation-hide").addClass("map-animation-show");
-            $("#navDiv").css("display","block");
-          } else {//animation-show and animation-hide are classes specifically for animation, so they are not part of the action buttons at first. this way the buttons can stay collapsed. so if neither class is present, this means that the buttons are collapsed and need to be shown. so if the action menu button is clicked, we want to add the animation class animation-show to the collapse action buttons to show the buttons, swap the font awesome icon and make the display be block so that the animation can be seen
-            $("#navDiv").addClass("map-animation-show");
-            $("#navigation").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
-            $("#navDiv").css("display","block");
-          }
-        })
-
 
         $(document).on("click","#contact",function(){//adding animations for clicking actions button on requestModal
             if($("#contactDiv").hasClass("contact-animation-show")){//if animation-show class is present, then action buttons are shown. we want to collapse them so we swap animation-show for animation-hide, change font awesome icon and after animation complete, make display for action buttons "none"
