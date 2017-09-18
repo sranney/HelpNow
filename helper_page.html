@@ -470,6 +470,27 @@
             }
         }
     
+        @media (max-width:600px){
+            .jumbotron{
+                display:block;
+            }
+            .jumbotron>img{
+                heigth:70px;
+                float:right;
+            }
+            p#pageTitle,p#goHelp{
+                display:none;
+            }
+            
+
+            #Menu{
+                display:none;
+            }
+            #Menu-mini{
+                display:inline;
+            }
+        }
+
     </style>
 
 <body>
@@ -834,6 +855,7 @@
 
                 $("#navDiv").css("display","block");
                 $("#mapDiv").css("height","300px");
+                $("#routeDiv").css("height","300px");
                 setTimeout(function(){
                     startLoc = databaseObj.users[userObj.uid].address;
                     endLoc = databaseObj.users[requesterUID].address;
@@ -858,6 +880,8 @@
             $("#actions").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
             $("#contactDiv").css("display","none");
             $("#contactDiv").removeClass("contact-animation-show").addClass("contact-animation-hide");
+            $("#mapDiv").css("display","none");
+            $("#routeDiv").css("display","none");
             setTimeout(function(){$(".collapsed").css("display","none")},100);
           } else if($(".collapsed").hasClass("animation-hide")){//if animation-hide class is present, then action buttons are collapsed. we want to show them so we swap animation-hide for animation-show, change font awesome icon and make display for action buttons "block" so that animation can be seen
             $("#actions").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");

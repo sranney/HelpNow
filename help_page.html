@@ -337,7 +337,7 @@
 
     </div>
 
-    <input id="requestInput" class="text-center" placeholder="What do you need help with today,"++"?">
+    <input id="requestInput" class="text-center" placeholder="What do you need help with today?">
     <button id="requestSubmit" class="btn btn-default btn-block">Request Help!</button>
 
     <div id="#errorMsg"></div>
@@ -440,6 +440,11 @@
                     myReftoDisconnect.onDisconnect().set("disconnected");
                     userLoggedIn=true;//used below to state user is logged in and to proceed to next page
                     var name = databaseObj.users[userObj.uid].name;
+                    //making the help page more personalized by adding the user's first name to the placeholder of the input box
+                    var firstName = name.substr(0,name.indexOf(" "));
+                    var requestInput_placeholder = $("#requestInput").attr("placeholder");
+                    requestInput_placeholder = requestInput_placeholder.replace("?",", "+firstName+"?");
+                    $("#requestInput").attr("placeholder",requestInput_placeholder);
                     var email = databaseObj.users[userObj.uid].email;
                     var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
                     if(databaseObj.users[userObj.uid].address !=undefined){
