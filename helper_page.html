@@ -336,7 +336,7 @@
             background-color:#B8491F;
         }
 
-        #mapDiv,#contactDiv{
+        #navDiv,#contactDiv{
             background-color:#505853;
             color:white;
             width:100%;
@@ -344,7 +344,13 @@
             height:0px;
             opacity:0;
             font-size:0px;
+            display:flex;
         }
+
+        #mapDiv{
+            width:50%;
+            height:60px;
+        }   
 
         .map-animation-show{
           animation-duration:.1s;
@@ -766,7 +772,7 @@
                     $("#pendingRequest").append(menuBtn);
                     var DrpBtn1 = $("<button class='collapsed btn btn-block' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn1);
-                    var mapDiv = $("<div id='mapDiv'></div>");
+                    var mapDiv = $("<div id='navDiv'><div id='mapDiv'></div><table></table></div>");
                     $("#pendingRequest").append(mapDiv);
                     var DrpBtn2 = $("<button class='collapsed btn btn-block' id='contact'><i class='fa fa-phone'></i><i class='fa fa-fw'></i>Contact " + requesterName.substr(0,requesterName.indexOf(" ")) + "<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn2);
@@ -790,7 +796,7 @@
                     requesterAlert = "<p>Hey, "+firstName+" has marked this request as complete, and has closed this request. Mark this request as complete to submit another request.</p>";
                     $("#helper").prepend(requesterAlert);
                     $("#navigation").prop( "disabled", true );
-                    $("#mapDiv").css("display","none");
+                    $("#navDiv").css("display","none");
                     $("#contact").prop( "disabled", true );
                     $("#contactDiv").css("display","none");
                 }
@@ -803,7 +809,7 @@
             if($(".collapsed").hasClass("animation-show")){//if animation-show class is present, then action buttons are shown. we want to collapse them so we swap animation-show for animation-hide, change font awesome icon and after animation complete, make display for action buttons "none"
             $(".collapsed").removeClass("animation-show").addClass("animation-hide");
             $("#actions").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
-            $("#mapDiv").css("display","none");
+            $("#navDiv").css("display","none");
             $("#contactDiv").css("display","none");
             setTimeout(function(){$(".collapsed").css("display","none")},100);
           } else if($(".collapsed").hasClass("animation-hide")){//if animation-hide class is present, then action buttons are collapsed. we want to show them so we swap animation-hide for animation-show, change font awesome icon and make display for action buttons "block" so that animation can be seen
@@ -818,18 +824,18 @@
         })
 
         $(document).on("click","#navigation",function(){//adding animations for clicking actions button on requestModal
-            if($("#mapDiv").hasClass("map-animation-show")){//if animation-show class is present, then action buttons are shown. we want to collapse them so we swap animation-show for animation-hide, change font awesome icon and after animation complete, make display for action buttons "none"
-            $("#mapDiv").removeClass("map-animation-show").addClass("map-animation-hide");
+            if($("#navDiv").hasClass("map-animation-show")){//if animation-show class is present, then action buttons are shown. we want to collapse them so we swap animation-show for animation-hide, change font awesome icon and after animation complete, make display for action buttons "none"
+            $("#navDiv").removeClass("map-animation-show").addClass("map-animation-hide");
             $("#navigation").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
-            setTimeout(function(){$("#mapDiv").css("display","none")},100);
-          } else if($("#mapDiv").hasClass("map-animation-hide")){//if animation-hide class is present, then action buttons are collapsed. we want to show them so we swap animation-hide for animation-show, change font awesome icon and make display for action buttons "block" so that animation can be seen
+            setTimeout(function(){$("#navDiv").css("display","none")},100);
+          } else if($("#navDiv").hasClass("map-animation-hide")){//if animation-hide class is present, then action buttons are collapsed. we want to show them so we swap animation-hide for animation-show, change font awesome icon and make display for action buttons "block" so that animation can be seen
             $("#navigation").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
-            $("#mapDiv").removeClass("map-animation-hide").addClass("map-animation-show");
-            $("#mapDiv").css("display","block");
+            $("#navDiv").removeClass("map-animation-hide").addClass("map-animation-show");
+            $("#navDiv").css("display","block");
           } else {//animation-show and animation-hide are classes specifically for animation, so they are not part of the action buttons at first. this way the buttons can stay collapsed. so if neither class is present, this means that the buttons are collapsed and need to be shown. so if the action menu button is clicked, we want to add the animation class animation-show to the collapse action buttons to show the buttons, swap the font awesome icon and make the display be block so that the animation can be seen
-            $("#mapDiv").addClass("map-animation-show");
+            $("#navDiv").addClass("map-animation-show");
             $("#navigation").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
-            $("#mapDiv").css("display","block");
+            $("#navDiv").css("display","block");
           }
         })
 
@@ -891,6 +897,7 @@
                 travelMode: "DRIVING"
             }, function(response,status){
                 if(status=="OK"){
+                    console.log(response);
                     directionsDisplay.setDirections(response);
                 } else {
                     window.alert("Directions request failed due to " + status);
