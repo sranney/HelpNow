@@ -352,6 +352,8 @@
         #navDiv{
             display:none;
             width:100%;
+            color:white;
+            background-color:#333333;
         }
 
         .contact-animation-show{
@@ -737,7 +739,7 @@
                     $("#pendingRequest").append(contactDiv);
                     var DrpBtn2 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
                     $("#pendingRequest").append(DrpBtn2);
-                    var showMap = $("<button class='btn btn-default' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</buttons>");
+                    var showMap = $("<button class='btn btn-default hidden' id='navigation'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation</buttons>");
                     $("#pendingRequest").append(showMap);
                     var navDiv = $("<div id='navDiv'></div>");
                     var mapDiv = $("<div id='mapDiv'></div>");
@@ -767,13 +769,23 @@
         }
 
         $(document).on("click","#navigation",function(){
-            $("#navDiv").css("display","block");
-            $("#mapDiv").css("height","300px");
-            setTimeout(function(){
-                startLoc = databaseObj.users[userObj.uid].address;
-                endLoc = databaseObj.users[requesterUID].address;
-                initNavMap(startLoc,userObj.uid,endLoc,requesterUID);
-            },500);
+            if($(this).attr("state","hidden")){
+
+                $("#navDiv").css("display","block");
+                $("#mapDiv").css("height","300px");
+                setTimeout(function(){
+                    startLoc = databaseObj.users[userObj.uid].address;
+                    endLoc = databaseObj.users[requesterUID].address;
+                    initNavMap(startLoc,userObj.uid,endLoc,requesterUID);
+                },500);
+
+            } else if($(this).attr("state","shown")){
+            
+                $("#mapDiv").empty();
+                $("#routeDiv").empty();
+                $("#navDiv").css("display","none");
+            
+            }
         });
 
         //for actions button animation
@@ -840,8 +852,7 @@
             var center = {lat:center_lat,lng:center_lng};
             navMap=new google.maps.Map(document.getElementById('mapDiv'),{
                 zoom:15,
-                center:center,
-                fullscreenControl:true
+                center:center
             });
             directionsDisplay.setMap(navMap);
 
