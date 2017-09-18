@@ -349,7 +349,7 @@
         
         #navDiv{
             display:none;
-            width:50%;
+            width:100%;
             height:0%;
         }
 
@@ -368,7 +368,7 @@
           }
           100%{
             opacity:1;
-            height:150px;
+            height:450px;
             display:block;
             padding:10px;
             border:3px solid white;
@@ -384,7 +384,7 @@
         @keyframes mapCollapse{
           0%{
             opacity:1;
-            height:150px;
+            height:450px;
             display:block;
             padding:10px;
             border:2px solid white;
@@ -907,6 +907,9 @@
             });
 
             google.maps.event.addListener( navMap, 'bounds_changed', onBoundsChanged );
+            google.maps.event.addDomListener(navMap, 'resize', function() {
+                map.setCenter(center);
+            });
 
         }
 
