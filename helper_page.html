@@ -931,7 +931,7 @@
                             msgArrayCount=snapshot.val().length;
                             messagesArray=snapshot.val();
                             var message = messagesArray[msgArrayCount-1].message;
-                            var date = messagesArray["length"].date;
+                            var date = messagesArray[msgArrayCount-1].date;
                             $(".msgContainer").append("<p id='msg'>"+message+"<br>"+date+"</p>");
                         }
                     }
