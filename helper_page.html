@@ -834,7 +834,7 @@
                     $("#pendingRequest").append(offerMsg);
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + request + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(menuBtn);
-                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='contact'><i class='fa fa-phone'></i><i class='fa fa-fw'></i>Contact " + requesterName.substr(0,requesterName.indexOf(" ")) + "<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
+                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='contact'><i class='fa fa-comments'></i><i class='fa fa-fw'></i>Contact " + requesterName.substr(0,requesterName.indexOf(" ")) + "<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn1);
                     var contactDiv = $("<div id='contactDiv'>Here's " + requesterName.substr(0,requesterName.indexOf(" ")) + "'s email and phone number: <p>Email: " + requesterEmail + "</p><p> Phone: " + requesterPhone + "</p><p>Alternatively, you can chat with " + requesterName.substr(0,requesterName.indexOf(" ")) + " using our chat app. Click here to access our chat app.</div>");
                     $("#pendingRequest").append(contactDiv);
@@ -1247,7 +1247,7 @@
 
         function ajaxWeather_latlng(lat,long){
             $.getJSON("https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+long+"&cnt=10&appid=037ae0f267a4d5e7fb06436b5baf1089", function(json, textStatus) {
-                var temperature = Math.round((((json.main.temp / 2) - 273.15) * 1.8) + 32);
+                var temperature = Math.round(((json.main.temp - 273.15) * 1.8) + 32);
                 var weatherCond = json.weather[0].description;
                 $("#todayWeather").html(temperature + "°F and " + weatherCond);
             });

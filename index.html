@@ -238,7 +238,14 @@
             color:#77BDD9;
             font-weight:bold;
         }
-
+		@media (max-width: 950px) {
+            img{
+                height:160px;
+            }
+            #helper>p,#help>p{
+                font-size:70px;
+            }
+        }
 		@media only screen and (max-width: 768px){
 			.navButtons{
 				display:block;
@@ -362,7 +369,9 @@
 
 		}
 
-
+		.awesomplete {
+			display: inherit;
+		}
 	</style>
 
 </head>
@@ -615,6 +624,8 @@
 			  	$("form#sign-up-form>#instructions").css("display","none");
 			  	$("form#sign-up-form>#firstName-su").css("display","none");
 			  	$("form#sign-up-form>#lastName-su").css("display","none");
+			  	$(".awesomplete").css("display","none");
+
 			  	$("form#sign-up-form>#email-su").css("display","none");
 				$("form#sign-up-form>#password-su").css("display","none");
 			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
