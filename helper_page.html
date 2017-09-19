@@ -916,7 +916,7 @@
             dB.ref("/messages/"+uid_pair).on("value",function(snapshot){
 
                 if(snapshot.val()!=null&&snapshot.val()!=undefined){
-                    if($(".msgContainer>#msg").length==0){
+                    if($(".msgContainer>.msg").length==0){
                         for (var i=0; i<snapshot.val().length; i++){
 
                                 var message = snapshot.val()[i].message;
