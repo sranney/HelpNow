@@ -428,6 +428,7 @@
         var accountInfo;//to be pushed to userInfo section
         var userObj;//will be user object with all kinds of datas
         var databaseObj,modalShown=false;
+        var placeholderSet=false;
         //get instance of real-time database
         dB.ref().on("value",function(snapshot){
             databaseObj = snapshot.toJSON();
@@ -441,10 +442,14 @@
                     userLoggedIn=true;//used below to state user is logged in and to proceed to next page
                     var name = databaseObj.users[userObj.uid].name;
                     //making the help page more personalized by adding the user's first name to the placeholder of the input box
-                    var firstName = name.substr(0,name.indexOf(" "));
-                    var requestInput_placeholder = $("#requestInput").attr("placeholder");
-                    requestInput_placeholder = requestInput_placeholder.replace("?",", "+firstName+"?");
-                    $("#requestInput").attr("placeholder",requestInput_placeholder);
+                    
+                    if(!placeholderSet){
+                        var firstName = name.substr(0,name.indexOf(" "));
+                        var requestInput_placeholder = $("#requestInput").attr("placeholder");
+                        requestInput_placeholder = requestInput_placeholder.replace("?",", "+firstName+"?");
+                        $("#requestInput").attr("placeholder",requestInput_placeholder);
+                        placeholderSet=true
+                    }
                     var email = databaseObj.users[userObj.uid].email;
                     var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
                     if(databaseObj.users[userObj.uid].address !=undefined){
