@@ -996,17 +996,6 @@
 
         })        
 
-        var position=0;
-        function slideToBottom() {
-            console.log($('.msgContainer .msg:last-child').position().top);
-            if(position<$('.msgContainer .msg:last-child').position().top){
-                position = $('.msgContainer .msg:last-child').position().top;
-                $('.msgContainer').animate({
-                    scrollTop: position
-                }, 'slow');
-            }
-        }
-
         $(document).on("click","#navigation",function(){
             if($(this).attr("state")=="hidden"){
 
