@@ -1240,7 +1240,7 @@
         },20000)
 
         function ajaxWeather_latlng(lat,long){
-            $.getJSON("https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+long+"&cnt=10&appid=037ae0f267a4d5e7fb06436b5baf1089", function(json, textStatus) {
+            $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+long+"&cnt=10&appid=037ae0f267a4d5e7fb06436b5baf1089", function(json, textStatus) {
                 var temperature = Math.round((((json.main.temp / 2) - 273.15) * 1.8) + 32);
                 var weatherCond = json.weather[0].description;
                 $("#todayWeather").html(temperature + "°F and " + weatherCond);
