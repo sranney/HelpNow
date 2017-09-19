@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<head>
     <link rel="shortcut icon" type="image/x-icon" href="helpnow_favicon.ico"/>
     <title>HelpNow - Get Help</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -7,6 +8,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/2a8a6780db.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
 
     <style type="text/css">
         #Menu-mini{
@@ -204,8 +206,7 @@
         }
 
         #confirmModalBody{
-            padding:0;
-            border-radius:-5px;
+            background-color:transparent;
         }
 
         #confirmBtn{
@@ -504,7 +505,7 @@
         }
 
     </style>
-
+</head>
 <body>
 
     <div id="Menu-mini" class="text-center">
@@ -810,18 +811,22 @@
 
         })
 
-        //series of functions to check different nodes of users
+        //series of functions to check different stuff that is added to firebase
 
-        var helperOpsRan=false,requesterStatusOpsRan=false,requesterAlert;
+        var helperOpsRan=false,requesterStatusOpsRan=false,requesterAlert,uid_pair,numMsgs=0,msgNumb = 0;
+
+        //numMsgs counts number of messages sent between two users
+        //msgNumb increments for each message added to the messages node for two users
         
         function requestFunctions(){//checking actions of other user
             //order of things matter here. knowing that 
             dB.ref("/users/"+userObj.uid+"/serving").on("value",function(snapshot){
                 console.log(snapshot.val());
-                if(snapshot.val()!=null && helperOpsRan==false){//adds an actions button that will serve as operations for the user to manage their request            
+                if(snapshot.val()!=null && helperOpsRan==false){//adds an actions button that will serve as operations for the user to manage their request       
                     helperOpsRan = true;
                     var requester = snapshot.val();
                     requesterUID = requester.requesterUID;
+                    uid_pair = userObj.uid + requesterUID;                    
                     var requesterName = databaseObj.users[requesterUID].name;
                     if(databaseObj.users[requesterUID].helpRequest==undefined){
                         var request = databaseObj.users[userObj.uid].serving.description;
@@ -836,8 +841,10 @@
                     $("#pendingRequest").append(offerMsg);
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + request + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(menuBtn);
-                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='startChat'><i class='fa fa-comments'></i><i class='fa fa-fw'></i>Additional Contact<i class='fa fa-fw'></i></button>");
+                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='startChat' state='hidden'><i class='fa fa-comments'></i><i class='fa fa-fw'></i>Open Chat<i class='fa fa-fw'></i></button>");
                     $("#pendingRequest").append(DrpBtn1);
+                    var chatBox = $("<div id='chatBox'><div class='msgContainer'></div><input type='text' class='form-control' id='chatmsg' placeholder='type here'><button id='sendText' class='btn btn-default' ng-click='send()'>Send</button></div>");
+                    $("#pendingRequest").append(chatBox);
                     var DrpBtn2 = $("<button class='collapsed btn btn-block' id='contact'><i class='fa fa-phone'></i><i class='fa fa-fw'></i>Additional Contact<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn2);
                     var contactDiv = $("<div id='contactDiv'>Here's " + requesterName.substr(0,requesterName.indexOf(" ")) + "'s email and phone number: <p>Email: " + requesterEmail + "</p><p> Phone: " + requesterPhone + "</p><p>Alternatively, you can chat with " + requesterName.substr(0,requesterName.indexOf(" ")) + " using our chat app above.</div>");
@@ -871,14 +878,124 @@
                 }
             })
 
+            dB.ref("/messages/"+uid_pair).on("child_added",function(snapshot){
+
+                if(snapshot.val()!=null&&snapshot.val()!=undefined){
+                
+                    if(numMsgs<databaseObj.messages[uid_pair].length){
+
+                        numMsgs = databaseObj.messages[uid_pair].length;//numMsgs initially set to 0
+                        msgNumb = numMsgs;
+
+                        if($(".msgContainer").length==0){
+
+                            for (var i=0; i<databaseObj.messages[uid_pair].length; i++){
+
+                                var message = databaseObj.messages[uid_pair]["time"+i].message;
+                                var date = databaseObj.messages[uid_pair]["time"+i].date;
+                                $(".msgContainer").append("<p id='msg'>"+message+"<br>"+date+"</p>");
+
+                            }
+
+                        } else {
+                            $(".msgContainer").append("<p>"+snapshot.val().message + "<br>" + snapshot.val().date+"</p>");
+                        }
+                
+                    }
+                
+                }
+
+            })
+
         }
 
 
         $(document).on("click","#startChat",function(){
-            dB.ref("/users/"+userObj.uid+"/currRole").set("helper");
-            window.open("chat.html");
-            window.focus();
+            if($(this).attr("state")=="hidden"){
+
+                $("#navDiv").css("display","block");
+                $("#mapDiv").css("height","300px");
+                $("#routeDiv").css("height","100%");
+                setTimeout(function(){
+                    startLoc = databaseObj.users[userObj.uid].address;
+                    endLoc = databaseObj.users[requesterUID].address;
+                    initNavMap(startLoc,userObj.uid,endLoc,requesterUID);
+                },500);
+                $(this).attr("state","shown");
+                $("#navigation").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+            } else if($(this).attr("state")=="shown"){
+            
+                $("#mapDiv").empty();
+                $("#routeDiv").empty();
+                $("#navDiv").css("display","none");
+                $(this).attr("state","hidden");
+                $("#navigation").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+            }
         })
+
+        $("#startChat").on("click",function(){
+            if($(this).attr("state")=="hidden"){
+                $("#chatBox").css("display","block");
+
+                setTimeout(slideToBottom,1000);
+
+                setTimeout(function(){
+                    $(".msgContainer").bind("DOMNodeInserted",function(){
+                        position = position+20;
+                        $('.msgContainer').animate({
+                            scrollTop: position
+                        }, 'slow');
+                    });
+                },5000);
+
+                $(this).attr("state","shown");
+
+            } else {
+                $("#chatBox").css("display","none");
+                $('.msgContainer').animate({
+                    scrollTop: 0
+                }, 'fast');
+                $(this).attr("state","hidden");
+            }
+        })
+
+        var position=0;
+        function slideToBottom() {
+            console.log($('.msgContainer .msg:last-child').position().top);
+            if(position<$('.msgContainer .msg:last-child').position().top){
+                position = $('.msgContainer .msg:last-child').position().top;
+                $('.msgContainer').animate({
+                    scrollTop: position
+                }, 'slow');
+            }
+        }
+
+
+
+        $("#chatmsg").on("keypress", function(e){
+
+            if($("#chatmsg").val().length>0){        
+                if(e.which == 13){
+                    $("#sendText").trigger("click");
+                    $("#chatmsg").val("");
+                }
+            }
+
+        })
+
+        $("#sendText").on("click",function(){
+
+            if($("#chatmsg").val().length>0){        
+                if(e.which == 13){
+                    dB.ref("/messages/"+uid_pair+"/time"+(msgNumb+1)).set({
+                        message: databaseObj.users[userObj.uid].name + ": " + $("#chatmsg").val(),
+                        date: moment(new Date())._d
+                    })
+                    $("#chatmsg").val("");
+                }
+            }
+
+        })        
 
         $(document).on("click","#navigation",function(){
             if($(this).attr("state")=="hidden"){
@@ -901,7 +1018,7 @@
                 $(this).attr("state","hidden");
                 $("#navigation").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
             }
-        });
+        })
 
         //for actions button animation
         $(document).on("click","#actions",function(){//adding animations for clicking actions button on requestModal
@@ -1031,12 +1148,12 @@
             var firstName = requesterName.substr(0,requesterName.indexOf(" "));
             $("#routeDiv").append("<p>Start Address (Point A - Where you are): " + directionsArray.start_address + "</p><p>End Address (Point B - Where "+firstName+" is): " + directionsArray.end_address + "</p><p>Distance from Point A to Point B: " + directionsArray.distance.text + "</p><p>Duration: " + directionsArray.duration.text + "</p>Driving Directions below:");
             var bigTableText;
-            bigTableText = "<table style='width:100%'><tr><th>Instructions</th><th>Duration</th><th>Distance</th></tr>"
+            bigTableText = "<table style='width:100%'><tr><th>Instructions</th><th class='dur'>Duration</th><th class='dist'>Distance</th></tr>"
             for (var i=0; i<directionsArray.steps.length; i++){
                 var instructions=directionsArray.steps[i].instructions;
                 var duration=directionsArray.steps[i].duration.text;
                 var distance=directionsArray.steps[i].distance.text;
-                bigTableText=bigTableText+ "<tr><td>"+instructions+"</td><td>"+duration+"</td><td>"+distance+"</td></tr>";
+                bigTableText=bigTableText+ "<tr><td>"+instructions+"</td><td class='dur'>"+duration+"</td><td class='dist'>"+distance+"</td></tr>";
             }
             bigTableText+="</table>";
             $("#routeDiv").append(bigTableText);
