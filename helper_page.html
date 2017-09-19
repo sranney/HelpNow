@@ -991,8 +991,8 @@
 
             if($("#chatmsg").val().length>0){        
                 if(e.which == 13){
-                    $("#sendText").trigger("click");
-                    $("#chatmsg").val("");
+                    event.preventDefault();
+                    return false;
                 }
             }
 
