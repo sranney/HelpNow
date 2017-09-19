@@ -843,8 +843,8 @@
                     var navDiv = $("<div id='navDiv'></div>");
                     var mapDiv = $("<div id='mapDiv'></div>");
                     var routeDiv = $("<div id='routeDiv'></div>");
-                    $(navDiv).append(mapDiv);
-                    $(navDiv).append(routeDiv);
+                    navDiv.append(mapDiv);
+                    navDiv.append(routeDiv);
                     $("#pendingRequest").append(navDiv);
                     var DrpBtn3 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
                     $("#pendingRequest").append(DrpBtn3);
