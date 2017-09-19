@@ -504,7 +504,7 @@
                 heigth:70px;
                 float:right;
             }
-            p#pageTitle,p#goHelp{
+            #userInfo_Rmodal,#userInfo{
                 display:none;
             }
             
@@ -525,7 +525,7 @@
                 heigth:70px;
                 float:right;
             }
-            p#pageTitle,p#goHelp{
+            #userInfo_Rmodal,#userInfo{
                 display:none;
             }
             
@@ -537,7 +537,6 @@
                 display:inline;
             }
 
-            #
         }
 
     </style>
@@ -877,7 +876,7 @@
                     $("#pendingRequest").append(offerMsg);
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + request + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(menuBtn);
-                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='startChat' state='hidden'><i class='fa fa-comments'></i><i class='fa fa-fw'></i>Open Chat<i class='fa fa-fw'></i></button>");
+                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='startChat' state='hidden'><i class='fa fa-comments'></i><i class='fa fa-fw'></i>Open Chat<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></button>");
                     $("#pendingRequest").append(DrpBtn1);
                     var chatBox = $("<div id='chatBox'><div class='msgContainer'></div><input type='text' class='form-control' id='chatmsg' placeholder='type here'><button id='sendText' class='btn btn-default' ng-click='send()'>Send</button></div>");
                     $("#pendingRequest").append(chatBox);
@@ -914,13 +913,30 @@
                 }
             })
 
-            dB.ref("/messages/"+uid_pair).on("child_added",function(snapshot){
+            dB.ref("/messages/"+uid_pair).on("value",function(snapshot){
 
                 if(snapshot.val()!=null&&snapshot.val()!=undefined){
-                    if(snapshot.key=="time"+nextmsgcount){                    
-                        $(".msgContainer").empty();
+                    if($(".msgContainer>#msg").length==0){
+                        for (var i=0; i<snapshot.val().length; i++){
 
-                        numMsgs = Object.keys(databaseObj.messages[uid_pair]).length;//numMsgs initially set to 0 but if there are any messages we want to set this to the number of messages
+                                var message = snapshot.val()[i].message;
+                                var date = snapshot.val()[i].date;
+                                $(".msgContainer").append("<p id='msg'>"+message+"<br>"+date+"</p>");
+
+                        }
+                        messagesArray=snapshot.val();
+                        msgArrayCount=snapshot.val().length;
+                    } else {
+                        if (snapshot.val().length>msgArrayCount){
+                            msgArrayCount=snapshot.val().length;
+                            messagesArray=snapshot.val();
+                            var message = messagesArray["length"].message;
+                            var date = messagesArray["length"].date;
+                            $(".msgContainer").append("<p id='msg'>"+message+"<br>"+date+"</p>");
+                        }
+                    }
+
+/*                        numMsgs = Object.keys(databaseObj.messages[uid_pair]).length;//numMsgs initially set to 0 but if there are any messages we want to set this to the number of messages
                         msgNumb = numMsgs; //to be used when setting new entries - for ordering
                         //restore all messages to chatbox
                         nextmsgcount=msgNumb+1;
@@ -931,9 +947,8 @@
                                 $(".msgContainer").append("<p id='msg'>"+message+"<br>"+date+"</p>");
 
                         }
-                    }
-                }
-                
+                    }*/
+                }              
             })
 
         }
@@ -943,40 +958,18 @@
             if($(this).attr("state")=="hidden"){
                 $("#chatBox").css("display","block");
 
-                if($(".msgContainer>#msg").length>1){
-                    setTimeout(slideToBottom,1000);
-                }
-
-                setTimeout(function(){
-                    $(".msgContainer").bind("DOMNodeInserted",function(){
-                        position = position+20;
-                        $('.msgContainer').animate({
-                            scrollTop: position
-                        }, 'slow');
-                    });
-                },5000);
-
                 $(this).attr("state","shown");
-
+                $(this).find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
             } else {
                 $("#chatBox").css("display","none");
                 $('.msgContainer').animate({
                     scrollTop: 0
                 }, 'fast');
                 $(this).attr("state","hidden");
+                $(this).find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
             }
         })
 
-        var position=0;
-        function slideToBottom() {
-            console.log($('.msgContainer .msg:last-child').position().top);
-            if(position<$('.msgContainer .msg:last-child').position().top){
-                position = $('.msgContainer .msg:last-child').position().top;
-                $('.msgContainer').animate({
-                    scrollTop: position
-                }, 'slow');
-            }
-        }
 
 
 
@@ -991,13 +984,15 @@
 
         })
 
+        var messagesArray=[];
         $(document).on("click","#sendText",function(){
 
-            if($("#chatmsg").val().length>0){        
-                dB.ref("/messages/"+uid_pair+"/time"+(msgNumb+1)).set({
+            if($("#chatmsg").val().length>0){
+                messagesArray.push({
                     message: databaseObj.users[userObj.uid].name + ": " + $("#chatmsg").val(),
                     date: moment().format().replace("T"," ")
-                })
+                });
+                dB.ref("/messages/"+uid_pair).set(messagesArray);
                 $("#chatmsg").val("");
             }
 
