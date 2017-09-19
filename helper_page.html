@@ -923,7 +923,7 @@
                         numMsgs = Object.keys(databaseObj.messages[uid_pair]).length;//numMsgs initially set to 0 but if there are any messages we want to set this to the number of messages
                         msgNumb = numMsgs; //to be used when setting new entries - for ordering
 
-                        if($(".msgContainer").length==1){//if there are messages in the database but no messages in the chatbox yet
+                        if($(".msgContainer>#msg").length==1){//if there are messages in the database but no messages in the chatbox yet
                             //restore all messages to chatbox
                             for (var i=1; i<=Object.keys(databaseObj.messages[uid_pair]).length; i++){
 
