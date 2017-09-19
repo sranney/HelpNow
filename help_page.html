@@ -347,7 +347,7 @@
         #chatBox{
             display:none;
         }        
-
+ 
 
     </style>
 
@@ -635,7 +635,7 @@
 
         })
 
-        var statusOpsRan=false,helperOpsRan=false,helperStatusOpsRan=false,helperAlert,helperUID;
+        var statusOpsRan=false,helperOpsRan=false,helperStatusOpsRan=false,helperAlert,helperUID,uid_pair,numMsgs=0,msgNumb = 0,nextmsgcount=1,messagesArray=[],msgArrayCount=0;
         
         function requestFunctions(){//checking actions of other user
             //order of things matter here. knowing that 
@@ -675,7 +675,7 @@
                     var firstName = helperName.substr(0,helperName.indexOf(" "));
                     var helperPhone = databaseObj.users[snapshot.val()].phoneNumber;
                     var helperEmail = databaseObj.users[snapshot.val()].email;
-                    var uid_pair = helperUID + userObj.uid;  
+                    uid_pair = helperUID + userObj.uid;  
                     helperAlert="<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with " + firstName + " through our chat app. Click here to go to our chat page.</p></div>"
                     $("#pendingRequest").append(helperAlert);
                     $("#withdraw").prop("disabled",true);
@@ -694,31 +694,33 @@
                 }
             })
 
-            dB.ref("/messages/"+uid_pair).on("value",function(snapshot){
+            if(uid_pair!=undefined){
+                dB.ref("/messages/"+uid_pair).on("value",function(snapshot){
 
-                if(snapshot.val()!=null&&snapshot.val()!=undefined){
-                    if($(".msgContainer>.msg").length==0){
-                        for (var i=0; i<snapshot.val().length; i++){
+                    if(snapshot.val()!=null&&snapshot.val()!=undefined){
+                        if($(".msgContainer>.msg").length==0){
+                            for (var i=0; i<snapshot.val().length; i++){
 
-                                var message = snapshot.val()[i].message;
-                                var date = snapshot.val()[i].date;
-                                $(".msgContainer").append("<p class='msg'>"+message+"<br>"+date+"</p>");
+                                    var message = snapshot.val()[i].message;
+                                    var date = snapshot.val()[i].date;
+                                    $(".msgContainer").append("<p class='msg'>"+message+"<br>"+date+"</p>");
 
-                        }
-                        messagesArray=snapshot.val();
-                        msgArrayCount=snapshot.val().length;
-                    } else {
-                        if (snapshot.val().length>msgArrayCount){
-                            msgArrayCount=snapshot.val().length;
+                            }
                             messagesArray=snapshot.val();
-                            var message = messagesArray[msgArrayCount-1].message;
-                            var date = messagesArray[msgArrayCount-1].date;
-                            $(".msgContainer").append("<p class='msg'>"+message+"<br>"+date+"</p>");
+                            msgArrayCount=snapshot.val().length;
+                        } else {
+                            if (snapshot.val().length>msgArrayCount){
+                                msgArrayCount=snapshot.val().length;
+                                messagesArray=snapshot.val();
+                                var message = messagesArray[msgArrayCount-1].message;
+                                var date = messagesArray[msgArrayCount-1].date;
+                                $(".msgContainer").append("<p class='msg'>"+message+"<br>"+date+"</p>");
+                            }
                         }
-                    }
-                }              
-            })
+                    }              
+                })
 
+            }
         }
 
         $(document).on("click","#startChat",function(){
