@@ -932,7 +932,7 @@
                             messagesArray=snapshot.val();
                             var message = messagesArray[msgArrayCount-1].message;
                             var date = messagesArray[msgArrayCount-1].date;
-                            $(".msgContainer").append("<p id='msg'>"+message+"<br>"+date+"</p>");
+                            $(".msgContainer").append("<p class='msg'>"+message+"<br>"+date+"</p>");
                         }
                     }
                 }              
@@ -948,6 +948,14 @@
                 $(this).attr("state","shown");
                 $(this).find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
                 setTimeout(slideToBottom,1000);
+                setTimeout(function(){
+                    $(".msgContainer").bind("DOMNodeInserted",function(){
+                        position = position+20;
+                        $('.msgContainer').animate({
+                            scrollTop: position
+                        }, 'slow');
+                    });
+                },5000);                
             } else {
                 $("#chatBox").css("display","none");
                 $('.msgContainer').animate({
