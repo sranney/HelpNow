@@ -1003,7 +1003,7 @@
             if($("#chatmsg").val().length>0){        
                 dB.ref("/messages/"+uid_pair+"/time"+(msgNumb+1)).set({
                     message: databaseObj.users[userObj.uid].name + ": " + $("#chatmsg").val(),
-                    date: moment().format().replace("T"," ");
+                    date: moment().format().replace("T"," ")
                 })
                 $("#chatmsg").val("");
             }
