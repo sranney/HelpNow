@@ -610,13 +610,14 @@
         
         function requestFunctions(){//checking actions of other user
             //order of things matter here. knowing that 
-            dB.ref("/helpRequests/"+userObj.uid).on("value",function(snapshot){
+            dB.ref("/helpRequests/"+userObj.uid).on("value",function(snapshot){//when a new node is added to the helpRequests with the user's uid, this event triggers. this only occurs when the user has submitted a new help request
                 console.log(snapshot.val());
-                if(snapshot.val()!=null && statusOpsRan==false){//adds an actions button that will serve as operations for the user to manage their request            
-                    statusOpsRan = true;
-                    $("div#userInfo_Rmodal").html(accountInfo.replace("signOut","RsignOut"));
-                    $("#pendingRequest").empty();
+                if(snapshot.val()!=null && statusOpsRan==false){//adds actions button that will serve as operations for the user to manage their new request            
+                    statusOpsRan = true;//prohibits the setup of the modal from happening more than once
+                    $("div#userInfo_Rmodal").html(accountInfo.replace("signOut","RsignOut"));//creates a unique id for the signout for the request modal
+                    $("#pendingRequest").empty();//empties the current contents of the pending request so that if the user submits a new request prior to disconnecting from the page, the modal will reset and add the contents below
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
+                    //actions button that is a dropdown button
                     $("#pendingRequest").append(menuBtn);
                     var DrpBtn1 = $("<button class='collapsed btn btn-block' id='withdraw'><i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>Withdraw Request</button>");
                     $("#pendingRequest").append(DrpBtn1);

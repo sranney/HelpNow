@@ -735,6 +735,7 @@
                         if(mapSet==false){
                             loc_GoogMaps = new google.maps.LatLng(databaseObj.users[userObj.uid].coords.lat, databaseObj.users[userObj.uid].coords.long);
                             moveToLocation();
+                            ajaxWeather_latlng(databaseObj.users[userObj.uid].coords.lat, databaseObj.users[userObj.uid].coords.long);
                         }
                     }
                 }
@@ -742,6 +743,7 @@
                 if(mapSet==false){
                     loc_GoogMaps = new google.maps.LatLng(databaseObj.users[userObj.uid].coords.lat, databaseObj.users[userObj.uid].coords.long);
                     moveToLocation();
+                    ajaxWeather_latlng(databaseObj.users[userObj.uid].coords.lat, databaseObj.users[userObj.uid].coords.long);
                 }
             }
         }
@@ -834,12 +836,14 @@
                     $("#pendingRequest").append(offerMsg);
                     var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + request + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(menuBtn);
-                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='contact'><i class='fa fa-comments'></i><i class='fa fa-fw'></i>Contact " + requesterName.substr(0,requesterName.indexOf(" ")) + "<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
+                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='startChat'><i class='fa fa-comments'></i><i class='fa fa-fw'></i>Additional Contact<i class='fa fa-fw'></i></button>");
                     $("#pendingRequest").append(DrpBtn1);
-                    var contactDiv = $("<div id='contactDiv'>Here's " + requesterName.substr(0,requesterName.indexOf(" ")) + "'s email and phone number: <p>Email: " + requesterEmail + "</p><p> Phone: " + requesterPhone + "</p><p>Alternatively, you can chat with " + requesterName.substr(0,requesterName.indexOf(" ")) + " using our chat app. Click here to access our chat app.</div>");
-                    $("#pendingRequest").append(contactDiv);
-                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='navigation' state='hidden'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
+                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='contact'><i class='fa fa-phone'></i><i class='fa fa-fw'></i>Additional Contact<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
                     $("#pendingRequest").append(DrpBtn2);
+                    var contactDiv = $("<div id='contactDiv'>Here's " + requesterName.substr(0,requesterName.indexOf(" ")) + "'s email and phone number: <p>Email: " + requesterEmail + "</p><p> Phone: " + requesterPhone + "</p><p>Alternatively, you can chat with " + requesterName.substr(0,requesterName.indexOf(" ")) + " using our chat app above.</div>");
+                    $("#pendingRequest").append(contactDiv);
+                    var DrpBtn3 = $("<button class='collapsed btn btn-block' id='navigation' state='hidden'><i class='fa fa-compass' aria-hidden='true'></i><i class='fa fa-fw'></i>Navigation<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
+                    $("#pendingRequest").append(DrpBtn3);
                     var navDiv = $("<div id='navDiv'></div>");
                     var mapDiv = $("<div id='mapDiv'></div>");
                     var routeDiv = $("<div id='routeDiv'></div>");
@@ -858,7 +862,7 @@
                     requesterStatusOpsRan=true;
                     var requesterName = databaseObj.users[requesterUID].name;
                     var firstName = requesterName.substr(0,requesterName.indexOf(" "));
-                    requesterAlert = "<p>Hey, "+firstName+" has marked this request as complete, and has closed this request. Mark this request as complete to find someone else to help out.</p>";
+                    requesterAlert = "<p>Hey, "+firstName+" has marked this request as complete, and has closed this request. Mark this request as complete to find someone else to help out. Thank you for your service.</p>";
                     $("#pendingRequest").prepend(requesterAlert);
                     $("#navigation").prop( "disabled", true );
                     $("#navDiv").css("display","none");
@@ -867,6 +871,13 @@
                 }
             })
 
+        }
+
+
+        $(document).on("click","#startChat",function(){
+            dB.ref("/users/"+userObj.uid+"/currRole").set("helper");
+            window.open("chat.html");
+            window.focus();
         }
 
         $(document).on("click","#navigation",function(){
@@ -960,7 +971,8 @@
             var center = {lat:center_lat,lng:center_lng};
             navMap=new google.maps.Map(document.getElementById('mapDiv'),{
                 zoom:15,
-                center:center
+                center:center,
+                fullscreenControl:false
             });
             directionsDisplay.setMap(navMap);
 
