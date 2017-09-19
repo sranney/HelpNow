@@ -935,19 +935,6 @@
                             $(".msgContainer").append("<p id='msg'>"+message+"<br>"+date+"</p>");
                         }
                     }
-
-/*                        numMsgs = Object.keys(databaseObj.messages[uid_pair]).length;//numMsgs initially set to 0 but if there are any messages we want to set this to the number of messages
-                        msgNumb = numMsgs; //to be used when setting new entries - for ordering
-                        //restore all messages to chatbox
-                        nextmsgcount=msgNumb+1;
-                        for (var i=1; i<=Object.keys(databaseObj.messages[uid_pair]).length; i++){
-
-                                var message = databaseObj.messages[uid_pair]["time"+i].message;
-                                var date = databaseObj.messages[uid_pair]["time"+i].date;
-                                $(".msgContainer").append("<p id='msg'>"+message+"<br>"+date+"</p>");
-
-                        }
-                    }*/
                 }              
             })
 
@@ -960,6 +947,17 @@
 
                 $(this).attr("state","shown");
                 $(this).find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+
+                setTimeout(slideToBottom,1000);
+
+                setTimeout(function(){
+                    $(".msgContainer").bind("DOMNodeInserted",function(){
+                        position = position+20;
+                        $('.msgContainer').animate({
+                            scrollTop: position
+                        }, 'slow');
+                    });
+                },5000);
             } else {
                 $("#chatBox").css("display","none");
                 $('.msgContainer').animate({
@@ -997,6 +995,17 @@
             }
 
         })        
+
+        var position=0;
+        function slideToBottom() {
+            console.log($('.msgContainer .msg:last-child').position().top);
+            if(position<$('.msgContainer .msg:last-child').position().top){
+                position = $('.msgContainer .msg:last-child').position().top;
+                $('.msgContainer').animate({
+                    scrollTop: position
+                }, 'slow');
+            }
+        }
 
         $(document).on("click","#navigation",function(){
             if($(this).attr("state")=="hidden"){
