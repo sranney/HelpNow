@@ -849,7 +849,7 @@
 
         //series of functions to check different stuff that is added to firebase
 
-        var helperOpsRan=false,requesterStatusOpsRan=false,requesterAlert,uid_pair,numMsgs=0,msgNumb = 0;
+        var helperOpsRan=false,requesterStatusOpsRan=false,requesterAlert,uid_pair,numMsgs=0,msgNumb = 0,nextmsgcount=1;
 
         //numMsgs counts number of messages sent between two users
         //msgNumb increments for each message added to the messages node for two users
@@ -917,18 +917,20 @@
             dB.ref("/messages/"+uid_pair).on("child_added",function(snapshot){
 
                 if(snapshot.val()!=null&&snapshot.val()!=undefined){
-                    
-                    $(".msgContainer").empty();
+                    if(snapshot.key=="time"+nextmsgcount){                    
+                        $(".msgContainer").empty();
 
-                    numMsgs = Object.keys(databaseObj.messages[uid_pair]).length;//numMsgs initially set to 0 but if there are any messages we want to set this to the number of messages
-                    msgNumb = numMsgs; //to be used when setting new entries - for ordering
-                    //restore all messages to chatbox
-                    for (var i=1; i<=Object.keys(databaseObj.messages[uid_pair]).length; i++){
+                        numMsgs = Object.keys(databaseObj.messages[uid_pair]).length;//numMsgs initially set to 0 but if there are any messages we want to set this to the number of messages
+                        msgNumb = numMsgs; //to be used when setting new entries - for ordering
+                        //restore all messages to chatbox
+                        nextmsgcount=msgNumb+1;
+                        for (var i=1; i<=Object.keys(databaseObj.messages[uid_pair]).length; i++){
 
-                            var message = databaseObj.messages[uid_pair]["time"+i].message;
-                            var date = databaseObj.messages[uid_pair]["time"+i].date;
-                            $(".msgContainer").append("<p id='msg'>"+message+"<br>"+date+"</p>");
+                                var message = databaseObj.messages[uid_pair]["time"+i].message;
+                                var date = databaseObj.messages[uid_pair]["time"+i].date;
+                                $(".msgContainer").append("<p id='msg'>"+message+"<br>"+date+"</p>");
 
+                        }
                     }
                 }
                 
@@ -941,7 +943,7 @@
             if($(this).attr("state")=="hidden"){
                 $("#chatBox").css("display","block");
 
-                if($(".msgContainer").length>1){
+                if($(".msgContainer>#msg").length>1){
                     setTimeout(slideToBottom,1000);
                 }
 
