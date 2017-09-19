@@ -87,7 +87,8 @@
         firebase.initializeApp(config);
         var dB = firebase.database();
         var Auth = firebase.auth();
-
+        var app = angular.module('chatApp', ['firebase']);
+        
         dB.ref().on("value",function(snapshot){
             databaseObj = snapshot.toJSON();//setting databaseObj to the entire firebase onvalue change snapshot gives me the current firebase with every change that occurs to the firebase
             //firebase function to check whether user is logged into site
@@ -101,7 +102,7 @@
 
                     var userName = databaseObj.users[userObj.uid].name;
                     var useruid = userObj.uid;
-                    var app = angular.module('chatApp', ['firebase']);
+
                     var currRoleset=false;
                     if(currRoleset=false){
                         var currRole = databaseObj.users[userObj.uid].currRole;
