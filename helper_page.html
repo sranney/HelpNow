@@ -921,7 +921,7 @@
 
                                 var message = snapshot.val()[i].message;
                                 var date = snapshot.val()[i].date;
-                                $(".msgContainer").append("<p id='msg'>"+message+"<br>"+date+"</p>");
+                                $(".msgContainer").append("<p class='msg'>"+message+"<br>"+date+"</p>");
 
                         }
                         messagesArray=snapshot.val();
@@ -947,7 +947,7 @@
 
                 $(this).attr("state","shown");
                 $(this).find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
-
+                setTimeout(slideToBottom,1000);
                 setTimeout(function(){
                     $(".msgContainer").bind("DOMNodeInserted",function(){
                         position = position+20;
@@ -966,7 +966,16 @@
             }
         })
 
-
+        var position=0;
+        function slideToBottom() {
+            console.log($('.msgContainer .msg:last-child').position().top);
+            if(position<$('.msgContainer .msg:last-child').position().top){
+                position = $('.msgContainer .msg:last-child').position().top;
+                $('.msgContainer').animate({
+                    scrollTop: position
+                }, 'slow');
+            }
+        }
 
 
         $(document).on("keypress","#chatmsg", function(e){
