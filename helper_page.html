@@ -986,7 +986,7 @@
 
 
 
-        $("#chatmsg").on("keypress", function(e){
+        $(document).on("keypress","#chatmsg", function(e){
 
             if($("#chatmsg").val().length>0){        
                 if(e.which == 13){
