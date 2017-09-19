@@ -948,14 +948,6 @@
                 $(this).attr("state","shown");
                 $(this).find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
                 setTimeout(slideToBottom,1000);
-                setTimeout(function(){
-                    $(".msgContainer").bind("DOMNodeInserted",function(){
-                        position = position+20;
-                        $('.msgContainer').animate({
-                            scrollTop: position
-                        }, 'slow');
-                    });
-                },5000);
             } else {
                 $("#chatBox").css("display","none");
                 $('.msgContainer').animate({
