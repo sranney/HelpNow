@@ -460,6 +460,41 @@
             color:white;
         }
 
+        #startChat{
+            background-color:white;
+            color:#71C671;
+            border:5px solid #7171C6;
+            font-size:30px;
+        }
+
+        .chatBox{
+            background-color:#3f3f3f;
+        }
+
+        .msgContainer{
+            max-height:400px;
+            overflow:scroll;
+            padding-right:10px;
+        }
+
+        .msg{
+            background-color:#a8a8a8;
+            margin-top:5px;
+            padding:15px;
+            color:white;
+            border-radius:4px;
+        }
+
+        input{
+            margin:10px auto;
+            background-color:#d3d3d3;
+            color:black;
+        }
+
+        #chatBox{
+            display:none;
+        }        
+
         @media (max-width:850px){
             .jumbotron{
                 display:block;
@@ -911,29 +946,6 @@
 
 
         $(document).on("click","#startChat",function(){
-            if($(this).attr("state")=="hidden"){
-
-                $("#navDiv").css("display","block");
-                $("#mapDiv").css("height","300px");
-                $("#routeDiv").css("height","100%");
-                setTimeout(function(){
-                    startLoc = databaseObj.users[userObj.uid].address;
-                    endLoc = databaseObj.users[requesterUID].address;
-                    initNavMap(startLoc,userObj.uid,endLoc,requesterUID);
-                },500);
-                $(this).attr("state","shown");
-                $("#navigation").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
-            } else if($(this).attr("state")=="shown"){
-            
-                $("#mapDiv").empty();
-                $("#routeDiv").empty();
-                $("#navDiv").css("display","none");
-                $(this).attr("state","hidden");
-                $("#navigation").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
-            }
-        })
-
-        $("#startChat").on("click",function(){
             if($(this).attr("state")=="hidden"){
                 $("#chatBox").css("display","block");
 
