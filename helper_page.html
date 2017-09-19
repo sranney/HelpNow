@@ -913,31 +913,32 @@
                 }
             })
 
-            dB.ref("/messages/"+uid_pair).on("value",function(snapshot){
+            if(uid_pair!=undefined){
+                dB.ref("/messages/"+uid_pair).on("value",function(snapshot){
 
-                if(snapshot.val()!=null&&snapshot.val()!=undefined){
-                    if($(".msgContainer>.msg").length==0){
-                        for (var i=0; i<snapshot.val().length; i++){
+                    if(snapshot.val()!=null&&snapshot.val()!=undefined){
+                        if($(".msgContainer>.msg").length==0){
+                            for (var i=0; i<snapshot.val().length; i++){
 
-                                var message = snapshot.val()[i].message;
-                                var date = snapshot.val()[i].date;
-                                $(".msgContainer").append("<p class='msg'>"+message+"<br>"+date+"</p>");
+                                    var message = snapshot.val()[i].message;
+                                    var date = snapshot.val()[i].date;
+                                    $(".msgContainer").append("<p class='msg'>"+message+"<br>"+date+"</p>");
 
-                        }
-                        messagesArray=snapshot.val();
-                        msgArrayCount=snapshot.val().length;
-                    } else {
-                        if (snapshot.val().length>msgArrayCount){
-                            msgArrayCount=snapshot.val().length;
+                            }
                             messagesArray=snapshot.val();
-                            var message = messagesArray[msgArrayCount-1].message;
-                            var date = messagesArray[msgArrayCount-1].date;
-                            $(".msgContainer").append("<p class='msg'>"+message+"<br>"+date+"</p>");
+                            msgArrayCount=snapshot.val().length;
+                        } else {
+                            if (snapshot.val().length>msgArrayCount){
+                                msgArrayCount=snapshot.val().length;
+                                messagesArray=snapshot.val();
+                                var message = messagesArray[msgArrayCount-1].message;
+                                var date = messagesArray[msgArrayCount-1].date;
+                                $(".msgContainer").append("<p class='msg'>"+message+"<br>"+date+"</p>");
+                            }
                         }
-                    }
-                }              
-            })
-
+                    }              
+                })
+            }
         }
 
 
