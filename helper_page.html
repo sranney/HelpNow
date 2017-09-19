@@ -949,7 +949,9 @@
             if($(this).attr("state")=="hidden"){
                 $("#chatBox").css("display","block");
 
-                setTimeout(slideToBottom,1000);
+                if($(".msgContainer").length>0){
+                    setTimeout(slideToBottom,1000);
+                }
 
                 setTimeout(function(){
                     $(".msgContainer").bind("DOMNodeInserted",function(){
