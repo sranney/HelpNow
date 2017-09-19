@@ -664,7 +664,7 @@
         $(document).on("click","#withdraw",function(){
             dB.ref("/helpRequests/"+userObj.uid).remove();//new request opened
             dB.ref("/users/"+userObj.uid+"/helpRequest").remove();
-            $('#requestModal').fadeOut(100);
+            $('#requestModal').fadeOut(10);
             setTimeout(function(){
                 $('#requestModal').modal('hide');
                 statusOpsRan=false;
