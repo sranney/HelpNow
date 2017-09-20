@@ -1070,7 +1070,7 @@
 
         $(document).on("click","#complete",function(){//when helper pushes complete button
             dB.ref("/users/"+userObj.uid+"/serving").remove();//remove helper info from node
-
+            $(".msgContainer").empty();
             if(databaseObj.users[requesterUID].helpedBy!=null){
                 if(databaseObj.users[requesterUID].helpedBy.helperUID==userObj.uid){
                     dB.ref("/users/"+requesterUID+"/helpedBy/helperStatus").set("complete");//notify helper that you have marked the request as complete
