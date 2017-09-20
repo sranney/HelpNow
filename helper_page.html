@@ -1233,9 +1233,10 @@
             if(loc_GoogMaps==undefined){
                 if(databaseObj.users[userObj.uid].coords!=undefined){
                     loc_GoogMaps = new google.maps.LatLng(databaseObj.users[userObj.uid].coords.lat, databaseObj.users[userObj.uid].coords.long);
-                    map.panTo(loc_GoogMaps);
+                    
                 }
             }
+            map.panTo(loc_GoogMaps);
             //helper marker
             helperMarker = new google.maps.Marker({
               position: loc_GoogMaps,
