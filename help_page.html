@@ -350,7 +350,7 @@
  
         @media (max-width:900px){
             #requestInput{
-                font-size:40px;
+                font-size:35px;
             }
         }
 
@@ -806,8 +806,11 @@
 
         /////////////////////////COMPLETE BUTTON - MARK REQUEST AS COMPLETE
         $(document).on("click","#complete",function(){
-            dB.ref("/messages/"+uid_pair).remove();
+            var uid_pair_temp = uid_pair;
             uid_pair=undefined;
+            dB.ref("/messages/"+uid_pair_temp).remove();
+            messagesArray=undefined;
+            msgArrayCount=undefined;
             dB.ref("/helpRequests/"+userObj.uid).remove();//new request opened
             dB.ref("/users/"+userObj.uid+"/helpRequest").remove();//remove helprequest
             dB.ref("/users/"+userObj.uid+"/helpedBy").remove();//remove helper info from node

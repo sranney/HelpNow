@@ -1069,8 +1069,11 @@
         })
 
         $(document).on("click","#complete",function(){//when helper pushes complete button
-            dB.ref("/messages/"+uid_pair).remove();
+            var uid_pair_temp = uid_pair;
             uid_pair=undefined;
+            dB.ref("/messages/"+uid_pair_temp).remove();
+            messagesArray=undefined;
+            msgArrayCount=undefined;
             dB.ref("/users/"+userObj.uid+"/serving").remove();//remove helper info from node
             $(".msgContainer").empty();
             if(databaseObj.users[requesterUID].helpedBy!=null){
