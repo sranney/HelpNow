@@ -1236,9 +1236,6 @@
             //error - function - how to handle errors
             //options - object - optional parameters for how to handle getting coordinates
             navigator.geolocation.getCurrentPosition(success, error, options);
-            google.maps.event.addDomListener(window, 'resize', function() {
-                map.setCenter(center);
-            });
 
         }
 
@@ -1266,6 +1263,9 @@
             });
             helperMarker.addListener('click', function() {
               infowindow.open(map, helperMarker);
+            });
+            google.maps.event.addDomListener(window, 'resize', function() {
+                map.setCenter(loc_GoogMaps);
             });
             //helpRequest markers
             addRequestMarkersWithinRadius();//now set help request markers
