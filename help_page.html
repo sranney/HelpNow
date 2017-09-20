@@ -319,8 +319,17 @@
             font-weight:bold;
         }
 
-        .chatBox{
+        #startChat{
+            background-color:white;
+            color:#71C671;
+            border:5px solid #7171C6;
+            font-size:30px;
+        }
+
+        #chatBox{
             background-color:#3f3f3f;
+            display:none;
+
         }
 
         .msgContainer{
@@ -336,18 +345,24 @@
             padding:15px;
             color:white;
             border-radius:4px;
+            font-size:16px;
         }
 
         .chatmsg{
             margin:10px auto;
             background-color:#d3d3d3;
             color:black;
+        }       
+
+        .modal{
+            overflow-y:auto;
         }
 
-        #chatBox{
-            display:none;
-        }        
- 
+        .modal-body{
+            overflow:auto;
+        }
+
+
         @media (max-width:900px){
             #requestInput{
                 font-size:35px;
