@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+
+<!--put small icon on modal top right and a dropdown with your account info in the modal on the top left--> 
+
+<html>
+<head>
+        <link href="reset.css">
+        <link rel="shortcut icon" type="image/x-icon" href="helpnow_favicon.ico"/>
+        <title>Help Now - Get Help</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://use.fontawesome.com/2a8a6780db.js"></script>
+        <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+        <style type="text/css">
+            body{
+                background-color:#032642;
+            }
+
+            .jumbotron{
+                background-color:#032642;
+                height:130px;
+                padding:10px;
+                margin-top:10px;
+                margin-bottom:10px;
+                display:flex;
+            }
+            ul{
+                list-style:none;
+                float:left;
+                color:white;
+            }
+            ul>li{
+                color:white;
+            }
+
+            img{
+                height:100px;
+                margin-right:15px;
+            }
+
+            .Menu{
+                margin:auto;
+            }
+
+            .Menu>.pageTitle,.Menu>.goHelp{
+                background-color:#991E37;
+                border-radius:3px;
+                border:3px solid white;
+                color:white;
+                padding:3px;
+                font-size:16px;
+                width:max-content;
+                transition:font-size 1s ease;
+                margin:auto;
+            }
+
+            .Menu>.goHelp{
+                background-color:#003600;
+                margin-top:5px;
+            }
+
+            .Menu>.pageTitle:hover,.Menu>.getHelp:hover{
+                font-size:19px;
+            }
+
+            #correctAddress,#submit,#accept,#reject,#instruct{
+                display:none;
+            }
+
+            #returnedAddress{
+                font-weight:bold;
+                font-size:20px;
+                color:blue;
+            }
+
+            #accept{
+                background-color:#003600;
+                color:white;
+                font-size:30px;
+                font-weight:bold;
+            }
+
+            #reject{
+                background-color:#991E37;
+                color:white;
+                font-size:30px;
+                font-weight:bold;
+            }
+
+            #userInfo{
+                color:white;
+            }
+
+            #correctAddress{
+                width:100%;
+            }
+
+            #submit{
+                border:3px solid #454545;
+                color:#454545;
+                font-size:30px;
+                font-weight:bold;
+            }
+
+            input{
+                font-size:20px;
+            }
+
+            #animateArrow{
+                font-size:30px;
+                animation-name:test;
+                animation-iteration-count:infinite;
+                animation-duration:1s;
+            }
+
+            @keyframes test{
+                  0%{
+                    font-size:30px;
+                  }
+                  50%{
+                    font-size:33px;
+                  }
+                  100%{
+                    font-size:30px;
+                  }
+            } 
+
+            #Proceed{
+                display:none;
+            }       
+
+            #request{
+                color:red;
+                font-weight:bold;
+                font-style:italic;
+            }
+
+            #requestInput{
+                font-size:45px;
+                border:5px solid grey;
+                width:100%;
+                color:grey;
+            }
+
+            #requestSubmit{
+                background-color:#991E37;
+                color:white;
+                font-size:30px;
+                font-weight:bold;
+            }
+
+            #actions{
+              width:100%;
+              height:100%;
+              font-size:30px;
+              border-radius:15px;
+              padding:10px;
+            }
+
+            .collapsed{
+              width:100%;
+              display:none;
+              height:0px;
+              opacity:0;
+              font-size:0px;
+              text-align:center;
+              border-radius:15px;
+            }
+
+            .animation-show{
+              animation-duration:.1s;
+              animation-name:expand;
+              animation-fill-mode:forwards;
+            }
+            
+            @keyframes expand{
+              0%{
+                opacity:0;
+                height:0%;
+                font-size:0px;
+                display:none;
+                border:0px solid white;
+              }
+              100%{
+                opacity:1;
+                height:100%;
+                font-size:30px;
+                display:block;
+                padding:10px;
+                border:3px solid white;
+              }
+            }
+            
+            .animation-hide{
+              animation-duration:.1s;
+              animation-name:collapse;
+              animation-fill-mode:forwards;
+            }
+            
+            @keyframes collapse{
+              0%{
+                opacity:1;
+                height:100%;
+                font-size:30px;
+                display:block;
+                padding:10px;
+                border:2px solid white;
+              }
+              100%{
+                opacity:0;
+                height:0%;
+                font-size:0px;
+                display:none;
+                border:0px solid white;
+              }
+            }
+
+            #complete{
+                color:white;
+                border:2px; 
+            }
+
+            #withdraw{
+                background-color:#E87647;
+                color:#400000;
+                border-color:#400000;
+            }
+
+            #complete{
+                background-color:#086268;
+            }
+
+            .goHelp>button{
+                margin-top:10px;
+                margin-bottom:10px;
+                width:50%;
+                font-size:25px;
+                background-color:#003600;
+                color:white;
+                border:4px solid white;
+            }
+
+            #pendingRequest{
+                font-size:20px;
+            }
+
+            #pendingRequest>a{
+                color:white;
+                font-size:20px;
+            }
+
+            #pendingRequest>a:hover{
+                background-color:#003600;
+                font-size:22px;
+                font-weight:bold;
+                border:3px solid white;
+                border-radius:5px;
+                padding:3px;
+            }
+
+            .Menu>.pageTitle,.Menu>.goHelp{
+                background-color:#991E37;
+                border-radius:3px;
+                border:3px solid white;
+                color:white;
+                padding:3px;
+                font-size:16px;
+                transition:font-size 1s ease;           
+            }
+
+            .Menu>.goHelp{
+                background-color:#003600;
+            }
+
+            .Menu>.pageTitle:hover,.Menu>.goHelp:hover{
+                font-size:19px;
+            }
+
+            #requestModal>.modal-dialog{
+                width:90%;
+            }
+
+            #requestModal>.modal-dialog>.modal-content{
+                width:100%;
+                margin:5% auto;
+            }
+
+            #errorMsg{
+                color:red;
+            }
+
+            #helper{
+                text-align:left;
+                color:white;
+                border-radius:15px;
+                background-color:#003600;
+                border: 5px solid white;
+                padding:20px;
+                margin:20px;
+            }
+
+            #Rmodal{
+                background-color:#032642;
+            }
+
+            #userInfo_Rmodal > ul{
+                text-align:left;
+            }
+
+            #signOut,#RsignOut{
+                text-decoration:underline;
+                font-size:14px;
+                width:max-content;
+            }
+
+            #signOut:hover,#RsignOut:hover{
+                text-decoration:underline;
+                font-size:16px;
+                color:#77BDD9;
+                font-weight:bold;
+            }
+
+            #startChat{
+                background-color:white;
+                color:#71C671;
+                border:5px solid #7171C6;
+                font-size:30px;
+            }
+
+            #chatBox{
+                background-color:#3f3f3f;
+                display:none;
+                padding:15px;
+                border:5px solid white;
+            }
+
+            .msgContainer{
+                min-height:150px;
+                max-height:400px;
+                overflow:scroll;
+                padding-right:10px;
+            }
+
+            .msg{
+                background-color:#a8a8a8;
+                margin-top:5px;
+                padding:15px;
+                color:white;
+                border-radius:4px;
+                font-size:16px;
+            }
+
+            .chatmsg{
+                margin:10px auto;
+                background-color:#d3d3d3;
+                color:black;
+            }       
+
+            .modal{
+                overflow-y:auto;
+            }
+
+            .modal-body{
+                overflow:auto;
+            }
+
+
+        @media (max-width:850px){
+            
+            #requestInput{
+                font-size:30px;
+            }
+
+            .jumbotron{
+                display:block;
+            }
+            
+            .Menu>.pageTitle,.Menu>.getHelp{
+                margin-left:0;
+            }
+
+            .jumbotron>.Menu{
+                float:left;
+                margin-left:15px;
+            }
+
+            .jumbotron>img{
+                height:70px;
+                float:right;
+                margin-right:15px;
+            }
+
+            #userInfo_Rmodal,#userInfo{
+                display:none;
+            }
+
+            .dist{
+                display:none;
+            }
+
+        }
+
+        </style>
+</head>
+
+<body>
+
+    <div class="jumbotron">
+        
+        <div id = "userInfo"></div>
+
+        <div class="Menu" class="text-center">
+            <p class='pageTitle'>You are on Get Help Page</p>
+            <p class='goHelp'>Click here to go to Go Help Page</p>
+        </div>
+
+        <img src="HelpNow Logo.png">
+
+    </div>
+
+    <input id="requestInput" class="text-center" placeholder="What do you need help with today?">
+    <button id="requestSubmit" class="btn btn-default btn-block">Request Help!</button>
+
+    <div id="#errorMsg"></div>
+
+    <div id="gpsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body text-center">
+        
+                    <div id="address"></div><!--will display message with calculated address-->
+                    
+                    <button class="btn btn-default btn-block" id="accept">
+                        <i class="fa fa-check"></i><i class="fa fa-fw"></i>Accept
+                    </button>
+
+                    <button class="btn btn-default btn-block" id="reject">
+                        <i class="fa fa-times"></i><i class="fa fa-fw"></i>Reject
+                    </button>
+
+                    <button id="reject">Reject</button>
+
+                    <div id="instruct">Please enter your correct address. Provided is your currently stored address, if set.</div>
+                    <input class="text-center" type="text" id="correctAddress" placeholder="1234 Simpleton Dr, Dallas TX 75204">
+                    <button id="submit" class="btn btn-default btn-block">
+                        Submit<i class="fa fa-fw"></i><i class="fa fa-arrow-right" id="animateArrow"></i>
+                    </button>
+
+                </div>
+
+                <div class="modal-footer text-center">
+
+                    <button class = "btn btn-primary" type="button" data-dismiss="modal" aria-hidden="true" id ="Proceed">Continue to Site</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="requestModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div id = "Rmodal" class="modal-content">
+
+                <div class="modal-body text-center">
+
+                    <div id="jumbotron_Rmodal" class="jumbotron">
+                        
+                        <div id = "userInfo_Rmodal"></div>
+                        <div class="Menu" class="text-center">
+                            <p class='pageTitle'>You are on Get Help Page</p>
+                            <p class='goHelp'>Click here to go to Go Help Page</p>
+                        </div>                    
+                        <img id="logo_Rmodal" src="HelpNow Logo.png">
+
+                    </div>
+
+                     <div id="pendingRequest"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+    <script type="text/javascript">
+
+    //////////////////////////////////////////////firebase code/////////////////////////////////////////////////
+
+        var config = {
+            apiKey: "AIzaSyBzJ9AknkEz3TmAHLEryoXaT74nLSf9mQQ",
+            authDomain: "project1-ad91c.firebaseapp.com",
+            databaseURL: "https://project1-ad91c.firebaseio.com",
+            projectId: "project1-ad91c",
+            storageBucket: "project1-ad91c.appspot.com",
+            messagingSenderId: "297815876711"
+        };
+        firebase.initializeApp(config);
+
+        var dB = firebase.database();
+        var Auth = firebase.auth();
+        var cloud = firebase.storage();
+        var provider_fb = new firebase.auth.FacebookAuthProvider();
+        var provider_goog = new firebase.auth.GoogleAuthProvider();
+        var userLoggedIn=false;
+        var myRefToDisconnect;
+
+        var accountInfo;//to be pushed to userInfo section
+        var userObj;//will be user object with all kinds of datas
+        var databaseObj,modalShown=false;
+        var placeholderSet=false;
+        //get instance of real-time database
+        dB.ref().on("value",function(snapshot){
+            databaseObj = snapshot.toJSON();
+            //firebase function to check whether user is logged into site
+            Auth.onAuthStateChanged(function(user) {
+                if (user) {
+                    userObj = user;
+                    myReftoDisconnect = dB.ref("/users/"+userObj.uid+"/iconnect");
+                    myReftoDisconnect.set(true);
+                    myReftoDisconnect.onDisconnect().set("disconnected");
+                    userLoggedIn=true;//used below to state user is logged in and to proceed to next page
+                    var name = databaseObj.users[userObj.uid].name;
+                    //making the help page more personalized by adding the user's first name to the placeholder of the input box
+                    
+                    if(!placeholderSet){
+                        var firstName = name.substr(0,name.indexOf(" "));
+                        var requestInput_placeholder = $("#requestInput").attr("placeholder");
+                        requestInput_placeholder = requestInput_placeholder.replace("?",", "+firstName+"?");
+                        $("#requestInput").attr("placeholder",requestInput_placeholder);
+                        placeholderSet=true
+                    }
+                    var email = databaseObj.users[userObj.uid].email;
+                    var phoneNumber = databaseObj.users[userObj.uid].phoneNumber;
+                    if(databaseObj.users[userObj.uid].address !=undefined){
+                        accountInfo = "<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li>"+databaseObj.users[userObj.uid].address+"</li><li id='signOut'>Sign Out</li></ul>";//provides welcome greeting
+                    } else {//don't include address yet, this will be included when the user provides address
+                        accountInfo = "<ul><li>" + name + "</li><li>" + email + "</li><li>" + phoneNumber + "</li><li id='signOut'>Sign Out</li></ul>";//provides welcome greeting
+                    }
+                    requestFunctions();
+                    $("#userInfo").html(accountInfo);
+                    if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&gpsProcessed==false&&databaseObj.users[userObj.uid].helpRequest==undefined){
+                        if(databaseObj.helpRequests!=undefined){
+                            if(databaseObj.helpRequests[userObj.uid]==undefined){
+                                gpsProcessor();//dealing with two asynchronous and separately fired functions and want this to run only when all of this information is available (database and address each being generated from two different functions) and for it to run only once - so I check that all data has been set and then I put in a boolean processed to allow me to control how many times this runs. we also want to make sure that this doesn't run when there is a helprequest active for the user. another modal will pop up and we only want that modal to show. we check for this by checking the databaseObj node specific to the user's helpRequest to see if it is null
+                            }
+                        } else {
+                            gpsProcessor();
+                        }
+                    }
+
+                } else {
+                    userLoggedIn=false;//used below to state user is not logged in and to prompt user with a modal
+                }
+            });
+        });
+
+        var gpsProcessed=false;
+        function gpsProcessor(){
+            console.log(address);
+            gpsProcessed=true;
+            if(databaseObj.users[userObj.uid].cameFromOtherPage == false){//will run when the user came from the other page because cameFromOtherPage will be false - address just set by user on the other page, so asking for address again is not necessary
+                if(address != databaseObj.users[userObj.uid].address || databaseObj.users[userObj.uid].address == undefined){                          
+                    if(address!=undefined){//want to continually run this query to see when address is set - when this becomes false, when address is set, then we want to quit this interval and show the modal that asks about current address
+                        if(acceptPushed==false&&submitPushed==false){
+                            if(modalShown==false){
+                                $("#gpsModal").modal({backdrop: 'static', keyboard: false});
+                                $("#gpsModal").modal("show");                                
+                                $("#address").html("We have calculated your address to be:<br><span id='returnedAddress'>"+address+"</span><br>Is this correct?");
+                                $("#accept").css("display","block");
+                                $("#reject").css("display","block");
+                                modalShown = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        var acceptPushed = false,submitPushed = false;
+        var lat,long,address,success,geocoder;
+
+        function getAddress(){
+                //////////////////////////////html5 geolocation api mixed with Goog Maps API Geocoding///////////////////////////////
+
+            var options = {
+              enableHighAccuracy: true,//set it to this so that we can access the most accurate gps system available on user's system
+              timeout: 5000,
+              maximumAge: 0
+            };
+
+            //if the getCurrentPosition function was able to get your gps location, then we want to do the following function, including running google maps geocode api
+
+            
+            function success(pos) {
+
+                var crd = pos.coords;
+                lat = crd.latitude;
+                long = crd.longitude;
+
+                /////GOOGLE MAPS GEOCODE API FUNCTIONS - gets address
+                geocoder = new google.maps.Geocoder;
+                var geopos = {lat:lat,lng:long};
+                geocoder.geocode({"location":geopos},function(results,status){
+                    if(status==="OK"){
+                        if(results[0]){
+                            address = results[0].formatted_address;//formatted address with street address
+                            if(databaseObj!=null && databaseObj!=undefined && address!=undefined && gpsProcessed==false && databaseObj.users[userObj.uid].helpRequest==undefined){
+                                if(databaseObj.helpRequests!=undefined){
+                                    if(databaseObj.helpRequests[userObj.uid]==undefined){
+                                        gpsProcessor();            
+                                    }
+                                } else {
+                                    gpsProcessor();
+                                }
+                            }                            
+                        }
+                    }
+              })
+
+            };
+
+            function error(err) {
+              console.warn(`ERROR(${err.code}): ${err.message}`);
+            };
+
+            //geolocation.getCurrentPosition takes three parameters, 
+            //success - function - what do you want to do with the information returned if the function getCurrentPosition runs successfully
+            //error - function - how to handle errors
+            //options - object - optional parameters for how to handle getting coordinates
+            navigator.geolocation.getCurrentPosition(success, error, options);
+        }
+
+        /////////////////////////ACCEPT CALCULATED ADDRESS BUTTON
+        $("#accept").on("click",function(){
+            acceptPushed=true;
+            if(databaseObj.users[userObj.uid].address!=address){
+                dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
+                dB.ref("/users/"+userObj.uid+"/address").set(address);
+            }
+            $("#address").css("display","none");
+            $("#accept").css("display","none");
+            $("#reject").css("display","none");
+            $("#reject").css("display","none");
+            $("#reject").css("display","none");
+            $("#gpsModal > div > div > div.modal-body.text-center").append("Thank you. Click button to continue.");
+            $("#Proceed").css("display","block");
+        })
+
+        /////////////////////////REJECT CALCULATED ADDRESS BUTTON
+        $("#reject").on("click",function(){
+            $("#address").css("display","none");
+            $("#accept").css("display","none");
+            $("#reject").css("display","none");
+            if(databaseObj.users[userObj.uid].address!=undefined){
+                $("#correctAddress").val(databaseObj.users[userObj.uid].address);
+            }
+            $("#correctAddress").css("display","block");
+            $("#submit").css("display","block");
+            $("#instruct").css("display","block");
+        })
+
+        ////////////////////////SUBMIT ADDRESS CORRECTION BUTTON
+        $("#submit").on("click",function(){
+            submitPushed=true;
+            var correctAddress = $("#correctAddress").val();
+                        
+            geocoder = new google.maps.Geocoder;
+            geocoder.geocode({"address":correctAddress},function(results,status){
+                if(status==="OK"){
+                    lat=results[0].geometry.location.lat();
+                    long=results[0].geometry.location.lng();
+                    dB.ref("/users/"+userObj.uid+"/coords").set({"lat":lat,"long":long});
+                    dB.ref("/users/"+userObj.uid+"/address").set(correctAddress);
+                }
+            })
+
+            $("#instruct").css("display","none");
+            $("#address").css("display","none");
+            $("#accept").css("display","none");
+            $("#reject").css("display","none");
+            $("#correctAddress").css("display","none");
+            $("#submit").css("display","none");
+            $("#gpsModal > div > div > div.modal-body.text-center").append("Thank you. Click button to continue.");
+            $("#Proceed").css("display","block");
+
+        })
+
+        var statusOpsRan=false,helperOpsRan=false,helperStatusOpsRan=false,helperAlert,helperUID,uid_pair,numMsgs=0,msgNumb = 0,nextmsgcount=1,messagesArray=[],msgArrayCount=0;
+        
+        function requestFunctions(){//checking actions of other user
+            //order of things matter here. knowing that 
+            dB.ref("/helpRequests/"+userObj.uid).on("value",function(snapshot){//when a new node is added to the helpRequests with the user's uid, this event triggers. this only occurs when the user has submitted a new help request
+                console.log(snapshot.val());
+                if(snapshot.val()!=null && statusOpsRan==false){//adds actions button that will serve as operations for the user to manage their new request            
+                    statusOpsRan = true;//prohibits the setup of the modal from happening more than once
+                    $("div#userInfo_Rmodal").html(accountInfo.replace("signOut","RsignOut"));//creates a unique id for the signout for the request modal
+                    $("#pendingRequest").empty();//empties the current contents of the pending request so that if the user submits a new request prior to disconnecting from the page, the modal will reset and add the contents below
+                    var menuBtn = $("<button class='btn btn-default btn-block' id='actions'>Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i></button>");
+                    //actions button that is a dropdown button
+                    $("#pendingRequest").append(menuBtn);
+                    var DrpBtn1 = $("<button class='collapsed btn btn-block' id='startChat' state='hidden'><i class='fa fa-comments'></i><i class='fa fa-fw'></i>Open Chat<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></button>");
+                    $("#pendingRequest").append(DrpBtn1);
+                    var chatBox = $("<div id='chatBox'><div class='msgContainer'></div><input type='text' class='form-control' id='chatmsg' placeholder='type here'><button id='sendText' class='btn btn-default' ng-click='send()'>Send</button></div>");
+                    $("#pendingRequest").append(chatBox);
+                    var DrpBtn2 = $("<button class='collapsed btn btn-block' id='withdraw'><i class='fa fa-times-circle-o'></i><i class='fa fa-fw'></i>Withdraw Request</button>");
+                    $("#pendingRequest").append(DrpBtn2);
+                    var DrpBtn3 = $("<button class='collapsed btn btn-block' id='complete'><i class='fa fa-check-square-o'></i><i class='fa fa-fw'></i>Mark Complete</button>");
+                    $("#pendingRequest").append(DrpBtn3);
+                    $("#requestModal").modal({backdrop: 'static', keyboard: false});
+                    $("#requestModal").modal("show");
+                    $("#startChat").prop( "disabled", true );
+                    $("#complete").prop( "disabled", true );
+                }
+            })
+            
+            dB.ref("/users/"+userObj.uid+"/helpRequest").on("value",function(snapshot){
+                $("#actions").html("Actions for request: \"" + databaseObj.users[userObj.uid].helpRequest + "\"<i class='fa fa-fw'></i><i class='fa fa-plus-circle'></i>");
+            })
+
+            dB.ref("/users/"+userObj.uid+"/helpedBy/helperUID").on("value",function(snapshot){
+                if(snapshot.val()!=null && helperOpsRan==false){//i.e., there is a UID set here and thus a user has volunteered to help
+                    helperUID=snapshot.val();
+                    helperOpsRan=true;
+                    var helperName = databaseObj.users[snapshot.val()].name;
+                    var firstName = helperName.substr(0,helperName.indexOf(" "));
+                    var helperPhone = databaseObj.users[snapshot.val()].phoneNumber;
+                    var helperEmail = databaseObj.users[snapshot.val()].email;
+                    uid_pair = helperUID + userObj.uid;  
+                    helperAlert="<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with " + firstName + " through our chat app. Open the actions menu above to go to our chat app.</p></div>"
+                    $("#pendingRequest").append(helperAlert);
+                    $("#withdraw").prop("disabled",true);
+                    $("#startChat").prop("disabled",false);
+                    $("#complete").prop("disabled",false);
+                }
+            })
+
+            dB.ref("/users/"+userObj.uid+"/helpedBy/helperStatus").on("value",function(snapshot){
+                if(snapshot.val()=="complete" && helperStatusOpsRan==false){
+                    helperStatusOpsRan=true;
+                    var helperName = databaseObj.users[helperUID].name;
+                    var firstName = helperName.substr(0,helperName.indexOf(" "));
+                    helperAlert = "<p>Hey, "+firstName+" has marked this request as complete, and has been removed from this request. Mark this request as complete to submit another request.</p>" + helperAlert;
+                    $("#helper").html(helperAlert);
+                }
+            })
+
+            if(uid_pair!=undefined){
+                dB.ref("/messages/"+uid_pair).on("value",function(snapshot){
+
+                    if(snapshot.val()!=null&&snapshot.val()!=undefined){
+                        if($(".msgContainer>.msg").length==0){
+                            for (var i=0; i<snapshot.val().length; i++){
+
+                                    var message = snapshot.val()[i].message;
+                                    var date = snapshot.val()[i].date;
+                                    $(".msgContainer").append("<p class='msg'>"+message+"<br>"+date+"</p>");
+
+                            }
+                            messagesArray=snapshot.val();
+                            msgArrayCount=snapshot.val().length;
+                        } else {
+                            if (snapshot.val().length>msgArrayCount){
+                                msgArrayCount=snapshot.val().length;
+                                messagesArray=snapshot.val();
+                                var message = messagesArray[msgArrayCount-1].message;
+                                var date = messagesArray[msgArrayCount-1].date;
+                                $(".msgContainer").append("<p class='msg'>"+message+"<br>"+date+"</p>");
+                            }
+                        }
+                    }              
+                })
+
+            }
+        }
+
+        $(document).on("click","#startChat",function(){
+            if($(this).attr("state")=="hidden"){
+                $("#chatBox").css("display","block");
+
+                $(this).attr("state","shown");
+                $(this).find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+                setTimeout(slideToBottom,1000);
+                setTimeout(function(){
+                    $(".msgContainer").bind("DOMNodeInserted",function(){
+                        position = position+20;
+                        $('.msgContainer').animate({
+                            scrollTop: position
+                        }, 'slow');
+                    });
+                },5000);                
+            } else {
+                $("#chatBox").css("display","none");
+                $('.msgContainer').animate({
+                    scrollTop: 0
+                }, 'fast');
+                $(this).attr("state","hidden");
+                $(this).find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+            }
+        })
+
+        var position=0;
+        function slideToBottom() {
+            if($(".msgContainer>.msg").length>0){            
+                if(position<$('.msgContainer .msg:last-child').position().top){
+                    position = $('.msgContainer .msg:last-child').position().top;
+                    $('.msgContainer').animate({
+                        scrollTop: position
+                    }, 'slow');
+                }
+            }
+        }
+
+
+        $(document).on("keypress","#chatmsg", function(e){
+
+            if($("#chatmsg").val().length>0){        
+                if(e.which == 13){
+                    event.preventDefault();
+                    return false;
+                }
+            }
+
+        })
+
+        $(document).on("click","#sendText",function(){
+
+            if($("#chatmsg").val().length>0){
+                messagesArray.push({
+                    message: databaseObj.users[userObj.uid].name + ": " + $("#chatmsg").val(),
+                    date: moment().format().replace("T"," ")
+                });
+                dB.ref("/messages/"+uid_pair).set(messagesArray);
+                $("#chatmsg").val("");
+            }
+
+        })        
+
+        //////////////////////ADD ACTIONS FOR BUTTONS IN THE REQUEST MODAL
+        /////////////////////////WITHDRAW BUTTON - WITHDRAW REQUEST FOR HELP - CAN ONLY BE DONE WHEN SOMEONE HAS NOT ACCEPTED REQUEST
+        $(document).on("click","#withdraw",function(){
+            dB.ref("/helpRequests/"+userObj.uid).remove();//new request opened
+            dB.ref("/users/"+userObj.uid+"/helpRequest").remove();
+            $(".msgContainer").empty();
+            $('#requestModal').modal('hide');
+            setTimeout(function(){
+                statusOpsRan=false;
+                helperOpsRan=false;
+                helperStatusOpsRan=false;
+            },200);
+        })
+
+        /////////////////////////COMPLETE BUTTON - MARK REQUEST AS COMPLETE
+        $(document).on("click","#complete",function(){
+            var uid_pair_temp = uid_pair;
+            uid_pair=undefined;
+            dB.ref("/messages/"+uid_pair_temp).remove();
+            messagesArray=[];
+            msgArrayCount=undefined;
+            dB.ref("/helpRequests/"+userObj.uid).remove();//new request opened
+            dB.ref("/users/"+userObj.uid+"/helpRequest").remove();//remove helprequest
+            dB.ref("/users/"+userObj.uid+"/helpedBy").remove();//remove helper info from node
+            $(".msgContainer").empty();
+            if(databaseObj.users[helperUID].serving!=null){
+                if(databaseObj.users[helperUID].serving.requesterUID==userObj.uid){
+                    dB.ref("/users/"+helperUID+"/serving/requesterStatus").set("complete");//notify helper that you have marked the request as complete
+                }
+            }
+            
+
+            /*$('#requestModal').modal("hide");*/
+            $('#requestModal').fadeOut(1000).modal("hide");
+            setTimeout(function(){
+                statusOpsRan=false;
+                helperOpsRan=false;
+                helperStatusOpsRan=false;
+            },1000);
+        })
+
+        //////////////////////MODAL CSS - CHANGE COLOR OF BACKGROUND DEPENDING ON WHICH MODAL IS SHOWN
+
+        //I want different colored backdrops for the modals depending on the modal
+        $("#requestModal").on("show.bs.modal", function() {
+            setTimeout(function(){        
+                $(".modal-backdrop").css("background", "#991E37");
+                $(".modal-backdrop").css("opacity","1");
+            },10);
+        });
+
+        // Triggers as soon as 'modal1' is closed
+        $('#requestModal').on('hidden.bs.modal', function() {
+          $('.modal-backdrop').css("background", "");
+            $(".modal-backdrop").css("opacity","0");
+        });
+
+        // Triggers as soon as 'modal2' Opens
+        $('#gpsModal').on('show.bs.modal', function() {
+            setTimeout(function(){
+                $('.modal-backdrop').css("background", "#404040");
+                $(".modal-backdrop").css("opacity",".7");
+            },10);
+        });
+
+        // Triggers as soon as 'modal2' is closed
+        $('#gpsModal').on('hidden.bs.modal', function() {
+          $('.modal-backdrop').css("background", "");
+          $(".modal-backdrop").css("opacity","0");
+        });
+
+        $("#requestSubmit").on("click",function(){//submits request and 
+            
+            if($("#requestInput").val().length>0){
+                dB.ref("/helpRequests/"+userObj.uid).set("open");//new request opened
+                dB.ref("/users/"+userObj.uid+"/helpRequest").set($("#requestInput").val()); 
+                $("#requestInput").val("");          
+            } else {
+                $("#errorMsg").html("Please enter a request to submit");
+            }
+
+        })
+
+        //for actions button animation
+        $(document).on("click","#actions",function(){//adding animations for clicking actions button on requestModal
+            if($(".collapsed").hasClass("animation-show")){//if animation-show class is present, then action buttons are shown. we want to collapse them so we swap animation-show for animation-hide, change font awesome icon and after animation complete, make display for action buttons "none"
+            $(".collapsed").removeClass("animation-show").addClass("animation-hide");
+            $("#startChat").attr("state","hidden");
+            $("#chatBox").css("display","none");
+            $("#startChat").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+            $("#actions").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+            setTimeout(function(){$(".collapsed").css("display","none")},100);
+          } else if($(".collapsed").hasClass("animation-hide")){//if animation-hide class is present, then action buttons are collapsed. we want to show them so we swap animation-hide for animation-show, change font awesome icon and make display for action buttons "block" so that animation can be seen
+            $("#actions").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+            $(".collapsed").removeClass("animation-hide").addClass("animation-show");
+            $(".collapsed").css("display","block");
+          } else {//animation-show and animation-hide are classes specifically for animation, so they are not part of the action buttons at first. this way the buttons can stay collapsed. so if neither class is present, this means that the buttons are collapsed and need to be shown. so if the action menu button is clicked, we want to add the animation class animation-show to the collapse action buttons to show the buttons, swap the font awesome icon and make the display be block so that the animation can be seen
+            $(".collapsed").addClass("animation-show");
+            $("#actions").find(".fa-plus-circle").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+            $(".collapsed").css("display","block");
+          }
+        })
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //go to other pages
+        
+        //go to Go Help page
+        $("#pendingRequest>a").on("click",function(){
+            gotoGoHelp();
+        })
+
+        $("p.goHelp").on("click",function(){
+            gotoGoHelp();
+        })
+
+        function gotoGoHelp(){
+            dB.ref("/users/" + userObj.uid + "/cameFromOtherPage").set(true);
+            var win = window.open("helper_page.html","_self");
+            win.focus(); 
+        }
+
+        //sign out and go to home page
+        $(document).on("click","#signOut,#RsignOut",function(){
+            firebase.auth().signOut().then(function() {
+                var win = window.open("index.html","_self");
+                win.focus();     
+            }, function(error) {
+                console.error('Sign Out Error', error);
+            });
+        })
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJRXIv3oHTTTjcAfMJuM-kILQXbkYJNCk&libraries=geometry&callback=getAddress">
+    </script>
+
+</body>
+
+</html>
