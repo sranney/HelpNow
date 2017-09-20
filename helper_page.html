@@ -496,6 +496,14 @@
             display:none;
         }        
 
+        .modal{
+            overflow-y:auto;
+        }
+
+        .modal-body{
+            overflow:auto;
+        }
+
         @media (max-width:850px){
             .jumbotron{
                 display:block;
@@ -1093,7 +1101,9 @@
 
 
         var navMap; 
-
+        //navMap will be the map that shows directions for the helper to use to get to help requester
+        //need to pass a start location, the helper's current location
+        //and an end location, the help requester's current location
         function initNavMap(startLoc,helperUID,endLoc,requesterUID){
             var directionsService = new google.maps.DirectionsService;
             var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -1124,9 +1134,11 @@
             google.maps.event.addDomListener(navMap, 'resize', function() {
                 navMap.setCenter(center);
             });
-            //keep center of map focused
-            google.maps.event.addDomListener(window, 'resize', function() {
 
+            //following code is for responsiveness
+            //keep center of map focused when resizing window
+            google.maps.event.addDomListener(window, 'resize', function() {
+                //get coordinates and make them a google coordinate set, then pass them to function to fit bounds
                 var startloc_lat=databaseObj.users[userObj.uid].coords.lat;
                 var startloc_lng=databaseObj.users[userObj.uid].coords.long;
                 var startloc_latlng=new google.maps.LatLng(startloc_lat, startloc_lng);

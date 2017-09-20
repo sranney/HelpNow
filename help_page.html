@@ -755,12 +755,13 @@
 
         var position=0;
         function slideToBottom() {
-            console.log($('.msgContainer .msg:last-child').position().top);
-            if(position<$('.msgContainer .msg:last-child').position().top){
-                position = $('.msgContainer .msg:last-child').position().top;
-                $('.msgContainer').animate({
-                    scrollTop: position
-                }, 'slow');
+            if($(".msgContainer>.msg").length>0){            
+                if(position<$('.msgContainer .msg:last-child').position().top){
+                    position = $('.msgContainer .msg:last-child').position().top;
+                    $('.msgContainer').animate({
+                        scrollTop: position
+                    }, 'slow');
+                }
             }
         }
 
