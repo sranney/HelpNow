@@ -1304,7 +1304,7 @@
                 $(".confirmMessage").html("<p id='confirm-message'>Help " + $(this).parent().find("#help_name").html() + " with \"" + $(this).parent().find("#request").html()+"\"?</p><button id='confirmBtn' class='btn btn-primary btn-block' data-dismiss='modal' aria-hidden='true'>Continue</button>");
             } else {
                 $("#confirmModal").modal("show");
-                $(".confirmMessage").html("<p id='confirm-message'>Either someone else has recently accepted "+requesterName.substr(0,requesterName.indexOf(" "))+"'s request or "+requesterName.substr(0,requesterName.indexOf(" "))+" has withdrawn his request for help. The map is being updated now. Click outside this box to find another person in need of help.</p>");
+                $(".confirmMessage").html("<p id='confirm-message'>Either someone else has recently accepted "+name.substr(0,name.indexOf(" "))+"'s request or "+name.substr(0,name.indexOf(" "))+" has withdrawn his request for help. The map is being updated now. Click outside this box to find another person in need of help.</p>");
                 initMap();
                 moveToLocation();
             }
