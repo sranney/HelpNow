@@ -1230,7 +1230,12 @@
         function moveToLocation(){//sets location to show user's current location and sets green helper marker with an infowindow that opens when clicked. also stores marker in markers array
             mapSet = true;
             // using global variable:
-            map.panTo(loc_GoogMaps);
+            if(loc_GoogMaps==undefined){
+                if(databaseObj.users[userObj.uid].coords!=undefined){
+                    loc_GoogMaps = new google.maps.LatLng(databaseObj.users[userObj.uid].coords.lat, databaseObj.users[userObj.uid].coords.long);
+                    map.panTo(loc_GoogMaps);
+                }
+            }
             //helper marker
             helperMarker = new google.maps.Marker({
               position: loc_GoogMaps,
