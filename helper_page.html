@@ -12,9 +12,7 @@
 
 
     <style type="text/css">
-        #Menu-mini{
-            display:none;
-        }
+
         body{
             background-color:#032642;
         }
@@ -54,11 +52,11 @@
             font-weight:bold;
         }
         
-        #Menu{
+        .Menu{
             margin:auto;
         }
 
-        #Menu>#pageTitle,#Menu>#getHelp{
+        .Menu>.pageTitle,.Menu>.getHelp{
             background-color:#003600;
             border-radius:3px;
             border:3px solid white;
@@ -70,39 +68,15 @@
             margin:auto;
         }
 
-        #Menu>#getHelp{
+        .Menu>.getHelp{
             background-color:#991E37;
             margin-top:5px;
         }
 
-        #Menu>#pageTitle:hover,#Menu>#getHelp:hover{
+        .Menu>.pageTitle:hover,.Menu>.getHelp:hover{
             font-size:19px;
         }
 
-        #Menu-mini{
-            margin:auto;
-        }
-
-        #Menu-mini>#pageTitle,#Menu-mini>#getHelp{
-            background-color:#003600;
-            border-radius:3px;
-            border:3px solid white;
-            color:white;
-            padding:3px;
-            font-size:16px;
-            width:max-content;
-            transition:font-size 1s ease;
-            margin:auto;
-        }
-
-        #Menu-mini>#getHelp{
-            background-color:#991E37;
-            margin-top:5px;
-        }
-
-        #Menu-mini>#pageTitle:hover,#Menu-mini>#getHelp:hover{
-            font-size:19px;
-        }
 /*************************************GPS MODAL***********************************************/
 
         #correctAddress,#submit,#accept,#reject,#instruct{
@@ -506,64 +480,43 @@
         }
 
         @media (max-width:850px){
+            
             .jumbotron{
                 display:block;
             }
-            .jumbotron>img{
-                heigth:70px;
-                float:right;
+            
+            .Menu>.pageTitle,.Menu>.getHelp{
+                margin-left:0;
             }
+
+            .jumbotron>.Menu{
+                float:left;
+                margin-left:15px;
+            }
+
+            .jumbotron>img{
+                height:70px;
+                float:right;
+                margin-right:15px;
+            }
+
             #userInfo_Rmodal,#userInfo{
                 display:none;
-            }
-            
-
-            #Menu{
-                display:none;
-            }
-            #Menu-mini{
-                display:inline;
-            }
-        }
-    
-        @media (max-width:600px){
-            .jumbotron{
-                display:block;
-            }
-            .jumbotron>img{
-                heigth:70px;
-                float:right;
-            }
-            #userInfo_Rmodal,#userInfo{
-                display:none;
-            }
-            
-
-            #Menu{
-                display:none;
-            }
-            #Menu-mini{
-                display:inline;
             }
 
         }
-
+    
     </style>
 </head>
 <body>
-
-    <div id="Menu-mini" class="text-center">
-        <p id='pageTitle'>You are on Go Help Page</p>
-        <p id='getHelp'>Click here to go to Get Help Page</p>
-    </div>    
 
     <div class="jumbotron">
         
         <div id = "userInfo"></div>
     
-        <div id="Menu" class="text-center">
-            <p id='pageTitle'>You are on Go Help Page</p>
-            <p id='getHelp'>Click here to go to Get Help Page</p>
+        <div class="Menu" class="text-center">
+            <p class='pageTitle'>You are on Go Help Page</p>
+            <p class='getHelp'>Click here to go to Get Help Page</p>
         </div>
 
         <img src="HelpNow Logo.png">
@@ -653,9 +606,9 @@
                     <div id="jumbotron_Rmodal" class="jumbotron">
                         
                         <div id = "userInfo_Rmodal"></div>
-                        <div id="Menu" class="text-center">
-                            <p id='pageTitle'>You are on Go Help Page</p>
-                            <p id='getHelp'>Click here to go to Get Help Page</p>
+                        <div class="Menu" class="text-center">
+                            <p class='pageTitle'>You are on Go Help Page</p>
+                            <p class='getHelp'>Click here to go to Get Help Page</p>
                         </div>                    
                         <img id="logo_Rmodal" src="HelpNow Logo.png">
 
@@ -1353,7 +1306,7 @@
            gotoGetHelp();
         })
 
-        $("p#getHelp").on("click",function(){
+        $("p.getHelp").on("click",function(){
            gotoGetHelp();
         })
 
