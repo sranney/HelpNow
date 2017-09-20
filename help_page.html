@@ -803,7 +803,7 @@
             dB.ref("/helpRequests/"+userObj.uid).remove();//new request opened
             dB.ref("/users/"+userObj.uid+"/helpRequest").remove();//remove helprequest
             dB.ref("/users/"+userObj.uid+"/helpedBy").remove();//remove helper info from node
-
+            $(".msgContainer").empty();
             if(databaseObj.users[helperUID].serving!=null){
                 if(databaseObj.users[helperUID].serving.requesterUID==userObj.uid){
                     dB.ref("/users/"+helperUID+"/serving/requesterStatus").set("complete");//notify helper that you have marked the request as complete
