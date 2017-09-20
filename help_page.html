@@ -700,7 +700,7 @@
                     var helperPhone = databaseObj.users[snapshot.val()].phoneNumber;
                     var helperEmail = databaseObj.users[snapshot.val()].email;
                     uid_pair = helperUID + userObj.uid;  
-                    helperAlert="<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with " + firstName + " through our chat app. Click here to go to our chat page.</p></div>"
+                    helperAlert="<div id='helper'>"+helperName+" has offered to help you. Here is "+firstName+"'s contact information:<p>Phone Number: " + helperPhone + "</p><p>Email: " + helperEmail + "</p><p>Alternatively, you can choose to chat with " + firstName + " through our chat app. Open the actions menu above to go to our chat app.</p></div>"
                     $("#pendingRequest").append(helperAlert);
                     $("#withdraw").prop("disabled",true);
                     $("#startChat").prop("disabled",false);
@@ -796,7 +796,6 @@
 
         })
 
-        var messagesArray=[];
         $(document).on("click","#sendText",function(){
 
             if($("#chatmsg").val().length>0){
