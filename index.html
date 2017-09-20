@@ -618,24 +618,25 @@
 			  var type_ext = type=="su" ? "up":"in";
 			  $("#sign-"+type_ext+"-form").css("display","none");
 			  FederatedSignIn_flag = type == "su" ? false : true;
-			  if(type=="su" || databaseObj == null){
-			  	$("#sign-"+type_ext).css("display","none");
-			  	if(provider.providerId==="google.com"){$("#facebook-"+type).css("display","none");} else {$("#google-"+type).css("display","none");}
-			  	$("#form-"+type).css("display","none");
-			  	$("form#sign-in-form>p").css("display","none");
-			  	$("form#sign-up-form>p").css("display","none");
-				$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");			  	
-			  	$("form#sign-up-form").prepend("<p>Welcome, " + userObj.displayName + "</p>");
-			  	$("form#sign-up-form").css("display","block");
-			  	$("form#sign-up-form>#instructions").css("display","none");
-			  	$("form#sign-up-form>#firstName-su").css("display","none");
-			  	$("form#sign-up-form>#lastName-su").css("display","none");
-			  	$(".awesomplete").css("display","none");
+			  if(databaseObj == null || databaseObj == undefined){
+				  	$("#sign-"+type_ext).css("display","none");
+				  	if(provider.providerId==="google.com"){$("#facebook-"+type).css("display","none");} else {$("#google-"+type).css("display","none");}
+				  	$("#form-"+type).css("display","none");
+				  	$("form#sign-in-form>p").css("display","none");
+				  	$("form#sign-up-form>p").css("display","none");
+					$("form#sign-up-form").prepend("<p>In order to best use our services, please provide a phone number below:</p>");			  	
+				  	$("form#sign-up-form").prepend("<p>Welcome, " + userObj.displayName + "</p>");
+				  	$("form#sign-up-form").css("display","block");
+				  	$("form#sign-up-form>#instructions").css("display","none");
+				  	$("form#sign-up-form>#firstName-su").css("display","none");
+				  	$("form#sign-up-form>#lastName-su").css("display","none");
+				  	$(".awesomplete").css("display","none");
 
-			  	$("form#sign-up-form>#email-su").css("display","none");
-				$("form#sign-up-form>#password-su").css("display","none");
-			  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
-			  	$("form#sign-up-form>#submit-su").html("Set Phone");
+				  	$("form#sign-up-form>#email-su").css("display","none");
+					$("form#sign-up-form>#password-su").css("display","none");
+				  	$("form#sign-up-form>#phoneNumber-su").css("display","block");
+				  	$("form#sign-up-form>#submit-su").html("Set Phone");
+
 			  } else if(!(userObj.uid in databaseObj.users)){
 			  	$("#sign-"+type_ext).css("display","none");
 			  	if(provider.providerId==="google.com"){$("#facebook-"+type).css("display","none");} else {$("#google-"+type).css("display","none");}
@@ -727,12 +728,15 @@
 			$("#logInComplete").css("display","block");
 			//since this is a new log-in, create a new node for node users that will pass name, phone and email information about user
 
-			dB.ref("/users/"+userObj.uid).set({
-				iconnect: true,
-				name : userObj.displayName,
-				phoneNumber: $("#phoneNumber-su").val(),
-				email: userObj.email
-			});
+
+				dB.ref("/users/"+userObj.uid).set({
+					iconnect: true,
+					name : userObj.displayName,
+					phoneNumber: $("#phoneNumber-su").val(),
+					email: userObj.email
+				});
+
+
 		}
 
 		function submitForm(type){//for user form signups
