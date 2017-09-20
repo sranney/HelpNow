@@ -855,7 +855,6 @@
         function requestFunctions(){//checking actions of other user
             //order of things matter here. knowing that 
             dB.ref("/users/"+userObj.uid+"/serving").on("value",function(snapshot){
-                console.log(snapshot.val());
                 if(snapshot.val()!=null && helperOpsRan==false){//adds an actions button that will serve as operations for the user to manage their request       
                     helperOpsRan = true;
                     var requester = snapshot.val();
@@ -909,6 +908,7 @@
                     $("#navDiv").css("display","none");
                     $("#contact").prop( "disabled", true );
                     $("#contactDiv").css("display","none");
+                    $("#chatBox").css("display","none");
                 }
             })
 
@@ -968,7 +968,6 @@
 
         var position=0;
         function slideToBottom() {
-            console.log($('.msgContainer .msg:last-child').position().top);
             if(position<$('.msgContainer .msg:last-child').position().top){
                 position = $('.msgContainer .msg:last-child').position().top;
                 $('.msgContainer').animate({
@@ -1076,7 +1075,7 @@
                     dB.ref("/users/"+requesterUID+"/helpedBy/helperStatus").set("complete");//notify helper that you have marked the request as complete
                 }
             }
-            
+            ajaxWeather_latlng(databaseObj.users[userObj.uid].coords.lat,databaseObj.users[userObj.uid].coords.lat);
             $('#requestModal').fadeOut(1000);
             setTimeout(function(){
                 $('#requestModal').modal("hide");
@@ -1108,7 +1107,6 @@
                 travelMode: "DRIVING"
             }, function(response,status){
                 if(status=="OK"){
-                    console.log(response);
                     directionsDisplay.setDirections(response);
                     createTable(response.routes[0].legs[0]);
                 } else {
