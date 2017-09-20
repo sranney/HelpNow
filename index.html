@@ -97,7 +97,7 @@
 
 		#helper>p,#help>p{
 			color:white;
-			font-size:90px;
+			font-size:85px;
 			font-weight:bold;
 		}
 		#helper>p#detail,#help>p#detail{
@@ -145,6 +145,10 @@
 			}
 		}
 
+		#about{
+			display:none;
+		}
+	
 		/*modal sign-up sheet style*/
 		#form-su,#form-si,#google-su,#google-si,#facebook-su,#facebook-si{
 			border-radius:7px;
@@ -240,10 +244,39 @@
             font-weight:bold;
         }
 
+		@media (max-width: 1200px) {
+            img{
+                height:180px;
+            }
+			#Slogan{
+				font-size:40px;
+			}
+            #helper>p,#help>p{
+                font-size:65px;
+            }
+
+        }
+
+		@media (max-width: 1100px) {
+            img{
+                height:180px;
+            }
+			#Slogan{
+				font-size:40px;
+			}
+            #helper>p,#help>p{
+                font-size:65px;
+            }
+
+        }
+
 		@media (max-width: 1000px) {
             img{
                 height:180px;
             }
+			#Slogan{
+				font-size:40px;
+			}
             #helper>p,#help>p{
                 font-size:70px;
             }
@@ -378,6 +411,13 @@
 		.awesomplete {
 			display: inherit;
 		}
+	
+		#about{
+			color:white;
+			margin:auto;
+
+		}
+
 	</style>
 
 </head>
@@ -407,6 +447,9 @@
 		</div>
 	</div>
 
+	<div class="text-center">
+		<a href="aboutus.html" id="about">About</a>
+	</div>
 <!--MODAL HTML BELOW-->
 
 	<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -473,7 +516,8 @@
 	<script type="text/javascript" src="https://cdn.rawgit.com/LeaVerou/awesomplete/gh-pages/awesomplete.min.js"></script>
 	<script type="text/javascript">
 		
-
+		//show about us link
+		$("#about").delay(3000).fadeIn(1000);
 
 ////////////////CONFIGURE FIREBASE, GET INSTANCE OF REAL-TIME DATABASE AND CHECK IF SOMEONE IS LOGGED INTO SITE - IF SO FORMAT HTML
 		var config = {

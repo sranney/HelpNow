@@ -40,11 +40,11 @@
                 margin-right:15px;
             }
 
-            #Menu{
+            .Menu{
                 margin:auto;
             }
 
-            #Menu>#pageTitle,#Menu>#goHelp{
+            .Menu>.pageTitle,.Menu>.goHelp{
                 background-color:#991E37;
                 border-radius:3px;
                 border:3px solid white;
@@ -56,12 +56,12 @@
                 margin:auto;
             }
 
-            #Menu>#goHelp{
+            .Menu>.goHelp{
                 background-color:#003600;
                 margin-top:5px;
             }
 
-            #Menu>#pageTitle:hover,#Menu>#getHelp:hover{
+            .Menu>.pageTitle:hover,.Menu>.getHelp:hover{
                 font-size:19px;
             }
 
@@ -232,7 +232,7 @@
                 background-color:#086268;
             }
 
-            #goHelp>button{
+            .goHelp>button{
                 margin-top:10px;
                 margin-bottom:10px;
                 width:50%;
@@ -260,7 +260,7 @@
                 padding:3px;
             }
 
-            #Menu>#pageTitle,#Menu>#goHelp{
+            .Menu>.pageTitle,.Menu>.goHelp{
                 background-color:#991E37;
                 border-radius:3px;
                 border:3px solid white;
@@ -270,11 +270,11 @@
                 transition:font-size 1s ease;           
             }
 
-            #Menu>#goHelp{
+            .Menu>.goHelp{
                 background-color:#003600;
             }
 
-            #Menu>#pageTitle:hover,#Menu>#goHelp:hover{
+            .Menu>.pageTitle:hover,.Menu>.goHelp:hover{
                 font-size:19px;
             }
 
@@ -367,11 +367,36 @@
             }
 
 
-            @media (max-width:900px){
-                #requestInput{
-                    font-size:35px;
-                }
+        @media (max-width:850px){
+            
+            .jumbotron{
+                display:block;
             }
+            
+            .Menu>.pageTitle,.Menu>.getHelp{
+                margin-left:0;
+            }
+
+            .jumbotron>.Menu{
+                float:left;
+                margin-left:15px;
+            }
+
+            .jumbotron>img{
+                height:70px;
+                float:right;
+                margin-right:15px;
+            }
+
+            #userInfo_Rmodal,#userInfo{
+                display:none;
+            }
+
+            .dist{
+                display:none;
+            }
+
+        }
 
         </style>
 </head>
@@ -382,9 +407,9 @@
         
         <div id = "userInfo"></div>
 
-        <div id="Menu" class="text-center">
-            <p id='pageTitle'>You are on Get Help Page</p>
-            <p id='goHelp'>Click here to go to Go Help Page</p>
+        <div class="Menu" class="text-center">
+            <p class='pageTitle'>You are on Get Help Page</p>
+            <p class='goHelp'>Click here to go to Go Help Page</p>
         </div>
 
         <img src="HelpNow Logo.png">
@@ -441,9 +466,9 @@
                     <div id="jumbotron_Rmodal" class="jumbotron">
                         
                         <div id = "userInfo_Rmodal"></div>
-                        <div id="Menu" class="text-center">
-                            <p id='pageTitle'>You are on Get Help Page</p>
-                            <p id='goHelp'>Click here to go to Go Help Page</p>
+                        <div class="Menu" class="text-center">
+                            <p class='pageTitle'>You are on Get Help Page</p>
+                            <p class='goHelp'>Click here to go to Go Help Page</p>
                         </div>                    
                         <img id="logo_Rmodal" src="HelpNow Logo.png">
 
@@ -829,7 +854,7 @@
             var uid_pair_temp = uid_pair;
             uid_pair=undefined;
             dB.ref("/messages/"+uid_pair_temp).remove();
-            messagesArray=undefined;
+            messagesArray=[];
             msgArrayCount=undefined;
             dB.ref("/helpRequests/"+userObj.uid).remove();//new request opened
             dB.ref("/users/"+userObj.uid+"/helpRequest").remove();//remove helprequest
@@ -921,7 +946,7 @@
             gotoGoHelp();
         })
 
-        $("p#goHelp").on("click",function(){
+        $("p.goHelp").on("click",function(){
             gotoGoHelp();
         })
 
