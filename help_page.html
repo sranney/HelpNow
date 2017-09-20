@@ -3,373 +3,377 @@
 <!--put small icon on modal top right and a dropdown with your account info in the modal on the top left--> 
 
 <html>
-    <link rel="shortcut icon" type="image/x-icon" href="helpnow_favicon.ico"/>
-    <title>Help Now - Get Help</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://use.fontawesome.com/2a8a6780db.js"></script>
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+<head>
+        <link href="reset.css">
+        <link rel="shortcut icon" type="image/x-icon" href="helpnow_favicon.ico"/>
+        <title>Help Now - Get Help</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://use.fontawesome.com/2a8a6780db.js"></script>
+        <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
-    <style type="text/css">
-        body{
-            background-color:#032642;
-        }
+        <style type="text/css">
+            body{
+                background-color:#032642;
+            }
 
-        .jumbotron{
-            background-color:#032642;
-            height:130px;
-            padding:10px;
-            margin-top:10px;
-            margin-bottom:10px;
-            display:flex;
-        }
-        ul{
-            list-style:none;
-            float:left;
-            color:white;
-        }
-        ul>li{
-            color:white;
-        }
+            .jumbotron{
+                background-color:#032642;
+                height:130px;
+                padding:10px;
+                margin-top:10px;
+                margin-bottom:10px;
+                display:flex;
+            }
+            ul{
+                list-style:none;
+                float:left;
+                color:white;
+            }
+            ul>li{
+                color:white;
+            }
 
-        img{
-            height:100px;
-            margin-right:15px;
-        }
+            img{
+                height:100px;
+                margin-right:15px;
+            }
 
-        #Menu{
-            margin:auto;
-        }
+            #Menu{
+                margin:auto;
+            }
 
-        #Menu>#pageTitle,#Menu>#goHelp{
-            background-color:#991E37;
-            border-radius:3px;
-            border:3px solid white;
-            color:white;
-            padding:3px;
-            font-size:16px;
-            width:max-content;
-            transition:font-size 1s ease;
-            margin:auto;
-        }
+            #Menu>#pageTitle,#Menu>#goHelp{
+                background-color:#991E37;
+                border-radius:3px;
+                border:3px solid white;
+                color:white;
+                padding:3px;
+                font-size:16px;
+                width:max-content;
+                transition:font-size 1s ease;
+                margin:auto;
+            }
 
-        #Menu>#goHelp{
-            background-color:#003600;
-            margin-top:5px;
-        }
+            #Menu>#goHelp{
+                background-color:#003600;
+                margin-top:5px;
+            }
 
-        #Menu>#pageTitle:hover,#Menu>#getHelp:hover{
-            font-size:19px;
-        }
+            #Menu>#pageTitle:hover,#Menu>#getHelp:hover{
+                font-size:19px;
+            }
 
-        #correctAddress,#submit,#accept,#reject,#instruct{
-            display:none;
-        }
+            #correctAddress,#submit,#accept,#reject,#instruct{
+                display:none;
+            }
 
-        #returnedAddress{
-            font-weight:bold;
-            font-size:20px;
-            color:blue;
-        }
+            #returnedAddress{
+                font-weight:bold;
+                font-size:20px;
+                color:blue;
+            }
 
-        #accept{
-            background-color:#003600;
-            color:white;
-            font-size:30px;
-            font-weight:bold;
-        }
-
-        #reject{
-            background-color:#991E37;
-            color:white;
-            font-size:30px;
-            font-weight:bold;
-        }
-
-        #userInfo{
-            color:white;
-        }
-
-        #correctAddress{
-            width:100%;
-        }
-
-        #submit{
-            border:3px solid #454545;
-            color:#454545;
-            font-size:30px;
-            font-weight:bold;
-        }
-
-        input{
-            font-size:20px;
-        }
-
-        #animateArrow{
-            font-size:30px;
-            animation-name:test;
-            animation-iteration-count:infinite;
-            animation-duration:1s;
-        }
-
-        @keyframes test{
-              0%{
+            #accept{
+                background-color:#003600;
+                color:white;
                 font-size:30px;
-              }
-              50%{
-                font-size:33px;
+                font-weight:bold;
+            }
+
+            #reject{
+                background-color:#991E37;
+                color:white;
+                font-size:30px;
+                font-weight:bold;
+            }
+
+            #userInfo{
+                color:white;
+            }
+
+            #correctAddress{
+                width:100%;
+            }
+
+            #submit{
+                border:3px solid #454545;
+                color:#454545;
+                font-size:30px;
+                font-weight:bold;
+            }
+
+            input{
+                font-size:20px;
+            }
+
+            #animateArrow{
+                font-size:30px;
+                animation-name:test;
+                animation-iteration-count:infinite;
+                animation-duration:1s;
+            }
+
+            @keyframes test{
+                  0%{
+                    font-size:30px;
+                  }
+                  50%{
+                    font-size:33px;
+                  }
+                  100%{
+                    font-size:30px;
+                  }
+            } 
+
+            #Proceed{
+                display:none;
+            }       
+
+            #request{
+                color:red;
+                font-weight:bold;
+                font-style:italic;
+            }
+
+            #requestInput{
+                font-size:45px;
+                border:5px solid grey;
+                width:100%;
+                color:grey;
+            }
+
+            #requestSubmit{
+                background-color:#991E37;
+                color:white;
+                font-size:30px;
+                font-weight:bold;
+            }
+
+            #actions{
+              width:100%;
+              height:100%;
+              font-size:30px;
+              border-radius:15px;
+              padding:10px;
+            }
+
+            .collapsed{
+              width:100%;
+              display:none;
+              height:0px;
+              opacity:0;
+              font-size:0px;
+              text-align:center;
+              border-radius:15px;
+            }
+
+            .animation-show{
+              animation-duration:.1s;
+              animation-name:expand;
+              animation-fill-mode:forwards;
+            }
+            
+            @keyframes expand{
+              0%{
+                opacity:0;
+                height:0%;
+                font-size:0px;
+                display:none;
+                border:0px solid white;
               }
               100%{
+                opacity:1;
+                height:100%;
                 font-size:30px;
+                display:block;
+                padding:10px;
+                border:3px solid white;
               }
-        } 
-
-        #Proceed{
-            display:none;
-        }       
-
-        #request{
-            color:red;
-            font-weight:bold;
-            font-style:italic;
-        }
-
-        #requestInput{
-            font-size:45px;
-            border:5px solid grey;
-            width:100%;
-            color:grey;
-        }
-
-        #requestSubmit{
-            background-color:#991E37;
-            color:white;
-            font-size:30px;
-            font-weight:bold;
-        }
-
-        #actions{
-          width:100%;
-          height:100%;
-          font-size:30px;
-          border-radius:15px;
-          padding:10px;
-        }
-
-        .collapsed{
-          width:100%;
-          display:none;
-          height:0px;
-          opacity:0;
-          font-size:0px;
-          text-align:center;
-          border-radius:15px;
-        }
-
-        .animation-show{
-          animation-duration:.1s;
-          animation-name:expand;
-          animation-fill-mode:forwards;
-        }
-        
-        @keyframes expand{
-          0%{
-            opacity:0;
-            height:0%;
-            font-size:0px;
-            display:none;
-            border:0px solid white;
-          }
-          100%{
-            opacity:1;
-            height:100%;
-            font-size:30px;
-            display:block;
-            padding:10px;
-            border:3px solid white;
-          }
-        }
-        
-        .animation-hide{
-          animation-duration:.1s;
-          animation-name:collapse;
-          animation-fill-mode:forwards;
-        }
-        
-        @keyframes collapse{
-          0%{
-            opacity:1;
-            height:100%;
-            font-size:30px;
-            display:block;
-            padding:10px;
-            border:2px solid white;
-          }
-          100%{
-            opacity:0;
-            height:0%;
-            font-size:0px;
-            display:none;
-            border:0px solid white;
-          }
-        }
-
-        #complete{
-            color:white;
-            border:2px; 
-        }
-
-        #withdraw{
-            background-color:#E87647;
-            color:#400000;
-            border-color:#400000;
-        }
-
-        #complete{
-            background-color:#086268;
-        }
-
-        #goHelp>button{
-            margin-top:10px;
-            margin-bottom:10px;
-            width:50%;
-            font-size:25px;
-            background-color:#003600;
-            color:white;
-            border:4px solid white;
-        }
-
-        #pendingRequest{
-            font-size:20px;
-        }
-
-        #pendingRequest>a{
-            color:white;
-            font-size:20px;
-        }
-
-        #pendingRequest>a:hover{
-            background-color:#003600;
-            font-size:22px;
-            font-weight:bold;
-            border:3px solid white;
-            border-radius:5px;
-            padding:3px;
-        }
-
-        #Menu>#pageTitle,#Menu>#goHelp{
-            background-color:#991E37;
-            border-radius:3px;
-            border:3px solid white;
-            color:white;
-            padding:3px;
-            font-size:16px;
-            transition:font-size 1s ease;           
-        }
-
-        #Menu>#goHelp{
-            background-color:#003600;
-        }
-
-        #Menu>#pageTitle:hover,#Menu>#goHelp:hover{
-            font-size:19px;
-        }
-
-        #requestModal>.modal-dialog{
-            width:90%;
-        }
-
-        #requestModal>.modal-dialog>.modal-content{
-            width:100%;
-            margin:5% auto;
-        }
-
-        #errorMsg{
-            color:red;
-        }
-
-        #helper{
-            text-align:left;
-            color:white;
-            border-radius:15px;
-            background-color:#003600;
-            border: 5px solid white;
-            padding:20px;
-            margin:20px;
-        }
-
-        #Rmodal{
-            background-color:#032642;
-        }
-
-        #userInfo_Rmodal > ul{
-            text-align:left;
-        }
-
-        #signOut,#RsignOut{
-            text-decoration:underline;
-            font-size:14px;
-        }
-
-        #signOut:hover,#RsignOut:hover{
-            text-decoration:underline;
-            font-size:16px;
-            color:#77BDD9;
-            font-weight:bold;
-        }
-
-        #startChat{
-            background-color:white;
-            color:#71C671;
-            border:5px solid #7171C6;
-            font-size:30px;
-        }
-
-        #chatBox{
-            background-color:#3f3f3f;
-            display:none;
-
-        }
-
-        .msgContainer{
-            min-height:150px;
-            max-height:400px;
-            overflow:scroll;
-            padding-right:10px;
-        }
-
-        .msg{
-            background-color:#a8a8a8;
-            margin-top:5px;
-            padding:15px;
-            color:white;
-            border-radius:4px;
-            font-size:16px;
-        }
-
-        .chatmsg{
-            margin:10px auto;
-            background-color:#d3d3d3;
-            color:black;
-        }       
-
-        .modal{
-            overflow-y:auto;
-        }
-
-        .modal-body{
-            overflow:auto;
-        }
-
-
-        @media (max-width:900px){
-            #requestInput{
-                font-size:35px;
             }
-        }
+            
+            .animation-hide{
+              animation-duration:.1s;
+              animation-name:collapse;
+              animation-fill-mode:forwards;
+            }
+            
+            @keyframes collapse{
+              0%{
+                opacity:1;
+                height:100%;
+                font-size:30px;
+                display:block;
+                padding:10px;
+                border:2px solid white;
+              }
+              100%{
+                opacity:0;
+                height:0%;
+                font-size:0px;
+                display:none;
+                border:0px solid white;
+              }
+            }
 
-    </style>
+            #complete{
+                color:white;
+                border:2px; 
+            }
+
+            #withdraw{
+                background-color:#E87647;
+                color:#400000;
+                border-color:#400000;
+            }
+
+            #complete{
+                background-color:#086268;
+            }
+
+            #goHelp>button{
+                margin-top:10px;
+                margin-bottom:10px;
+                width:50%;
+                font-size:25px;
+                background-color:#003600;
+                color:white;
+                border:4px solid white;
+            }
+
+            #pendingRequest{
+                font-size:20px;
+            }
+
+            #pendingRequest>a{
+                color:white;
+                font-size:20px;
+            }
+
+            #pendingRequest>a:hover{
+                background-color:#003600;
+                font-size:22px;
+                font-weight:bold;
+                border:3px solid white;
+                border-radius:5px;
+                padding:3px;
+            }
+
+            #Menu>#pageTitle,#Menu>#goHelp{
+                background-color:#991E37;
+                border-radius:3px;
+                border:3px solid white;
+                color:white;
+                padding:3px;
+                font-size:16px;
+                transition:font-size 1s ease;           
+            }
+
+            #Menu>#goHelp{
+                background-color:#003600;
+            }
+
+            #Menu>#pageTitle:hover,#Menu>#goHelp:hover{
+                font-size:19px;
+            }
+
+            #requestModal>.modal-dialog{
+                width:90%;
+            }
+
+            #requestModal>.modal-dialog>.modal-content{
+                width:100%;
+                margin:5% auto;
+            }
+
+            #errorMsg{
+                color:red;
+            }
+
+            #helper{
+                text-align:left;
+                color:white;
+                border-radius:15px;
+                background-color:#003600;
+                border: 5px solid white;
+                padding:20px;
+                margin:20px;
+            }
+
+            #Rmodal{
+                background-color:#032642;
+            }
+
+            #userInfo_Rmodal > ul{
+                text-align:left;
+            }
+
+            #signOut,#RsignOut{
+                text-decoration:underline;
+                font-size:14px;
+            }
+
+            #signOut:hover,#RsignOut:hover{
+                text-decoration:underline;
+                font-size:16px;
+                color:#77BDD9;
+                font-weight:bold;
+            }
+
+            #startChat{
+                background-color:white;
+                color:#71C671;
+                border:5px solid #7171C6;
+                font-size:30px;
+            }
+
+            #chatBox{
+                background-color:#3f3f3f;
+                display:none;
+                padding:15px;
+                border:5px solid white;
+            }
+
+            .msgContainer{
+                min-height:150px;
+                max-height:400px;
+                overflow:scroll;
+                padding-right:10px;
+            }
+
+            .msg{
+                background-color:#a8a8a8;
+                margin-top:5px;
+                padding:15px;
+                color:white;
+                border-radius:4px;
+                font-size:16px;
+            }
+
+            .chatmsg{
+                margin:10px auto;
+                background-color:#d3d3d3;
+                color:black;
+            }       
+
+            .modal{
+                overflow-y:auto;
+            }
+
+            .modal-body{
+                overflow:auto;
+            }
+
+
+            @media (max-width:900px){
+                #requestInput{
+                    font-size:35px;
+                }
+            }
+
+        </style>
+</head>
 
 <body>
 
@@ -893,6 +897,7 @@
         $(document).on("click","#actions",function(){//adding animations for clicking actions button on requestModal
             if($(".collapsed").hasClass("animation-show")){//if animation-show class is present, then action buttons are shown. we want to collapse them so we swap animation-show for animation-hide, change font awesome icon and after animation complete, make display for action buttons "none"
             $(".collapsed").removeClass("animation-show").addClass("animation-hide");
+            $("#startChat").attr("state","hidden");
             $("#chatBox").css("display","none");
             $("#startChat").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
             $("#actions").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
