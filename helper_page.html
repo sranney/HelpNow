@@ -1056,9 +1056,9 @@
                 }
             }
             ajaxWeather_latlng(databaseObj.users[userObj.uid].coords.lat,databaseObj.users[userObj.uid].coords.lat);
-            $('#requestModal').fadeOut(1000);
+            $('#requestModal').modal("hide");
             setTimeout(function(){
-                $('#requestModal').modal("hide");
+                
                 statusOpsRan=false;
                 helperOpsRan=false;
                 requesterStatusOpsRan=false;
