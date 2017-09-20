@@ -656,10 +656,15 @@
 			  	$("body").append("<p>Welcome, " + userObj.displayName + "</p>");
 			  	$("#sign-in").css("display","none");
 				$("#sign-up").css("display","none");
+				$("#facebook-su").css("display","none");
+				$("#google-su").css("display","none");
+			  	$("#form-su").css("display","none");
 				$("#facebook-si").css("display","none");
 				$("#google-si").css("display","none");
 			  	$("#form-si").css("display","none");
 			  	$("form#sign-in-form").css("display","none");
+			  	$("form#sign-up-form").css("display","none");
+			  	$(".awesomplete").css("display","none");
 			  	$(".modal-body").append("<p>Thank you, " + userObj.displayName + ", please click the button below to continue to site.</p><br><p>Please note that, on the next page, you will be asked to allow our website to access your location. This helps us be able to match you with people that are in your vicinity.</p>");
 			  	$("#logInComplete").css("display","block");
 			  }
