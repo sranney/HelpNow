@@ -1,0 +1,420 @@
+/*homepage style and animations*/
+
+body,.jumbotron{
+	background-color:#032642;
+}
+
+.jumbotron{
+	animation-duration:1s;
+	animation-iteration-count:1;
+	animation-name:slideInFromTop;			
+}
+
+/*jumbotron keyframes*/
+@keyframes slideInFromTop{
+	0%{transform:translateY(-100%);}
+	100%{transform:translateY(0%);}
+}
+
+img{
+	height:200px;
+}		
+
+/*slogan styling*/
+.jumbotron>h2{
+	color:white;
+	opacity:0;
+	font-size:50px;
+	font-weight:bold;
+	animation-delay:1s;
+	animation-name:fillforwardswelcome;
+	animation-fill-mode:forwards;
+	animation-duration:3s;
+}
+
+/*slogan keyframes*/
+@keyframes fillforwardswelcome{
+	0%{
+		opacity:0;
+	}
+	100%{
+		opacity:1;
+	}			
+}
+
+/*styling for personalized message for logged in users*/
+.jumbotron>h3{
+	color:#BFBFBF;
+	opacity:0;
+	font-size:30px;
+	font-weight:bold;
+	animation-delay:4s;
+	animation-name:fillforwardswelcome;
+	animation-fill-mode:forwards;
+	animation-duration:3s;
+}
+
+/*animation for logged in users*/
+@keyframes fillforwardswelcome{
+	0%{
+		opacity:0;
+	}
+	100%{
+		opacity:1;
+	}			
+}
+
+/*these are the red and green areas that a user clicks on to go to specific page*/
+#helper,#help{
+	height:100%;
+	width:100%;
+	opacity:0;
+	border-radius:15px;
+	transition:height .5s,transform .5s;
+}
+
+
+
+/*these red and green buttons are in the div with class navButtons*/
+/*display flex makes the styling so much easier to handle. places the helper and help divs side-by-side*/
+.navButtons{
+	display: flex;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+	width:100%;
+	min-height:40vh;
+}
+
+/*the content of the red and green help and helper divs*/
+#helper>p,#help>p{
+	color:white;
+	font-size:85px;
+	font-weight:bold;
+}
+
+/*the style for the detail that is shown when hovering over helper and help*/ 
+#helper>p#detail,#help>p#detail{
+	display:none;
+	font-size:25px;
+}
+
+/*what happens when user hovers over one of the red and green areas on the map*/
+/*the detail for the buttons is shown*/
+#helper:hover p#detail,#help:hover p#detail{
+	display:block;
+}		
+
+/*covering specific background color for helper and its specific animation*/
+#helper{
+	background-color:#003600;
+	animation-delay:2s;
+	animation-duration:1s;
+	animation-iteration-count:1;
+	animation-name:slideInFromLeft;
+	animation-fill-mode:forwards;
+}
+
+/*covering specific background color for help and its specific animation*/
+#help{
+	background-color:#991E37;
+	animation-delay:2s;
+	animation-duration:1s;
+	animation-iteration-count:1;
+	animation-name:slideInFromRight;			
+	animation-fill-mode:forwards;
+}
+
+/*keyframes for helper*/
+@keyframes slideInFromLeft{
+	0%{
+		transform:translateX(-300%);
+		opacity:0;
+	}
+	100%{
+		transform:translateX(0);
+		opacity:1;
+	}
+}
+
+/*keyframes for help*/
+@keyframes slideInFromRight{
+	0%{
+		transform:translateX(300%);
+		opacity:0;
+	}
+	100%{
+		transform:translateX(0);
+		opacity:1;
+	}
+}
+
+/*buttons for modal sign-up sheet style*/
+#form-su,#form-si,#google-su,#google-si,#facebook-su,#facebook-si{
+	border-radius:7px;
+	color:white;
+	font-size:20px;
+	display:none;
+	margin:1px auto;
+}
+
+/*specific styling for first two buttons that are shown on modal pop-up*/
+#sign-up,#sign-in{
+	font-size:20px;
+	font-weight:bold;
+	border:3px solid black;
+}
+
+/*facebook buttons*/
+#facebook-su,#facebook-si{
+	background-color:#385998;
+}
+
+/*google buttons*/
+#google-su,#google-si{
+	background-color:#DD1812;
+}
+
+/*buttons for sign up/in with email and password*/
+#form-su,#form-si{
+	background-color:#454545;	
+}
+
+/*error message area which displays errors for logins*/
+#errorMsg{
+	color:red;
+	text-align:center;
+}
+
+/*don't show sign up or sign in forms when modal is first display*/
+#sign-up-form,#sign-in-form{
+	display:none;
+}
+
+/*different instructions on what to do when filling out form fields*/
+.instructions{
+	margin:0px;
+}
+
+/*
+form>#email-si,form>#phoneNumber-si{
+	display:none;
+}*/
+
+/*style for input fields in forms*/
+input{
+	padding:4px;
+	width:100%;
+	margin:3px 0px;
+}
+
+/*font outside of input fields*/
+form#sign-up-form>p,form#sign-in-form>p{
+	margin:14px auto;
+	font-weight:bold;
+	font-size:20px;
+	color:black;
+}
+
+/*buttons for submitting forms*/
+#submit-su,#submit-si{
+	margin:10px;
+}
+
+/*button that needs to be clicked before proceeding to next page*/
+#logInComplete{
+	width:100%;
+	display:none;
+}
+
+/*set color for all modal components*/
+.modal-dialog,.modal-content,.modal-body,.modal-footer{
+	background-color:#E5E5E5;
+	border-radius:15px;
+}
+
+/*style for sign out*/
+#signOut{
+    text-decoration:underline;
+    font-size:14px;
+    width:max-content;
+    margin:0 auto;
+}
+
+/*hover styling for sign out*/
+#signOut:hover{
+    text-decoration:underline;
+    font-size:16px;
+    color:#77BDD9;
+    font-weight:bold;
+}
+
+/*media queries for page*/
+@media (max-width: 1200px) {
+    img{
+        height:180px;
+    }
+	#Slogan{
+		font-size:40px;
+	}
+    #helper>p,#help>p{
+        font-size:65px;
+    }
+
+}
+
+@media (max-width: 1100px) {
+    img{
+        height:180px;
+    }
+	#Slogan{
+		font-size:40px;
+	}
+    #helper>p,#help>p{
+        font-size:65px;
+    }
+
+}
+
+@media (max-width: 1000px) {
+    img{
+        height:180px;
+    }
+	#Slogan{
+		font-size:40px;
+	}
+    #helper>p,#help>p{
+        font-size:70px;
+    }
+
+}
+@media only screen and (max-width: 768px){
+	.navButtons{
+		display:block;
+	}
+	#Slogan{
+		font-size:32px;
+	}
+}
+
+@media (max-width: 600px) {
+
+	img{
+		height:160px;
+	}
+	#Slogan{
+		font-size:28px;
+	}
+	#Welcome{
+		font-size:24px;
+	}			
+	#helper>p,#help>p{
+		font-size:70px;
+	}
+	#helper>p#detail,#help>p#detail{
+		font-size:25px;
+	}
+
+	form#sign-up-form>p, form#sign-in-form>p{
+		font-size:18px;
+	}
+
+}
+
+@media (max-width: 550px) {
+
+	img{
+		height:140px;
+	}
+	#Slogan{
+		font-size:25px;
+	}
+	#Welcome{
+		font-size:20px;
+	}			
+	#helper>p,#help>p{
+		font-size:70px;
+	}
+	#helper>p#detail,#help>p#detail{
+		font-size:25px;
+	}
+
+	form#sign-up-form>p, form#sign-in-form>p{
+		font-size:18px;
+	}
+
+}
+
+@media (max-width: 500px) {
+
+	img{
+		height:140px;
+	}
+	#Slogan{
+		font-size:18px;
+	}
+	#Welcome{
+		font-size:15px;
+	}
+
+	#signOut{
+        font-size:10px;
+    }
+
+    #signOut:hover{
+        font-size:12px;
+    }
+
+	#helper>p,#help>p{
+		font-size:60px;
+	}
+	#facebook-su,#google-su,#form-su,#facebook-si,#google-si,#form-si{
+		font-size:17px;
+	}
+	#helper>p#detail,#help>p#detail{
+		font-size:18px;
+	}
+
+	form#sign-up-form>p, form#sign-in-form>p{
+		font-size:18px;
+	}
+
+}
+
+@media (max-width: 385px) {
+
+	img{
+		height:100px;
+	}
+	#Slogan{
+		font-size:15px;
+	}
+	#Welcome{
+		font-size:13px;
+	}
+	#signOut{
+        font-size:10px;
+    }
+    #signOut:hover{
+        font-size:12px;
+    }
+	#helper>p,#help>p{
+		font-size:40px;
+	}
+	#facebook-su,#google-su,#form-su,#facebook-si,#google-si,#form-si{
+		font-size:15px;
+	}
+	#helper>p#detail,#help>p#detail{
+		font-size:14px;
+	}
+
+	form#sign-up-form>p, form#sign-in-form>p{
+		font-size:15px;
+	}
+
+}
+
+/*format for awesomplete div*/		
+.awesomplete {
+	display: inherit;
+}
