@@ -1,0 +1,568 @@
+
+/*color of background*/
+body{
+    background-color:#032642;
+}
+
+/*format for where logo, user account info and page info is on*/
+/*display flex is used to allow for very easy alignment of items in jumbotron*/
+.jumbotron{
+    background-color:#032642;
+    min-height:130px;
+    overflow: auto;
+    padding:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+    display:flex;
+}
+/*user info ul*/
+ul{
+    list-style:none;
+    float:left;
+    color:white;
+}
+ul>li{
+    color:white;
+}
+/*logo*/
+img{
+    height:100px;
+    margin-right:15px;
+}
+
+/*the sign out list item that is in the user info list on the modal (Rsignout) and on the sheet (signout)*/
+#signOut,#RsignOut{
+    text-decoration:underline;
+    font-size:14px;
+    width:max-content;
+}
+
+/*what happens when the signout list item is hovered over*/
+#signOut:hover,#RsignOut:hover{
+    text-decoration:underline;
+    font-size:16px;
+    color:#77BDD9;
+    font-weight:bold;
+    width:max-content;
+}
+/*holds the "You are on Go Help and Click here to go to Get Help p tags*/
+/*formatting for both modal and sheet menu*/
+.Menu{
+    margin:auto;
+}
+
+/*formatting for the "You are on Go Help" and "Click here to go to Get Help" p tags*/
+/*formatting for both modal and sheet menu*/
+.Menu>.pageTitle,.Menu>.getHelp{
+    background-color:#003600;
+    border-radius:3px;
+    border:3px solid white;
+    color:white;
+    padding:3px;
+    font-size:16px;
+    width:max-content;
+    transition:font-size 1s ease;
+    margin:auto;
+}
+
+/*different formatting for .getHelp*/
+/*formatting for both modal and sheet menu*/
+.Menu>.getHelp{
+    background-color:#991E37;
+    margin-top:5px;
+}
+
+/*what happens when either of these is hovered over*/
+.Menu>.pageTitle:hover,.Menu>.getHelp:hover{
+    font-size:19px;
+}
+
+/*************************************GPS MODAL***********************************************/
+/*only want accept and reject buttons to show up at first*/
+/*correct address is for when my calculation is wrong and the user needs to supply their correct address*/
+/*submit is for submitting this correct address*/
+/*instruct is instructing the user to enter their correct address*/
+#correctAddress,#submit,#instruct{
+    display:none;
+}
+
+/*the address that is calculated through html5 geolocation and google maps geocoding api*/
+/*after that calculation is complete, if the address that is calculated is different from the address stored in the users node for the user or if there is not yet an address set for the user then the modal pops up and shows the address calculated for the user*/
+#returnedAddress{
+    font-weight:bold;
+    font-size:20px;
+    color:blue;
+}
+
+/*format for accept button for accepting calculated address*/
+#accept{
+    background-color:#003600;
+    color:white;
+    font-size:30px;
+    font-weight:bold;
+}
+
+/*format for reject button for rejecting calculated address*/
+#reject{
+    background-color:#991E37;
+    color:white;
+    font-size:30px;
+    font-weight:bold;
+}
+
+/*input field formatting - make the field 100%*/
+#correctAddress{
+    font-size:20px;
+    width:100%;
+}
+
+/*submit button for when the correct address is given by theh user*/
+#submit{
+    border:3px solid #454545;
+    color:#454545;
+    font-size:30px;
+    font-weight:bold;
+}
+
+/*properties for the arrow on the submit button*/
+#animateArrow{
+    font-size:30px;
+    animation-name:arrow_swell;
+    animation-iteration-count:infinite;
+    animation-duration:1s;
+}
+
+/*just want to make the arrow on the button grow slightly*/
+@keyframes arrow_swell{
+      0%{
+        font-size:30px;
+      }
+      50%{
+        font-size:33px;
+      }
+      100%{
+        font-size:30px;
+      }
+} 
+
+/*button that allows user to continue to site to find someone to help*/
+/*should only show up when user has gone through rest of gps modal*/
+#Proceed{
+    display:none;
+}       
+
+/*********************************Map stuff*******************************************/
+/*map on main helper sheet*/
+/*have to set height of map for map to show up*/
+#map{
+    height:400px;
+}
+
+/*the red italic request that shows up on the google map markers*/
+#request{
+    color:red;
+    font-weight:bold;
+    font-style:italic;
+}
+
+/*button that helper pushes on the marker infowindow*/
+.contact{
+    width:100%;
+    background-color:#003600;
+    border-radius:10px;
+    color:white;
+    border:none;
+    outline:none;
+    font-size:20px;
+}
+
+/*confirmation modal message that pops up after user clicks on a "Help!" contact button*/
+.confirmMessage{
+    border-radius:15px;
+    color:#454545;
+    background-color:#E5E5DB;
+    border:5px solid #454545;
+    font-size:40px;
+    font-weight:bold;
+}
+
+/*actual message in confirmMessage*/
+.confirmMessage>p{
+    display:inline;
+    margin:10px;
+}
+
+/*modal body on which confirmMessage is shown*/
+#confirmModalBody{
+    background-color: #454545;
+}
+
+/*button to confirm help request acceptance and move to next phase of request*/
+#confirmBtn{
+    font-size:30px;
+    background-color:#454545;
+    color:#E5E5DB
+}
+
+/*************************MARKER LEGEND**********************/
+/*legend that is displayed below map*/
+#markerInfo{
+    margin-top:3px;
+    margin-bottom:3px;
+    display:inline-block;
+    background-color:#403F3D;
+    border:3px solid white;
+    padding:5px;
+    transition:all 1s ease-in-out;
+}
+
+/*hovering over the legend makes it more pronounced through a scale to 1.1 of its actual size*/
+#markerInfo:hover{
+    transform:scale(1.1);
+}
+/*pairs of icon and description of icon - makes them show up on same line*/
+#markerInfo>div{
+    display:inline-block;
+}
+
+/*icon formatting*/
+#markerInfo>div>img{
+    height:30px;
+    display:inline;
+}
+
+/*description formatting*/
+#markerInfo>div>p{
+    height:30px;
+    display:inline;
+    color:white;
+}
+
+/*********************DISCLAIMER NOTE AT BOTTOM OF SHEET***************/
+/*disclaimer note that explains that open requests by user will not show up on their go help page*/
+#disclaimer{
+    font-style:italic;
+    font-size:16px;
+    color:white;
+}
+
+/*formatting of the a tag in disclaimer*/
+#disclaimer>a{
+    color:white;
+}
+
+/*formatting for when user hovers over "click here" in the disclaimer*/
+#disclaimer>a:hover{
+    font-size:18px;
+    font-weight:bold;
+    background-color:#991E37;
+    border:3px solid white;
+    border-radius:5px;
+    padding:3px;
+}
+
+/**************************************FORMATTING FOR REQUEST MODAL************************************/
+/*****************MODAL IS PORTAL THAT APPEARS WHEN USER HAS OPEN "ACCEPTED REQUEST" FORM**************/
+
+/*expand width of modal compared to document body size*/
+#requestModal>.modal-dialog{
+    width:90%;
+}
+
+/*want modal-content to be 100% width of modal-dialog and have a little bit of space on top and bottom*/
+#requestModal>.modal-dialog>.modal-content{
+    width:100%;
+    margin:5% auto;
+}
+
+/*make background color of modal be the same as the background color of the sheet - color theme changes when this "portal" modal is open. in the javascript for this sheet, I change the modal-backdrop to be green when this is open*/
+#Rmodal{
+    background-color:#032642;
+}
+
+/*list of user account info that shows up on modal*/
+#userInfo_Rmodal > ul{
+    text-align:left;
+}
+
+/*menu button that shows up when modal is open - this is created dynamically and appended to the pending request section*/
+#tools{
+  width:100%;
+  height:100%;
+  font-size:30px;
+  border-radius:15px;
+  padding:10px;
+}
+
+/*all buttons that hold different tools for helper have this class - mostly for animation purposes, but also allows consistent styling. but the height, opacity, display and font-size are purely for animation purposes*/
+.collapsed{
+  width:100%;
+  display:none;
+  height:0px;
+  opacity:0;
+  font-size:0px;
+  text-align:center;
+  border-radius:15px;
+  border:3px solid white;
+}
+
+/* class that is added to buttons with class collapsed when buttons not shown */
+.animation-show{
+  animation-duration:.1s;
+  animation-name:expand;
+  animation-fill-mode:forwards;/* allows me to change the styling of buttons through animation and keep that styling */
+}
+
+/* animation for collapsed buttons when buttons are being shown */
+@keyframes expand{
+  0%{
+    opacity:0;
+    height:0%;
+    font-size:0px;
+    display:none;
+    border:0px solid white;
+  }
+  100%{
+    opacity:1;
+    height:100%;
+    font-size:30px;
+    display:block;
+    padding:10px;
+    border:3px solid white;
+  }
+}
+
+/* class that replaces class animation-show to hide class collapsed buttons */
+.animation-hide{
+  animation-duration:.1s;
+  animation-name:collapse;
+  animation-fill-mode:forwards;
+}
+
+/* animation to hide the shown class collapsed buttons */
+@keyframes collapse{
+  0%{
+    opacity:1;
+    height:100%;
+    font-size:30px;
+    display:block;
+    padding:10px;
+    border:2px solid white;
+  }
+  100%{
+    opacity:0;
+    height:0%;
+    font-size:0px;
+    display:none;
+    border:0px solid white;
+  }
+}
+
+/* further styling for tool buttons (buttons with class collapsed) */
+#navigation,#complete,#contact{
+    color:white;
+}
+
+/* Additional Contact Information button */
+#contact{
+    background-color:#402E24;
+}
+
+/* Mark task as Complete button */
+#complete{
+    background-color:#086268;
+}
+
+/* Navigation button */
+#navigation{
+    background-color:#333333;
+    width:100%;
+    font-size:30px;
+}
+
+/* div associated with Additional COntact button formatted above */
+#contactDiv{
+    background-color:#402E24;
+    color:white;
+    width:100%;
+    display:none;
+    height:0px;
+    opacity:0;
+    font-size:0px;
+    display:flex;
+}
+
+/* parent div associated with navigation button - mapDiv is formatted in javascript prior to placing map in it, routeDiv is formatted below*/
+#navDiv{
+    display:none;
+    width:100%;
+    color:white;
+    background-color:#333333;
+    padding:15px;
+    border:3px solid white;
+}
+
+/* animation class to show contactDiv formatted above */
+.contact-animation-show{
+  animation-duration:.1s;
+  animation-name:contactExpand;
+  animation-fill-mode:forwards;
+}
+
+/* animation for showing contactDiv */
+@keyframes contactExpand{
+  0%{
+    opacity:0;
+    height:0%;
+    font-size:0px;
+    display:none;
+    border:0px solid white;
+  }
+  100%{
+    opacity:1;
+    height:100%;
+    font-size:30px;
+    display:block;
+    padding:10px;
+    border:3px solid white;
+  }
+}
+
+/* animation class for hiding contactDiv */
+.contact-animation-hide{
+  animation-duration:.1s;
+  animation-name:contactCollapse;
+  animation-fill-mode:forwards;
+}
+
+/* animation for hiding contactDiv */
+@keyframes contactCollapse{
+  0%{
+    opacity:1;
+    height:100%;
+    font-size:30px;
+    display:block;
+    padding:10px;
+    border:2px solid white;
+  }
+  100%{
+    opacity:0;
+    height:0%;
+    font-size:0px;
+    display:none;
+    border:0px solid white;
+  }
+}
+
+/* message at top of requestModal that states what request the helper has offered to help in */
+#offerMsg{
+    color:white;
+    font-size:20px;
+}
+
+/* routeDiv formatting - this is a child div of navDiv that shows route from helper to requester */
+#routeDiv>p,#routeDiv{
+    margin-top:15px;
+    font-size:15px;
+    text-align:left;
+}
+
+/*         request modal - allow
+#Rmodal>.modal-body{
+overflow: auto;
+} */
+/*pendingRequest is where all stuff below header of modal is shown*/
+#pendingRequest{
+    color:white;
+}
+
+/*div for weather on main helper page*/
+#weatherDiv{
+    color:white;
+}
+
+/*formatting of Open Chat button*/
+#startChat{
+    background-color:white;
+    color:#71C671;
+    border:5px solid #7171C6;
+    font-size:30px;
+}
+
+/*div for all chat content*/
+#chatBox{
+    background-color:#3f3f3f;
+    display:none;
+    padding:15px;
+    border:5px solid white;
+}
+
+/*div for messages*/
+.msgContainer{
+    min-height:150px;
+    max-height:400px;
+    overflow:scroll;
+    padding-right:10px;
+}
+
+/*formatting for messages*/
+.msg{
+    background-color:#a8a8a8;
+    margin-top:5px;
+    padding:15px;
+    color:white;
+    border-radius:4px;
+    font-size:16px;
+}
+
+/*input for messages*/
+.chatmsg{
+    margin:10px auto;
+    background-color:#d3d3d3;
+    color:black;
+}
+
+/*to deal with the larger modals overflow - adds scroll bar to body*/
+.modal{
+    overflow-y:auto;
+}
+
+.modal-body{
+    overflow:auto;
+}
+
+/*responsiveness - hides user info, changes jumbotron display to block and puts float on menu and image*/
+@media (max-width:850px){
+    
+    #tools,#complete,#navigation,#startChat,#contact{
+        font-size:20px;
+    }
+
+    .jumbotron{
+        display:block;
+    }
+    
+    .Menu>.pageTitle,.Menu>.getHelp{
+        margin-left:0;
+    }
+
+    .jumbotron>.Menu{
+        float:left;
+        margin-left:15px;
+    }
+
+    .jumbotron>img{
+        height:70px;
+        float:right;
+        margin-right:15px;
+    }
+
+    #userInfo_Rmodal,#userInfo{
+        display:none;
+    }
+
+    .dist{
+        display:none;
+    }
+
+}
