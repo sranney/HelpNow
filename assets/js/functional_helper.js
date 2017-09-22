@@ -520,7 +520,7 @@ function initNavMap(startLoc,helperUID,endLoc,requesterUID){
     });
 
     //event listener for when bounds are changed
-    google.maps.event.addListener( navMap, 'bounds_changed', onBoundsChanged );
+    /*google.maps.event.addListener( navMap, 'bounds_changed', onBoundsChanged );*/
     //event listener for when map is resized
     google.maps.event.addDomListener(navMap, 'resize', function() {
         navMap.setCenter(center);
