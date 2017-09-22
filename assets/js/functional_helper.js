@@ -190,7 +190,7 @@ var helperOpsRan=false,requesterStatusOpsRan=false,requesterAlert,uid_pair,numMs
 //msgNumb increments for each message added to the messages node for two users
 
 function requestFunctions(){//checking actions of other user
-    //order of things matter here. knowing that 
+    
     dB.ref("/users/"+userObj.uid+"/serving").on("value",function(snapshot){
         //if this returns a snapshot that is not null, then a serving node has been added to this helper's users node that has content in it. the only time that a serving node gets added to a helper's users node is when the helper has pushed the confirm button, confirming that accept a help request. as soon as that request is marked complete by the helper, the serving node is removed from their users node. 
         //this event will be triggered at different times, from what I have seen.
@@ -274,13 +274,13 @@ function requestFunctions(){//checking actions of other user
             $("#pendingRequest").prepend(requesterAlert);
             //disables buttons and collapses contents of open tools
             $("#navigation").prop( "disabled", true );
-            $("#navigation").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+            $("#navigation").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
             $("#navDiv").css("display","none");
             $("#contact").prop( "disabled", true );
-            $("#contact").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+            $("#contact").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
             $("#contactDiv").css("display","none");
             $("#startChat").prop( "disabled", true );
-            $("#startChat").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+            $("#startChat").find(".fa-minus-circle").removeClass("fa-minus-circle").addClass("fa-plus-circle");
             $("#chatBox").css("display","none");
         }
     })
