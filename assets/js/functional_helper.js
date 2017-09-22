@@ -520,7 +520,6 @@ function initNavMap(startLoc,helperUID,endLoc,requesterUID){
     });
 
     //event listener for when bounds are changed
-    /*google.maps.event.addListener( navMap, 'bounds_changed', onBoundsChanged );*/
     //event listener for when map is resized
     google.maps.event.addDomListener(navMap, 'resize', function() {
         navMap.setCenter(center);
@@ -551,15 +550,6 @@ function initNavMap(startLoc,helperUID,endLoc,requesterUID){
 
 }
 
-/*function onBoundsChanged(){
-    if ( $(navMap.getDiv()).children().eq(0).height() == window.innerHeight &&
-         $(navMap.getDiv()).children().eq(0).width()  == window.innerWidth ) {
-        $("#requestModal").modal("hide");
-    }
-    else {
-        $("#requestModal").modal("show");
-    }
-}*/
 //function for creating route table
 //notice that columns are being assigned classes - this is for responsiveness - when screen gets to a certain smaller width, I hide distance column
 function createTable(directionsArray){
@@ -578,7 +568,7 @@ function createTable(directionsArray){
     $("#routeDiv").append(bigTableText);//appends the string as html into routeDiv
 }
 //function to generate main page map
-var map;
+var map, geolocationFound = false;
 function initMap(){
     //first creates a map that centers on Dallas
     var center={lat:32.7767,lng:-96.7970};
@@ -590,46 +580,49 @@ function initMap(){
 
 //////////////////////////////html5 geolocation api mixed with Goog Maps API Geocoding///////////////////////////////
     //options for html5 geolocation api
-    var options = {
-      enableHighAccuracy: true,//set it to this so that I can access the most accurate gps system available on user's system - I think this is a setting that would only be active for mobiles
-      timeout: 5000,
-      maximumAge: 0
-    };
 
-    //if the getCurrentPosition function was able to get your gps location, then I want to do the following function, including running google maps geocode api
-  
-    function success(pos) {//pos is an object that returns among other things the coordinates of the user
+    if(geolocationFound = false){//don't need to run the geolocation more than once 
+        var options = {
+          enableHighAccuracy: true,//set it to this so that I can access the most accurate gps system available on user's system - I think this is a setting that would only be active for mobiles
+          timeout: 5000,
+          maximumAge: 0
+        };
 
-        var crd = pos.coords;
-        lat = crd.latitude;
-        long = crd.longitude;
+        //if the getCurrentPosition function was able to get your gps location, then I want to do the following function, including running google maps geocode api
+      
+        function success(pos) {//pos is an object that returns among other things the coordinates of the user
 
-        /////GOOGLE MAPS GEOCODE API FUNCTIONS - gets address
-        geocoder = new google.maps.Geocoder;//sets up new geocoder
-        var geopos = {lat:lat,lng:long};//creates an object using the html5 geolocation calculated latlng
-        geocoder.geocode({"location":geopos},function(results,status){//and passes it to the google maps geocoder api as location
-            if(status==="OK"){//then if return is good, sets global variable address to the part of the result object
-                if(results[0]){
-                    address = results[0].formatted_address;//formatted address with street address
-                    if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&gpsProcessed==false&& databaseObj.users[userObj.uid].serving==undefined){
-                        gpsProcessor()
-                    }                            
+            var crd = pos.coords;
+            lat = crd.latitude;
+            long = crd.longitude;
+
+            /////GOOGLE MAPS GEOCODE API FUNCTIONS - gets address
+            geocoder = new google.maps.Geocoder;//sets up new geocoder
+            var geopos = {lat:lat,lng:long};//creates an object using the html5 geolocation calculated latlng
+            geocoder.geocode({"location":geopos},function(results,status){//and passes it to the google maps geocoder api as location
+                if(status==="OK"){//then if return is good, sets global variable address to the part of the result object
+                    if(results[0]){
+                        address = results[0].formatted_address;//formatted address with street address
+                        if(databaseObj!=null&&databaseObj!=undefined&&address!=undefined&&gpsProcessed==false&& databaseObj.users[userObj.uid].serving==undefined){
+                            geolocationFound=true;
+                            gpsProcessor();
+                        }                            
+                    }
                 }
-            }
-        })
+            })
 
-    };
+        };
 
-    function error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
-    };
+        function error(err) {
+          console.warn(`ERROR(${err.code}): ${err.message}`);
+        };
 
-    //geolocation.getCurrentPosition takes three parameters, 
-    //success - function - what do you want to do with the information returned if the function getCurrentPosition runs successfully
-    //error - function - how to handle errors
-    //options - object - optional parameters for how to handle getting coordinates
-    navigator.geolocation.getCurrentPosition(success, error, options);
-
+        //geolocation.getCurrentPosition takes three parameters, 
+        //success - function - what do you want to do with the information returned if the function getCurrentPosition runs successfully
+        //error - function - how to handle errors
+        //options - object - optional parameters for how to handle getting coordinates
+        navigator.geolocation.getCurrentPosition(success, error, options);
+    }
 }
 
 var mapSet = false;//to prevent more than one call to the function moveToLocation from the database onvalue change function
