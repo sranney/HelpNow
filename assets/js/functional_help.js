@@ -461,6 +461,7 @@ $('#gpsModal').on('hidden.bs.modal', function() {
 $("#requestSubmit").on("click",function(){//submits request and 
     
     if($("#requestInput").val().length>0){
+        $("#errorMsg").empty();
         dB.ref("/helpRequests/"+userObj.uid).set("open");//new request opened and so I push this to firebase in helpRequests
         dB.ref("/users/"+userObj.uid+"/helpRequest").set($("#requestInput").val()); 
         //additionally, I push the helpRequest to the users node of the requester. this is checked on page load and then opens up a modal with the request
