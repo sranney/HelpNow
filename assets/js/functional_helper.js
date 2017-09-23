@@ -23,7 +23,7 @@ var databaseObj,modalShown = false;
 //get instance of real-time database
 dB.ref().on("value",function(snapshot){
     databaseObj = snapshot.toJSON();//setting databaseObj to the entire firebase onvalue change snapshot gives me the current firebase with every change that occurs to the firebase
-    //firebase function to check whether user is logged into site
+    //get current user's user object including uid
     Auth.onAuthStateChanged(function(user) {
         if (user) {
             userObj = user;
@@ -54,7 +54,7 @@ dB.ref().on("value",function(snapshot){
 //I want different colored backdrops for the modals depending on the modal
 $("#requestModal").on("show.bs.modal", function() {
     setTimeout(function(){        
-        $(".modal-backdrop").css("background", "#003600");//change color of modal-backdrop
+        $(".modal-backdrop").css("background", "#003600");//change color of modal-backdrop - green
         $(".modal-backdrop").css("opacity","1");
     },10);
 });
@@ -182,13 +182,13 @@ $("#submit").on("click",function(){//when the user clicks reject calculated addr
 
 })
 
-//series of functions to check different stuff that is added to firebase
+
 
 var helperOpsRan=false,requesterStatusOpsRan=false,requesterAlert,uid_pair,numMsgs=0,msgNumb = 0,nextmsgcount=1,messagesArray=[],msgArrayCount=0;
 
 //numMsgs counts number of messages sent between two users
 //msgNumb increments for each message added to the messages node for two users
-
+//series of functions to check different stuff that is added to firebase
 function requestFunctions(){//checking actions of other user
     
     dB.ref("/users/"+userObj.uid+"/serving").on("value",function(snapshot){
@@ -263,7 +263,7 @@ function requestFunctions(){//checking actions of other user
     dB.ref("/users/"+userObj.uid+"/serving/requesterStatus").on("value",function(snapshot){
         //again, this is an onvalue change listener that I only want to execute its code block once
         //so I check the value of the snapshot and have a boolean variable that will prevent from the code block being executed more than once
-        //this listener is purely to run code when the snapshot value is set to complete
+        //this listener is purely to run code when the snapshot value is set to complete by the requester
         //this value changes from live to complete by the requester when the requester marks the request as complete
         if(snapshot.val()=="complete" && requesterStatusOpsRan==false){
             requesterStatusOpsRan=true;
@@ -285,7 +285,7 @@ function requestFunctions(){//checking actions of other user
         }
     })
 
-    //I had no idea that this would work and it might be weird coding but in order for the following listener to work properly, and only be defined when uid_pair is set, I had to wrap it in a check on teh value of uid_pair. I didn't want to set uid_pair to "123" or any other number, because I didn't want to be checking the messages node of just any number, but the appropriate uid_pair
+    //in order for the following listener to work properly, and only be defined when uid_pair is set, I had to wrap it in an if statement to check the value of uid_pair. I didn't want to set uid_pair to "123" or any other number, because I didn't want to be checking the messages node of just any number, but the appropriate uid_pair
     if(uid_pair!=undefined){
         dB.ref("/messages/"+uid_pair).on("value",function(snapshot){
             //here, uid_pair is a key and its value is an array with the messages stored in order
